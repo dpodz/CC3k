@@ -1,0 +1,10 @@
+after_script:
+  - make clean
+
+stages:
+  - build
+
+build_job:
+  stage: build 
+  script: 
+    - make

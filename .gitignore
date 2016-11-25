@@ -1,0 +1,6 @@
+*.o
+*.d
+cc3k
+docs/**/*.aux
+docs/**/*.log
+docs/**/*.synctex.gz

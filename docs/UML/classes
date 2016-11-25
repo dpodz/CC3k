@@ -1,0 +1,191 @@
+GridInit class - Abstract class
+
+  public:
+
+  Grid* createGrid()
+
+GridInitCustomItems : GridInit 
+  private:
+  
+  configFile
+
+GridInitSavedItems : GridInit
+  private:
+
+  configFile
+
+Controller : Observer - Abstract class
+
+  public:
+  
+  void playGame()
+
+  private:
+
+  virtual bool GameCycle()
+  Game* g
+
+CLIController : Controller
+
+CharacterAI - Abstract class
+  public:
+
+  void processTurn(Character)
+
+  private:
+
+  Game* g
+
+RandomAI : CharacterAI
+
+View : Observer - Abstract class
+
+CLIView : View
+
+Game class
+  public:
+  
+  void turnUpdate()
+  GridSize getGridSize()
+  Cell getCell(Int, Int)
+
+  
+  private:
+
+  Grid g
+  Vector<Vector<int>> hostile
+
+Grid class : Observer, Subject 
+
+  - public 
+  void move(Character, Direction)
+  void attack(Character, Direction)
+  void usePotion(Character, Direction)
+  void turnUpdate()
+  Cell getCell(Int, Int)
+  GridSize getGridSize()
+
+  - private
+
+  Vector<Vector<Cells>> tiles;
+  GridSize size;
+
+Cell class : Subject
+
+  - public 
+
+  vector<Entities> getEntities()
+  CellType getType()
+  Character getCharacter()
+  bool isValid()
+  void addEntity(Entity)
+  void removeEntity(Entity)
+  void walkedOn(Character)
+  void usePotion(Character)
+  void turnUpdate()
+
+  private:
+
+  Vector<Entity> entities
+
+enum Direction
+
+Stats struct 
+
+  Attack 
+  Defence
+  PotionStrength
+
+Entity class : Subject - Abstract class
+
+  public:
+
+  virtual bool canWalkOn()
+  virtual EntityType getType()
+
+  virtual int getGold()
+  virtual void setGold(Int)
+  virtual void turnUpdate()
+
+Character class - Abstract class
+
+  - public
+
+  int getHealth()
+  Pos getPosition()
+  virtual void setHealth(Int)
+  virtual Stats getStats()
+
+  virtual void move(Direction)
+  virtual void attack(Direction)
+
+  virtual void attack(Character)
+  virtual void getAttackedBy(Character)
+  virtual int getDroppedGold()
+  virtual int getScore()
+  virtual Vector<Entity> onDeath()
+  virtual void onKill()
+  virtual bool checkHostile(Character)
+
+  virtual void usePotion(Direction)
+  virtual void useItem(Item)
+
+  virtual bool hasKnowledgeOf(Entity)
+  virtual void setKnowledgeOf(Entity, bool)
+
+  private:
+
+  map<std::type_index, bool> knowledge;
+
+Item class - Abstract class
+
+  public:
+
+  virtual void walkedOnBy(Character)
+  virtual void itemUsedBy(Character)
+
+
+Treasure class - Abstract class
+
+
+Modifier : Character - Abstract class
+
+  public: 
+
+  Same as Character
+
+  private:
+
+  Character CharacterComponent
+
+StatModifier : Modifier
+
+  public:
+
+  Stat getStats()
+
+
+Potion class - Abstract class
+
+  public:
+
+Observer class - Abstract class
+
+  public: 
+
+  virtual void notify(Subject)
+  virtual SubscriptionType subType()
+
+
+Subject class - Abstract class
+
+  public: 
+
+  void attach(Observer)
+  void notifyObserver(SubscriptionType)
+  virtual Info getInfo()
+
+  private:
+
+  Vector<Observer> observers
+
