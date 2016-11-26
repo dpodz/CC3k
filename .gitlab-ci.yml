@@ -1,5 +1,8 @@
+cache:
+  
 after_script:
   - make clean
+  - rm -rf *
 
 stages:
   - build
