@@ -1,2 +1,4 @@
 - Debug messages added to make it easier to debug code
-
+- Controller has a game
+- Variable naming
+- Class naming - GridInitRandomGen

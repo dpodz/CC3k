@@ -4,8 +4,8 @@
 #include "messages.h"
 
 class Observer {
+	
 public:
-
 	Observer();
 	virtual ~Observer() = 0;
 

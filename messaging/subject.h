@@ -8,10 +8,9 @@
 
 class Subject {
 
-	std::vector<std::shared_ptr<Observer>> observers;
+	std::vector<std::weak_ptr<Observer>> mObservers;
 
 public:
-
 	Subject();
 	// ~Subject() is still implemented
 	virtual ~Subject() = 0; 
