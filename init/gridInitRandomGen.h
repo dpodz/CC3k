@@ -17,7 +17,7 @@ public:
 	GridInitRandomGen(std::shared_ptr<Character>, const std::String);
 	~GridInitRandomGen();
 
-	virtual Grid createGrid() override;
+	virtual std::unique_ptr<Grid> createGrid() override;
 	virtual void createEntities(std::shared_ptr<Grid>) override;
 };
 

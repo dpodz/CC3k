@@ -10,7 +10,7 @@ public:
 	GridInit();
 	~GridInit(); 
 
-	virtual Grid createGrid() = 0;
+	virtual std::unique_ptr<Grid> createGrid() = 0;
 	virtual void createEntities(std::shared_ptr<Grid>) = 0;
 };
 
