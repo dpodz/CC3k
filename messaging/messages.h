@@ -3,12 +3,8 @@
 
 #include <memory>
 #include <string>
-<<<<<<< HEAD
 #include "../model/position.h"
 
-=======
-#include "position.h"
->>>>>>> cf706e3710c9771d600c4811688893605756f6a5
 class Entity;
 class Character;
 class Item;
