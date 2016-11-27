@@ -3,4 +3,10 @@
 
 typedef int FactionId;
 
+enum class FactionRelation {
+	hostile,
+	neutral,
+	friendly
+};
+
 #endif // FACTION_H

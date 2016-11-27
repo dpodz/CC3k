@@ -10,12 +10,6 @@ class Grid;
 class GridInit;
 class Cell;
 
-enum FactionRelation {
-	hostile,
-	neutral,
-	friendly
-};
-
 class Game {
 
 	std::unique_ptr<Grid> mGrid;
@@ -25,10 +19,6 @@ class Game {
 public:
 	Game();
 	~Game();
-	
-	void turnUpdate();
-	GridSize getGridSize() const;
-	std::shared_ptr<Cell> getCell(int, int) const;
 
 	void setGridGen(std::shared_ptr<GridInit>);
 	void generateNewGrid();
@@ -36,6 +26,15 @@ public:
 
 	void setFactionRelation(FactionId, FactionId, FactionRelation);
 	FactionRelation getFactionRelation(FactionId, FactionId) const;
+
+	void turnUpdate();
+
+	GridSize getGridSize() const;
+	std::shared_ptr<Cell> getCell(int, int) const;
+
+	void move(std::shared_ptr<Character>, Direction);
+	void attack(std::shared_ptr<Character>, Direction);
+	void usePotion(std::shared_ptr<Character>, Direction);
 };
 
 #endif // GAME_H

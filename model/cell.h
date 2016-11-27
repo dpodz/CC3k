@@ -5,7 +5,7 @@
 #include <memory>
 #include <vector>
 
-enum CellType {
+enum class CellType {
 	Empty,
 	Floor,
 	Wall,

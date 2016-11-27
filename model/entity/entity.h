@@ -9,6 +9,7 @@ class Character;
 class Entity : public Subject {
 
 	int mGold;
+	Position mCurPos;
 
 public:
 	Entity();
@@ -16,6 +17,9 @@ public:
 
 	int getGold() const;
 	void setGold(int);
+
+	Position getPos() const;
+	void setPos(Position);
 
 	virtual bool canWalkOn() = 0;
 	virtual void lookedOnBy(std::shared_ptr<Character>) = 0;
