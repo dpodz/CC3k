@@ -2,17 +2,18 @@
 #define CHARACTER_H
 
 #include "stats.h"
+#include "entity.h"
 #include "../faction.h"
 #include <vector>
 #include <map>
 #include <memory>
-
-class Entity;
+#include <typeindex>
+		
 class Item;
 
 class Character : public Entity {
 
-	map<std::type_index, bool> mKnowledge;
+	std::map<std::type_index, bool> mKnowledge;
 	FactionId mFaction;
 	Stats mCharStats;
 	int mCurHP;
@@ -23,9 +24,9 @@ public:
 	~Character();
 	
 	int getHealth() const;
-	setHealth(int); 
+	void setHealth(int); 
 
-	virtual int getStats() const;
+	virtual Stats getStats() const;
 
 	bool hasKnowledgeOf(std::shared_ptr<Entity>) const;
 	void setKnowledgeOf(std::shared_ptr<Entity>, bool);
@@ -43,7 +44,7 @@ public:
 	virtual std::vector<std::shared_ptr<Entity>> onDeath();
 	virtual void onKill();	
 
-	virtual useItem(std::shared_ptr<Item>)
+	virtual void useItem(std::shared_ptr<Item>);
 };
 
 #endif // CHARACTER_H

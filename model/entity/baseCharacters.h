@@ -9,7 +9,7 @@ public:
 	Shade();
 	~Shade();
 
-	virtual int getScore() override;
+	virtual int getScore() const override;
 };
 
 #endif // BASE_CHARACTERS_H

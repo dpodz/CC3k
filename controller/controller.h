@@ -1,7 +1,7 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
-#include "../../messaging/observer.h"
+#include "../messaging/observer.h"
 #include <memory>
 
 class Game;

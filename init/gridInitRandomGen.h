@@ -15,7 +15,7 @@ class GridInitRandomGen : public GridInit {
 	std::ifstream mFile;
 
 public:
-	GridInitRandomGen(std::shared_ptr<Character>, const std::String);
+	GridInitRandomGen(std::shared_ptr<Character>, const std::string);
 	~GridInitRandomGen();
 
 	virtual std::unique_ptr<Grid> createGrid() override;

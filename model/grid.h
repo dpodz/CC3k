@@ -9,6 +9,10 @@
 class Cell;
 class Character;
 
+struct GridSize {
+	int x, y;
+};
+
 class Grid : public Observer, public Subject {
 
 	std::vector<std::vector<std::shared_ptr<Cell>>> mCells;
