@@ -3,7 +3,7 @@
 
 #include <memory>
 #include <string>
-
+#include "position.h"
 class Entity;
 class Character;
 class Item;
@@ -12,7 +12,7 @@ class Observer;
 
 // Base class
 struct BaseMessage {
-	virtual notifyObserver( std::shared_ptr<Observer> ) = 0;
+	virtual void notifyObserver( std::shared_ptr<Observer> ) = 0;
 };
 
 // Debugging Message
