@@ -15,7 +15,7 @@ class GridInitPreset : public GridInit {
 	std::ifstream mFile;
 
 public:
-	GridInitPreset(std::shared_ptr<Character>, const std::String);
+	GridInitPreset(std::shared_ptr<Character>, const std::string);
 	~GridInitPreset();
 
 	virtual std::unique_ptr<Grid> createGrid() override;

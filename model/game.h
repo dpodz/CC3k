@@ -14,7 +14,7 @@ enum FactionRelation {
 	hostile,
 	neutral,
 	friendly
-}
+};
 
 class Game {
 

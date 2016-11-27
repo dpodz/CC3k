@@ -2,12 +2,13 @@
 #define CHARACTER_H
 
 #include "stats.h"
+#include "entity.h"
 #include "../faction.h"
 #include <vector>
 #include <map>
 #include <typeindex>
 #include <memory>
-#include "entity.h"
+#include <typeindex>
 
 class Item;
 
