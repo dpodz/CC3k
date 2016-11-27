@@ -12,7 +12,6 @@ protected:
 public:
 	Modifier(std::shared_ptr<Character>);
 	virtual ~Modifier() = 0;
-		
 };
 
 #endif // MODIFIER_H

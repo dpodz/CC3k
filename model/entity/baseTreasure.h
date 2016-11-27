@@ -1,0 +1,6 @@
+#ifndef BASE_TREASURE_H
+#define BASE_TREASURE_H
+
+
+
+#endif // BASE_TREASURE_H

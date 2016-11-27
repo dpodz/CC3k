@@ -7,6 +7,14 @@
 #include <memory>
 #include <vector>
 
+enum CellType {
+	Empty,
+	Floor,
+	Wall,
+	Door,
+	Passage
+};
+
 class Cell : public Subject {
 
 	std::vector<std::shared_ptr<Entity>> mEntities;
