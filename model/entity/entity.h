@@ -17,7 +17,7 @@ public:
 	int getGold() const;
 	void setGold(int);
 
-	virtual bool canWalkOn();
+	virtual bool canWalkOn() = 0;
 	virtual void lookedOnBy(std::shared_ptr<Character>) = 0;
 };
 

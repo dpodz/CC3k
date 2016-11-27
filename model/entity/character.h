@@ -6,9 +6,10 @@
 #include "../faction.h"
 #include <vector>
 #include <map>
+#include <typeindex>
 #include <memory>
 #include <typeindex>
-		
+
 class Item;
 
 class Character : public Entity {
@@ -20,7 +21,7 @@ class Character : public Entity {
 	int mMaxHP;
 
 public:
-	Character(Stats, int maxHP, FactionId);
+	Character(FactionId, Stats, int curHP, int maxHP);
 	~Character();
 	
 	int getHealth() const;
@@ -38,7 +39,7 @@ public:
 	// May need to rewrite function below (expand it)
 	virtual void getAttackedBy(std::shared_ptr<Entity>);
 
-	virtual void getDroppedGold() const;
+	virtual int getDroppedGold() const;
 	virtual int getScore() const;
 
 	virtual std::vector<std::shared_ptr<Entity>> onDeath();
