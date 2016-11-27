@@ -20,7 +20,9 @@ int Character::getHealth() const {
 }
 
 void Character::setHealth(int hp) {
-	mCurHP = hp;
+	if (hp <= mMaxHP && hp >= 0) {
+		mCurHP = hp;
+	}
 }
 
 Stats Character::getStats() const {
@@ -66,3 +68,5 @@ void Character::onKill() {
 void Character::useItem(shared_ptr<Item> item) {
 	// TODO
 }
+
+bool Character::canWalkOn() { return false; }

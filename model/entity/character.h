@@ -45,6 +45,8 @@ public:
 	virtual void onKill();	
 
 	virtual void useItem(std::shared_ptr<Item>);
+
+	virtual bool canWalkOn() override;
 };
 
 #endif // CHARACTER_H

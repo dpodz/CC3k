@@ -13,6 +13,8 @@ public:
 	~Treasure();
 	
 	virtual void walkedOnBy(std::shared_ptr<Character>) override;
+	virtual bool canWalkOn() override;
+	virtual void lookedOnBy(std::shared_ptr<Character>) override;
 };
 
 #endif // TREASURE_H
