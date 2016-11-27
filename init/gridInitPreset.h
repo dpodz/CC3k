@@ -2,8 +2,8 @@
 #define GRID_INIT_PRESET_H
 
 #include "gridInit.h"
-#include "../state/grid.h"
-#include "../state/entity/character.h"
+#include "../model/grid.h"
+#include "../model/entity/character.h"
 #include <memory>
 #include <fstream>
 #include <string>
