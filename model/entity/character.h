@@ -6,26 +6,26 @@
 #include <vector>
 #include <map>
 #include <memory>
+#include "entity.h"
 
-class Entity;
 class Item;
 
 class Character : public Entity {
 
-	map<std::type_index, bool> mKnowledge;
+	std::map<std::type_index, bool> mKnowledge;
 	FactionId mFaction;
 	Stats mCharStats;
 	int mCurHP;
 	int mMaxHP;
 
 public:
-	Character(Stats, int maxHP, FactionId);
+	Character(FactionId, Stats, int curHP, int maxHP);
 	~Character();
 	
 	int getHealth() const;
-	setHealth(int); 
+	void setHealth(int); 
 
-	virtual int getStats() const;
+	virtual Stats getStats() const;
 
 	bool hasKnowledgeOf(std::shared_ptr<Entity>) const;
 	void setKnowledgeOf(std::shared_ptr<Entity>, bool);
@@ -37,13 +37,13 @@ public:
 	// May need to rewrite function below (expand it)
 	virtual void getAttackedBy(std::shared_ptr<Entity>);
 
-	virtual void getDroppedGold() const;
+	virtual int getDroppedGold() const;
 	virtual int getScore() const;
 
 	virtual std::vector<std::shared_ptr<Entity>> onDeath();
 	virtual void onKill();	
 
-	virtual useItem(std::shared_ptr<Item>)
+	virtual void useItem(std::shared_ptr<Item>);
 };
 
 #endif // CHARACTER_H
