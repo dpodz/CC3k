@@ -5,6 +5,7 @@
 #include "../faction.h"
 #include <vector>
 #include <map>
+#include <typeindex>
 #include <memory>
 #include "entity.h"
 

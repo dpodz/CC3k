@@ -9,7 +9,7 @@
 using namespace std;
 
 
-Character::Character(FactionId factionId, Stats, int curHP, int maxHP): 
+Character::Character(FactionId factionId, Stats stats, int curHP, int maxHP): 
 									mFaction{factionId}, mCharStats{stats}, mCurHP{curHP}, mMaxHP{maxHP} { }
 
 Character::~Character() { }								
@@ -28,11 +28,11 @@ Stats Character::getStats() const {
 }
 
 bool Character::hasKnowledgeOf(shared_ptr<Entity> entity) const {
-	return mKnowledge[type_index(typeid(*entity))];
+	return mKnowledge.find(typeid(entity))->second;
 }
 
 void Character::setKnowledgeOf(shared_ptr<Entity> entity, bool knows) {
-	mKnowledge[type_index(typeid(*entity))] = knows;
+	mKnowledge[typeid(entity)] = knows;
 }
 
 FactionId Character::getFaction() const {
