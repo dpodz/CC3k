@@ -2,18 +2,19 @@
 #define CELL_H
 
 #include "../messaging/subject.h"
-#include "entity/entity.h"
-#include "entity/character.h"
 #include <memory>
 #include <vector>
 
-enum CellType {
+enum class CellType {
 	Empty,
 	Floor,
 	Wall,
 	Door,
 	Passage
 };
+
+class Entity;
+class Character;
 
 class Cell : public Subject {
 

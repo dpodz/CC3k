@@ -2,8 +2,9 @@
 #define TREASURE_H
 
 #include "item.h"
-#include "character.h"
 #include <memory>
+
+class Character;
 
 class Treasure : public Item {
 
@@ -12,6 +13,8 @@ public:
 	~Treasure();
 	
 	virtual void walkedOnBy(std::shared_ptr<Character>) override;
+	virtual bool canWalkOn() override;
+	virtual void lookedOnBy(std::shared_ptr<Character>) override;
 };
 
 #endif // TREASURE_H

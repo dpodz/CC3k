@@ -2,11 +2,12 @@
 #define GRID_INIT_RANDOM_GEN_H
 
 #include "gridInit.h"
-#include "../state/grid.h"
-#include "../state/entity/character.h"
 #include <memory>
 #include <fstream>
 #include <string>
+
+class Grid;
+class Character;
 
 class GridInitRandomGen : public GridInit {
 
@@ -14,7 +15,7 @@ class GridInitRandomGen : public GridInit {
 	std::ifstream mFile;
 
 public:
-	GridInitRandomGen(std::shared_ptr<Character>, const std::String);
+	GridInitRandomGen(std::shared_ptr<Character>, const std::string);
 	~GridInitRandomGen();
 
 	virtual std::unique_ptr<Grid> createGrid() override;

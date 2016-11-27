@@ -2,15 +2,18 @@
 #define CLI_VIEW_H
 
 #include "view.h"
-#include "../state/entity/chracter.h"
 #include <memory>
+
+class Character;
+class Game;
 
 class CLIView : View {
 
 	std::weak_ptr<Character> mPlayer;
+	std::shared_ptr<Game> mGame;
 
 public:
-	CLIView(std::shared_ptr<Character>);
+	CLIView(std::shared_ptr<Character>, std::shared_ptr<Game>);
 	~CLIView();
 };
 

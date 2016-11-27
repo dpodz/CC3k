@@ -1,8 +1,13 @@
 #ifndef GRID_INIT_H
 #define GRID_INIT_H
 
+<<<<<<< HEAD
 #include "../model/grid.h"
+=======
+>>>>>>> 993b3a25628111809407d78b7a2841444745761a
 #include <memory>
+
+class Grid;
 
 class GridInit {
 

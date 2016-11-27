@@ -2,12 +2,14 @@
 #define ENTITY_H
 
 #include "../../messaging/subject.h"
-#include "character.h"
 #include <memory>
+
+class Character;
 
 class Entity : public Subject {
 
 	int mGold;
+	Position mCurPos;
 
 public:
 	Entity();
@@ -16,7 +18,10 @@ public:
 	int getGold() const;
 	void setGold(int);
 
-	virtual bool canWalkOn();
+	Position getPos() const;
+	void setPos(Position);
+
+	virtual bool canWalkOn() = 0;
 	virtual void lookedOnBy(std::shared_ptr<Character>) = 0;
 };
 

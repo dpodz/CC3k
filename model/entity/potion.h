@@ -3,8 +3,9 @@
 
 #include "stats.h"
 #include "item.h"
-#include "character.h"
 #include <memory>
+
+class Character;
 
 class Potion : public Item {
 
@@ -15,6 +16,8 @@ public:
 	~Potion();
 		
 	virtual void itemUsedBy(std::shared_ptr<Character>) override;
+	virtual bool canWalkOn() override;
+	virtual void lookedOnBy(std::shared_ptr<Character>) override;
 };
 
 #endif // POTION_H

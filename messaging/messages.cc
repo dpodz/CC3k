@@ -1,4 +1,6 @@
-#include "defaultMessage.h"
+#include "messages.h"
+#include "observer.h"
+#include <memory>
 
 void DebugMessage::notifyObserver( std::shared_ptr<Observer> observer ) {
 	observer->notify(*this);

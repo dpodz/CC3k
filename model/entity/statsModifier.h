@@ -3,8 +3,9 @@
 
 #include "modifier.h"
 #include "stats.h"
-#include "character.h"
 #include <vector>
+
+class Character;
 
 class StatsModifier : public Modifier {
 

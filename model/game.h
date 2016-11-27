@@ -1,13 +1,14 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include "grid.h"
-#include "cell.h"
 #include "faction.h"
-#include "../init/gridInit.h"
 #include <memory>
 #include <map>
 #include <utility>
+
+class Grid;
+class GridInit;
+class Cell;
 
 class Game {
 
@@ -18,10 +19,6 @@ class Game {
 public:
 	Game();
 	~Game();
-	
-	void turnUpdate();
-	GridSize getGridSize() const;
-	std::shared_ptr<Cell> getCell(int, int) const;
 
 	void setGridGen(std::shared_ptr<GridInit>);
 	void generateNewGrid();
@@ -29,6 +26,15 @@ public:
 
 	void setFactionRelation(FactionId, FactionId, FactionRelation);
 	FactionRelation getFactionRelation(FactionId, FactionId) const;
+
+	void turnUpdate();
+
+	GridSize getGridSize() const;
+	std::shared_ptr<Cell> getCell(int, int) const;
+
+	void move(std::shared_ptr<Character>, Direction);
+	void attack(std::shared_ptr<Character>, Direction);
+	void usePotion(std::shared_ptr<Character>, Direction);
 };
 
 #endif // GAME_H

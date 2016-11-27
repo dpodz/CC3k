@@ -2,11 +2,17 @@
 #define GRID_INIT_PRESET_H
 
 #include "gridInit.h"
+<<<<<<< HEAD
 #include "../model/grid.h"
 #include "../model/entity/character.h"
+=======
+>>>>>>> 993b3a25628111809407d78b7a2841444745761a
 #include <memory>
 #include <fstream>
 #include <string>
+
+class Character;
+class Grid;
 
 class GridInitPreset : public GridInit {
 
@@ -14,7 +20,7 @@ class GridInitPreset : public GridInit {
 	std::ifstream mFile;
 
 public:
-	GridInitPreset(std::shared_ptr<Character>, const std::String);
+	GridInitPreset(std::shared_ptr<Character>, const std::string);
 	~GridInitPreset();
 
 	virtual std::unique_ptr<Grid> createGrid() override;

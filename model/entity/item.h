@@ -2,8 +2,9 @@
 #define ITEM_H
 
 #include "entity.h"
-#include "character.h"
 #include <memory>
+
+class Character;
 
 class Item : public Entity {
 
