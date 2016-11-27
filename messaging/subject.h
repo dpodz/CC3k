@@ -1,14 +1,15 @@
 #ifndef SUBJECT_H
 #define SUBJECT_H
 
-#include "observer.h"
 #include "message.h"
 #include <vector>
 #include <memory>
 
+class Observer;
+
 class Subject {
 
-	std::vector<std::weak_ptr<Observer>> mObservers;
+	std::vector<std::strong_ptr<Observer>> mObservers;
 
 public:
 	Subject();
