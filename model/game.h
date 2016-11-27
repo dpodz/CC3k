@@ -3,6 +3,7 @@
 
 #include "grid.h"
 #include "cell.h"
+#include "faction.h"
 #include "../init/gridInit.h"
 #include <memory>
 #include <map>

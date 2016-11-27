@@ -8,7 +8,7 @@
 
 class StatsModifier : public Modifier {
 
-	Stats statOffsets;
+	Stats mStatOffsets;
 
 public:
 	StatsModifier(std::shared_ptr<Character>, Stats);
