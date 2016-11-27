@@ -1,11 +1,13 @@
 #ifndef GRID_H
 #define GRID_H
 
-#include "cell.h"
 #include "../messaging/observer.h"
 #include "../messaging/subject.h"
 #include <memory>
 #include <vector>
+
+class Cell;
+class Character;
 
 class Grid : public Observer, public Subject {
 

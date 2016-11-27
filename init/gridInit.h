@@ -1,8 +1,9 @@
 #ifndef GRID_INIT_H
 #define GRID_INIT_H
 
-#include "../state/grid.h"
 #include <memory>
+
+class Grid;
 
 class GridInit {
 

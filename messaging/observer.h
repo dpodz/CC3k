@@ -2,7 +2,7 @@
 #define OBSERVER_H
 
 #include "messages.h"
-#include "defaultMessages.h"
+
 class Observer {
 	
 public:

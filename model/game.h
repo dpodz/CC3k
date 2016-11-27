@@ -1,13 +1,20 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include "grid.h"
-#include "cell.h"
 #include "faction.h"
-#include "../init/gridInit.h"
 #include <memory>
 #include <map>
 #include <utility>
+
+class Grid;
+class GridInit;
+class Cell;
+
+enum FactionRelation {
+	hostile,
+	neutral,
+	friendly
+}
 
 class Game {
 

@@ -2,9 +2,10 @@
 #define RANDOM_AI_H
 
 #include "AI.h"
-#include "../../state/game.h"
-#include "../../state/entity/character.h"
 #include <memory>
+
+class Game;
+class Character;
 
 class randomAI : public AI {
 

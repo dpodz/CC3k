@@ -2,8 +2,9 @@
 #define TREASURE_H
 
 #include "item.h"
-#include "character.h"
 #include <memory>
+
+class Character;
 
 class Treasure : public Item {
 

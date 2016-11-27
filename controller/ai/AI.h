@@ -1,9 +1,10 @@
 #ifndef AI_H
 #define AI_H
 
-#include "../../state/game.h"
-#include "../../state/entity/character.h"
 #include <memory>
+
+class Character;
+class Game;
 
 class CharacterAI {
 

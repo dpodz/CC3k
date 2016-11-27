@@ -3,8 +3,9 @@
 
 #include "stats.h"
 #include "item.h"
-#include "character.h"
 #include <memory>
+
+class Character;
 
 class Potion : public Item {
 

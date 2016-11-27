@@ -2,9 +2,10 @@
 #define CLI_CONTROLLER_H
 
 #include "controller.h"
-#include "../../state/game.h"
-#include "../../state/entity/character.h"
 #include <memory>
+
+class Game;
+class Character;
 
 class CLIController : public Controller {
 

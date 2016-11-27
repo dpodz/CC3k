@@ -2,8 +2,6 @@
 #define CELL_H
 
 #include "../messaging/subject.h"
-#include "entity/entity.h"
-#include "entity/character.h"
 #include <memory>
 #include <vector>
 
@@ -14,6 +12,9 @@ enum CellType {
 	Door,
 	Passage
 };
+
+class Entity;
+class Character;
 
 class Cell : public Subject {
 

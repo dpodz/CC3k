@@ -2,11 +2,12 @@
 #define GRID_INIT_PRESET_H
 
 #include "gridInit.h"
-#include "../state/grid.h"
-#include "../state/entity/character.h"
 #include <memory>
 #include <fstream>
 #include <string>
+
+class Character;
+class Grid;
 
 class GridInitPreset : public GridInit {
 

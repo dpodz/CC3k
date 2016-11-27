@@ -1,13 +1,14 @@
 #ifndef CHARACTER_H
 #define CHARACTER_H
 
-#include "entity.h"
-#include "item.h"
 #include "stats.h"
 #include "../faction.h"
 #include <vector>
 #include <map>
 #include <memory>
+
+class Entity;
+class Item;
 
 class Character : public Entity {
 

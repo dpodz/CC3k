@@ -2,11 +2,12 @@
 #define GRID_INIT_RANDOM_GEN_H
 
 #include "gridInit.h"
-#include "../state/grid.h"
-#include "../state/entity/character.h"
 #include <memory>
 #include <fstream>
 #include <string>
+
+class Grid;
+class Character;
 
 class GridInitRandomGen : public GridInit {
 

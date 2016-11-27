@@ -1,9 +1,10 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
-#include "../../state/game.h"
 #include "../../messaging/observer.h"
 #include <memory>
+
+class Game;
 
 class Controller : public Observer {
 

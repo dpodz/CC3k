@@ -2,8 +2,9 @@
 #define ENTITY_H
 
 #include "../../messaging/subject.h"
-#include "character.h"
 #include <memory>
+
+class Character;
 
 class Entity : public Subject {
 
