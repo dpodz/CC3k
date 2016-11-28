@@ -19,7 +19,7 @@ public:
 	virtual void notify(EntityObserved &);
 	virtual void notify(ItemUsed &);
 	virtual void notify(ItemPickedUp &);
-	virtual void notify(MapCreated &);
+	virtual void notify(GridCreated &);
 	virtual void notify(DebugMessage &);
 };
 

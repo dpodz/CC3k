@@ -1,21 +1,24 @@
 #include "gridInitPreset.h"
 #include <cstdlib>
+#include <vector>
 
-GridInitPreset::GridInitPreset(std::shared_ptr<Character> player, const std::String fileName): 
-	mPlayer{player}, mFile(fileName, std::ifstream::in) {}
+using namespace std;
+
+GridInitPreset::GridInitPreset(shared_ptr<Character> player, const String fileName): 
+	mPlayer{player}, mFile(fileName, ifstream::in) {}
 
 GridInitPreset::~GridInitPreset() {}
 
 //Private methods
 
-std::shared_ptr<Entity> GridInitPreset::getRandomEntity(vector<std::shared_ptr<Entity>> entityVector) {
+shared_ptr<Entity> GridInitPreset::getRandomEntity(vector< shared_ptr<Entity> > entityVector) {
 	return entityVector.at(rand()%entityVector.size());
 }
 
-void GridInitPreset::generateRoom(int roomNumber, int posx, int posy, std::shared_ptr<Grid> theGrid) {
+void GridInitPreset::generateRoom(int roomNumber, int posx, int posy, shared_ptr<Grid> theGrid) {
 	if (posx >= 0 && posx < 79 && posy >= 0 && posy < 30 && 
-		theGrid->getCell(posx,posy)->getType == CellType::Floor &&
-		theGrid->getCell(posx,posy)->getRoomId == -1) {
+		theGrid->getCell(posx,posy)->getType() == CellType::Floor &&
+		theGrid->getCell(posx,posy)->getRoomId() == -1) {
 		// Add this grid to the rooms list and recurse
 		theGrid->getCell(posx,posy)->setRoomId(roomNumber);
 		mRooms[roomNumber].push_back(theGrid->getCell(posx,posy));
@@ -32,13 +35,13 @@ void GridInitPreset::generateRoom(int roomNumber, int posx, int posy, std::share
 
 //Public methods
 
-std::shared_ptr<Grid> GridInitPreset::createGrid() {
+shared_ptr<Grid> GridInitPreset::createGrid() {
 	if (!mFile.isOpen()){
 		throw "cannot open file";
 	}
-	std::string line;
+	string line;
 	int lineNum = 0;
-	std::unique_ptr<Grid> theGrid({79,30});
+	shared_ptr<Grid> theGrid({79,30});
 	// read in the floor plan
 	while (getline(mFile, line)) {
 			for (int i = 0 ; i < 79 ; i++) {
@@ -57,7 +60,7 @@ std::shared_ptr<Grid> GridInitPreset::createGrid() {
 	return theGrid;
 }
 
-void createEntities(std::shared_ptr<Grid> theGrid) {
+void createEntities(shared_ptr<Grid> theGrid) {
 	//We need to generate a list of the rooms:
 	mRooms.clear(); // make sure it's empty
 	int roomNumber = 0;

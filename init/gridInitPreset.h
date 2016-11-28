@@ -18,15 +18,15 @@ class GridInitPreset : public GridInit {
 
 	std::shared_ptr<Character> mPlayer;
 	std::ifstream mFile;
-	vector<vector<std::shared_ptr<Cell>>> mRooms;
+	std::vector< std::vector< std::shared_ptr<Cell> > > mRooms;
 	void generateRoom(int roomId, int posx, int posy);
-	std::shared_ptr<Entity> getRandomEntity(vector<std::shared_ptr<Entity>>);
+	std::shared_ptr<Entity> getRandomEntity(std::vector< std::shared_ptr<Entity> >);
 public:
 	GridInitPreset(std::shared_ptr<Character>, const std::string);
 	~GridInitPreset();
 
-	virtual std::shared_ptr<Grid> createGrid() override;
-	virtual void createEntities(std::shared_ptr<Grid>) override;
+	std::shared_ptr<Grid> createGrid() override;
+	void createEntities(std::shared_ptr<Grid>) override;
 };
 
 #endif // GRID_INIT_PRESET_H

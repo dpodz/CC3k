@@ -51,7 +51,6 @@ struct ItemUsed: public BaseMessage {
 // Entity Created
 struct EntityCreated: public BaseMessage {
 	std::shared_ptr<Entity> entity;
-	Position pos;
 	
 	virtual void notifyObserver ( std::shared_ptr<Observer> ) override;
 };
@@ -59,13 +58,12 @@ struct EntityCreated: public BaseMessage {
 // Entity Removed
 struct EntityRemoved: public BaseMessage {
 	std::shared_ptr<Entity> entity;
-	Position pos;
 	
 	virtual void notifyObserver ( std::shared_ptr<Observer> ) override;
 };
 
 // Map Created
-struct MapCreated: public BaseMessage {
+struct GridCreated: public BaseMessage {
 	std::shared_ptr<Game> theGame;
 
 	virtual void notifyObserver ( std::shared_ptr<Observer> ) override;
@@ -91,7 +89,6 @@ struct ItemPickedUp: public BaseMessage {
 struct EntityMoved: public BaseMessage {
 	std::shared_ptr<Entity> entity;
 	Position oldPos;
-	Position newPos;
 	
 	virtual void notifyObserver ( std::shared_ptr<Observer> ) override;
 };
