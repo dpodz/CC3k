@@ -13,7 +13,7 @@ Treasure::Treasure(int value) {
 Treasure::~Treasure() { }
 
 bool Treasure::canWalkOn() {
-	return false;
+	return true;
 }
 
 void Treasure::lookedOnBy(shared_ptr<Character>) {

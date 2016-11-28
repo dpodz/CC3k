@@ -16,7 +16,6 @@ public:
 	~Potion();
 		
 	virtual void itemUsedBy(std::shared_ptr<Character>) override;
-	virtual bool canWalkOn() override;
 	virtual void lookedOnBy(std::shared_ptr<Character>) override;
 };
 
