@@ -5,6 +5,7 @@
 #include <memory>
 #include <map>
 #include <utility>
+#include "position.h"
 
 class Grid;
 class GridInit;

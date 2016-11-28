@@ -9,7 +9,7 @@ class Character;
 
 class CLIController : public Controller {
 
-	std::weak_ptr<Character> mPlayer;
+	std::shared_ptr<Character> mPlayer;
 
 public:
 	CLIController(std::shared_ptr<Game>);

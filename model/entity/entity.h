@@ -21,7 +21,7 @@ public:
 	Position getPos() const;
 	void setPos(Position);
 
-	virtual bool canWalkOn() = 0;
+	virtual bool canWalkOn();
 	virtual void lookedOnBy(std::shared_ptr<Character>) = 0;
 };
 
