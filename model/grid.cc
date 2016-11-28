@@ -12,8 +12,13 @@
 using namespace std;
 
 Grid::Grid(GridSize size) : Observer {}, Subject {}, mSize (size), 
-	mCells (mSize.x, 
-		vector<shared_ptr<Cell>> (mSize.y, make_shared<Cell>())) {}
+	mCells (mSize.y, vector<shared_ptr<Cell>> (mSize.x, make_shared<Cell>())) {
+	for (int i = 0; i < mSize.y; ++i) {
+		for (int j = 0; j < mSize.x; ++j) {
+			mCells[i][j] = make_shared<Cell>(Position{j, i});
+		}
+	}		
+}
 
 Grid::~Grid() {}
 
@@ -34,7 +39,7 @@ std::shared_ptr<Cell> Grid::getCell(Position pos) const {
 }
 
 std::shared_ptr<Cell> Grid::getCell(int x, int y) const {
-	return mCells.at(x).at(y);
+	return mCells.at(y).at(x);
 }
 
 bool Grid::checkBounds(Position pos) {
@@ -93,7 +98,16 @@ void Grid::usePotion(shared_ptr<Character> character, Direction dir) {
 	getCell(potPos)->usePotion(character);
 }
 
+void Grid::attachCells(vector<shared_ptr<Observer>> observers) {
+	for (auto & row: mCells) {
+		for (auto & cell : row) {
+			cell->attach(observers);
+		}
+	}
+}
+
 void Grid::notify(CharacterDeath & msg) {
+	// TODO: Add character item drop
 	getCell(msg.killed->getPos())->removeEntity(msg.killed);
 }
 

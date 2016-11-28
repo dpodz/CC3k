@@ -10,7 +10,7 @@
 #include "../model/cell.h"
 #include <memory>
 
-class CLIView : View {
+class CLIView : public View {
 
 	std::weak_ptr<Character> mPlayer;
 	std::shared_ptr<Game> mGame;

@@ -2,6 +2,7 @@
 #define CELL_H
 
 #include "../messaging/subject.h"
+#include "position.h"
 #include <memory>
 #include <vector>
 
@@ -24,14 +25,17 @@ class Cell : public Subject {
 	std::vector<std::shared_ptr<Entity>> mEntities;
 	CellType mCellType;
 	RoomId mRoomId;
+	const Position mCellPos;
 
 public:
-	Cell();
+	Cell(Position cellPos = {-1,-1});
 	~Cell();
 
 	std::vector<std::shared_ptr<Entity>> getEntities() const;
 	CellType getType() const;
 	void setType(CellType);
+
+	Position getPos() const;
 
 	RoomId getRoomId() const;
 	void setRoomId(RoomId);

@@ -7,7 +7,8 @@
 class Game;
 class Character;
 
-class CLIController : public Controller {
+class CLIController : public Controller, 
+	public std::enable_shared_from_this<CLIController> {
 
 	std::shared_ptr<Character> mPlayer;
 

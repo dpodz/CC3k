@@ -17,6 +17,7 @@ public:
 	virtual ~Subject() = 0; 
 
 	void attach(std::shared_ptr<Observer>);
+	void attach(std::vector<std::shared_ptr<Observer>>);
 	void notifyObservers(BaseMessage &);
 };
 

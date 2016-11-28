@@ -5,8 +5,10 @@
 #include <memory>
 #include <map>
 #include <utility>
+#include <vector>
 #include "position.h"
 #include "grid.h"
+#include "../messaging/observer.h"
 
 class GridInit;
 class Cell;
@@ -24,6 +26,10 @@ public:
 	void setGridGen(std::shared_ptr<GridInit>);
 	void generateNewGrid();
 	void createNewEntities();
+
+	std::shared_ptr<Grid> getGrid() const;
+
+	void attach(std::vector<std::shared_ptr<Observer>>);
 
 	void setFactionRelation(FactionId, FactionId, FactionRelation);
 	FactionRelation getFactionRelation(FactionId, FactionId) const;

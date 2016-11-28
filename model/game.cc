@@ -25,6 +25,15 @@ void Game::createNewEntities() {
 	mGridInit->createEntities(mGrid);
 }
 
+shared_ptr<Grid> Game::getGrid() const {
+	return mGrid;
+}
+
+void Game::attach(vector<shared_ptr<Observer>> observers) {
+	mGrid->attach(observers);
+	mGrid->attachCells(observers);
+}
+
 void Game::setFactionRelation(FactionId a, FactionId b, FactionRelation newRelation) {
 	auto key = make_pair(a, b);
 	mFactionRelation.erase(key);

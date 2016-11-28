@@ -3,6 +3,11 @@
 #include <map>
 using namespace std;
 
+CLIView::CLIView(shared_ptr<Character> player, shared_ptr<Game> game):
+	mPlayer {player}, mGame {game} {}
+
+CLIView::~CLIView() {}
+
 void CLIView::printGrid() {
 	if (!mGame) {
 		cout << "No grid loaded yet" << endl;
@@ -11,17 +16,19 @@ void CLIView::printGrid() {
 	//USE GRID SIZE
 	for (int i = 0 ; i < 30 ; i++) {
 		for (int j = 0 ; j < 79 ; j++) {
-			if (mGame->getCell(i,j)->getEntities().size() > 0) {
+			CellType cellType = mGame->getCell(j,i)->getType();
+
+			if (mGame->getCell(j,i)->getEntities().size() > 0) {
 				cout << "T"; // TODO PLACEHOLDER FOR ANY ENTITY
-			} else if (mGame->getCell(j,i)->getType() == CellType::Wall) {
+			} else if (cellType == CellType::Wall) {
 				cout << "|"; // TODO Add logic for | and -
-			} else if (mGame->getCell(j,i)->getType() == CellType::Floor) {
+			} else if (cellType == CellType::Floor) {
 				cout << ".";
-			} else if (mGame->getCell(j,i)->getType() == CellType::Door) {
+			} else if (cellType == CellType::Door) {
 				cout << "+";
-			} else if (mGame->getCell(j,i)->getType() == CellType::Passage) {
+			} else if (cellType == CellType::Passage) {
 				cout << "#";
-			} else if (mGame->getCell(j,i)->getType() == CellType::Stair) {
+			} else if (cellType == CellType::Stair) {
 				cout << "\\";
 			} else {
 				cout << " ";
@@ -38,6 +45,7 @@ void CLIView::notify(DebugMessage & dm) {
 void CLIView::notify(CharacterDeath & cd) {
 	string killerName;
 	string killedName;
+	
 	if (dynamic_pointer_cast<Shade>(cd.killer)) { killerName = "Shade"; } 
 	else { killerName = "Not a Shade"; }
 	

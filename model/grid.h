@@ -36,6 +36,8 @@ public:
 	void attack(std::shared_ptr<Character>, Direction);
 	void usePotion(std::shared_ptr<Character>, Direction);
 
+	void attachCells(std::vector<std::shared_ptr<Observer>>);
+
 	virtual void notify(CharacterDeath &) override;
 	virtual void notify(ItemPickedUp &) override;
 };

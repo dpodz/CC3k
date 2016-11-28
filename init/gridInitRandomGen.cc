@@ -10,8 +10,9 @@
 
 using namespace std;
 
-GridInitRandomGen::GridInitRandomGen(shared_ptr<Character> player, const string fileName): 
-	GridInit {}, mPlayer {player}, mFile {fileName}, mRooms {} {}
+GridInitRandomGen::GridInitRandomGen(shared_ptr<Character> player, const string fileName,
+	vector<shared_ptr<Observer>> observers): 
+	GridInit {}, mPlayer {player}, mFile {fileName}, mObservers {observers}, mRooms {} {}
 
 GridInitRandomGen::~GridInitRandomGen() {}
 
@@ -22,7 +23,7 @@ shared_ptr<Entity> GridInitRandomGen::getRandomEntity(vector< shared_ptr<Entity>
 }
 
 void GridInitRandomGen::generateRoom(int roomNumber, int posx, int posy, shared_ptr<Grid> theGrid) {
-	
+
 	if (posx >= 0 && posx < 79 && posy >= 0 && posy < 30 && 
 		theGrid->getCell(posx,posy)->getType() == CellType::Floor &&
 		theGrid->getCell(posx,posy)->getRoomId() == -1) {
@@ -55,39 +56,45 @@ shared_ptr<Grid> GridInitRandomGen::createGrid() {
 	// read in the floor plan
 	while (getline(mFile, line)) {
 			for (int i = 0 ; i < 79 ; i++) {
+				auto cell = theGrid->getCell({i,lineNum});
 				if (line[i] == '|' || line[i] == '-') {
-					theGrid->getCell({i,lineNum})->setType(CellType::Wall);
+					cell->setType(CellType::Wall);
 				} else if (line[i] == '.') {
-					theGrid->getCell({i,lineNum})->setType(CellType::Floor);
+					cell->setType(CellType::Floor);
 				} else if (line[i] == '+') {
-					theGrid->getCell({i,lineNum})->setType(CellType::Door);
+					cell->setType(CellType::Door);
 				} else if (line[i] == '#') {
-					theGrid->getCell({i,lineNum})->setType(CellType::Passage);
+					cell->setType(CellType::Passage);
 				}
 			}
 			lineNum++;
 	}
-	return theGrid;
-}
 
-void GridInitRandomGen::createEntities(shared_ptr<Grid> theGrid) {
-	
 	// We need to generate a list of the rooms:
 	mRooms.clear(); // make sure it's empty
 	int roomNumber = 0;
+
 	for (int i = 0 ; i < 79 ; i++) {
 		for (int j = 0 ; j < 30; j++) {
 			if (theGrid->getCell(i,j)->getType() == CellType::Floor &&
 			    theGrid->getCell(i,j)->getRoomId() == -1) {
+				mRooms.emplace_back();
 				this->generateRoom(roomNumber,i,j,theGrid);
 				roomNumber++;
 			}
 		}
 	}
 
+	return theGrid;
+}
+
+void GridInitRandomGen::createEntities(shared_ptr<Grid> theGrid) {
+	
 	// Generate the player
 	int playerRoom = rand() % mRooms.size();
-	mRooms[playerRoom][rand() % mRooms[playerRoom].size()]->addEntity(mPlayer);
+	auto playerCell = mRooms[playerRoom][rand() % mRooms[playerRoom].size()];
+	mPlayer->setPos(playerCell->getPos());
+	playerCell->addEntity(mPlayer);
 	
 	// Generate the stairway location
 	int stairRoom;

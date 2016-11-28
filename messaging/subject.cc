@@ -5,12 +5,20 @@
 #include "observer.h"
 #include "subject.h"
 
+using namespace std;
+
 Subject::Subject() : mObservers {} {}
 
 Subject::~Subject() {}
 
-void Subject::attach( std::shared_ptr<Observer> observer) {
-	mObservers.emplace_back(observer);
+void Subject::attach(shared_ptr<Observer> observer) {
+	mObservers.push_back(observer);
+}
+
+void Subject::attach(vector<shared_ptr<Observer>> observers) {
+	for (auto & observer : observers) {
+		attach(observer);
+	}
 }
 
 void Subject::notifyObservers(BaseMessage & message) {

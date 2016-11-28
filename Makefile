@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -std=c++11 -Wall -MMD
+CXXFLAGS = -std=c++11 -Wall -MMD -g
 EXEC = cc3k
 OBJECTS = \
 main.o messaging/messages.o messaging/subject.o messaging/observer.o \

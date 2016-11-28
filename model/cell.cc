@@ -10,8 +10,9 @@
 
 using namespace std;
 
-Cell::Cell() : 
-	Subject {}, mEntities {}, mCellType {CellType::Empty} {}
+Cell::Cell(Position cellPos) : 
+	Subject {}, mEntities {}, mCellType {CellType::Empty}, mRoomId {-1}, 
+	mCellPos (cellPos) {}
 
 Cell::~Cell() {}
 
@@ -25,6 +26,10 @@ CellType Cell::getType() const {
 
 void Cell::setType(CellType cellType) {
 	mCellType = cellType;
+}
+
+Position Cell::getPos() const {
+	return mCellPos;
 }
 
 RoomId Cell::getRoomId() const {

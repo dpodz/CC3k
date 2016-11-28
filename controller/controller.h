@@ -2,10 +2,11 @@
 #define CONTROLLER_H
 
 #include <memory>
+#include "../messaging/observer.h"
 
 class Game;
 
-class Controller {
+class Controller : public Observer {
 
 protected:
 	std::shared_ptr<Game> mGame;
