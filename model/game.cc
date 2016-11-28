@@ -50,6 +50,10 @@ GridSize Game::getGridSize() const {
 	return mGrid->getGridSize();
 }
 
+shared_ptr<Cell> Game::getCell(Position pos) const {
+	return mGrid->getCell(pos);
+}
+
 shared_ptr<Cell> Game::getCell(int x, int y) const {
 	return mGrid->getCell(x, y);
 }
