@@ -31,13 +31,10 @@ void GridInitRandomGen::generateRoom(int roomNumber, int posx, int posy, shared_
 		theGrid->getCell(posx,posy)->setRoomId(roomNumber);
 		mRooms[roomNumber].push_back(theGrid->getCell(posx,posy));
 		// recurse through the 4 adjacent cells
-		for (int i = -1 ; i <= 1 ; i++) {
-			for (int j = -1 ; j <= 1 ; j++) {
-				if (i+j%2 == 1) { // this will only iterate on the 4 blocks around the cell
-					this->generateRoom(roomNumber, posx+i, posy+j, theGrid);
-				}
-			}
-		}
+		this->generateRoom(roomNumber, posx+1, posy, theGrid);
+		this->generateRoom(roomNumber, posx-1, posy, theGrid);
+		this->generateRoom(roomNumber, posx, posy-1, theGrid);
+		this->generateRoom(roomNumber, posx, posy+1, theGrid);
 	}
 }
 
