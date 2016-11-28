@@ -6,8 +6,6 @@
 
 using namespace std;
 
-// TODO: Messaging
-
 Cell::Cell() : 
 	mEntities {}, mCellType {CellType::Empty} {}
 
@@ -23,6 +21,14 @@ CellType Cell::getType() const {
 
 void Cell::setType(CellType cellType) {
 	mCellType = cellType;
+}
+
+RoomId Cell::getRoomId() const {
+	returun mRoomId;
+}
+
+void Cell:setRoomId(RoomId roomId) {
+	mRoomId = roomId;
 }
 
 shared_ptr<Character> Cell::getCharacter() const {
@@ -51,16 +57,26 @@ bool Cell::isValidMove() const {
 
 void Cell::addEntity(shared_ptr<Entity> entity) {
 	mEntities.push_back(entity);
+
+	notifyObservers(EntityCreated {entity});
 }
 
 void Cell::removeEntity(shared_ptr<Entity> entity) {
 	mEntities.erase(remove(mEntities.begin(), mEntities.end(), 
 		entity), mEntities.end());
+
+	notifyObservers(EntityRemoved {entity});
 }
 
 void Cell::walkedOn(shared_ptr<Character> character) {
 	for (auto entity & : mEntities) {
 		entity->walkedOnBy(character);
+	}
+}
+
+void Cell::walkedOn(shared_ptr<Character> character) {
+	for (auto entity & : mEntities) {
+		entity->lookedOnBy(character);
 	}
 }
 

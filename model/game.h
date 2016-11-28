@@ -30,6 +30,7 @@ public:
 	void turnUpdate();
 
 	GridSize getGridSize() const;
+	std::shared_ptr<Cell> getCell(Position) const;
 	std::shared_ptr<Cell> getCell(int, int) const;
 
 	void move(std::shared_ptr<Character>, Direction);
