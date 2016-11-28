@@ -9,7 +9,7 @@
 
 using namespace std;
 
-Grid::Grid(GridSize) : mSize {GridSize}, 
+Grid::Grid(GridSize) : Observer {}, Subject {}, mSize {GridSize}, 
 	mCells {GridSize.x, 
 		vector<shared_ptr<Cell>> {GridSize.y, make_shared<Cell>()}} {}
 

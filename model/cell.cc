@@ -7,7 +7,7 @@
 using namespace std;
 
 Cell::Cell() : 
-	mEntities {}, mCellType {CellType::Empty} {}
+	Subject {}, mEntities {}, mCellType {CellType::Empty} {}
 
 Cell::~Cell() {}
 
