@@ -26,7 +26,7 @@ void EntityRemoved::notifyObserver( std::shared_ptr<Observer> observer ) {
 	observer->notify(*this);
 }
 
-void MapCreated::notifyObserver( std::shared_ptr<Observer> observer ) {
+void GridCreated::notifyObserver( std::shared_ptr<Observer> observer ) {
 	observer->notify(*this);
 }
 
@@ -38,6 +38,6 @@ void ItemPickedUp::notifyObserver( std::shared_ptr<Observer> observer ) {
 	observer->notify(*this);
 }
 
-void EntityMove::notifyObserver( std::shared_ptr<Observer> observer ) {
+void EntityMoved::notifyObserver( std::shared_ptr<Observer> observer ) {
 	observer->notify(*this);
 }

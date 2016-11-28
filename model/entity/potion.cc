@@ -8,7 +8,7 @@
 using namespace std;
 
 
-Potion::Potion(Stats stats): mPotionStats{stats} { }
+Potion::Potion(Stats stats): mPotionStats(stats) { }
 
 Potion::~Potion() { }
 

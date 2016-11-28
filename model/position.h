@@ -26,6 +26,7 @@ struct Position {
 			case Direction::WO: return {x, y - 1};
 			case Direction::NW: return {x + 1, y - 1};
 		}
+		return {x,y};
 	}
 };
 

@@ -12,7 +12,7 @@ class Entity : public Subject {
 	Position mCurPos;
 
 public:
-	Entity();
+	Entity(int gold = 0, Position pos = {-1,-1});
 	~Entity();
 
 	int getGold() const;
@@ -23,6 +23,9 @@ public:
 
 	virtual bool canWalkOn();
 	virtual void lookedOnBy(std::shared_ptr<Character>) = 0;
+	virtual void walkedOnBy(std::shared_ptr<Character>) = 0;
+
+	virtual void turnUpdate();
 };
 
 #endif // ENTITY_H

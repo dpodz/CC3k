@@ -14,20 +14,24 @@ class CLIView : View {
 
 	std::weak_ptr<Character> mPlayer;
 	std::shared_ptr<Game> mGame;
+	
 	void printGrid();
+
 public:
+
 	CLIView(std::shared_ptr<Character>, std::shared_ptr<Game>);
 	~CLIView();
-	void notify(CharacterDeath &) override;
-	void notify(CharacterAttack &) override;
-	void notify(EntityMoved &) override;
-	void notify(EntityCreated &) override;
-	void notify(EntityRemoved &) override;
-	void notify(EntityObserved &) override;
-	void notify(ItemUsed &) override;
-	void notify(ItemPickedUp &) override;
-	void notify(GridCreated &) override;
-	void notify(DebugMessage &) override;
+	
+	virtual void notify(CharacterDeath &) override;
+	virtual void notify(CharacterAttack &) override;
+	virtual void notify(EntityMoved &) override;
+	virtual void notify(EntityCreated &) override;
+	virtual void notify(EntityRemoved &) override;
+	virtual void notify(EntityObserved &) override;
+	virtual void notify(ItemUsed &) override;
+	virtual void notify(ItemPickedUp &) override;
+	virtual void notify(GridCreated &) override;
+	virtual void notify(DebugMessage &) override;
 };
 
 #endif // CLI_VIEW_H

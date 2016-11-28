@@ -6,14 +6,14 @@
 #include <map>
 #include <utility>
 #include "position.h"
+#include "grid.h"
 
-class Grid;
 class GridInit;
 class Cell;
 
 class Game {
 
-	std::unique_ptr<Grid> mGrid;
+	std::shared_ptr<Grid> mGrid;
 	std::shared_ptr<GridInit> mGridInit;
 	std::map<std::pair<FactionId, FactionId>, FactionRelation> mFactionRelation;
 
@@ -37,6 +37,7 @@ public:
 	void move(std::shared_ptr<Character>, Direction);
 	void attack(std::shared_ptr<Character>, Direction);
 	void usePotion(std::shared_ptr<Character>, Direction);
+
 };
 
 #endif // GAME_H

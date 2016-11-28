@@ -48,6 +48,9 @@ public:
 	virtual void useItem(std::shared_ptr<Item>);
 
 	virtual bool canWalkOn() override;
+	virtual void walkedOnBy(std::shared_ptr<Character>) override;
+	
+	virtual void turnUpdate() override;
 };
 
 #endif // CHARACTER_H

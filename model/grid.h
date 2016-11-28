@@ -10,7 +10,8 @@ class Cell;
 class Character;
 
 struct GridSize {
-	int x, y;
+	int x;
+	int y;
 };
 
 class Grid : public Observer, public Subject {

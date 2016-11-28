@@ -1,3 +1,4 @@
+#include "game.h"
 #include "grid.h"
 #include "faction.h"
 #include "../init/gridInit.h"
@@ -17,16 +18,17 @@ void Game::setGridGen(shared_ptr<GridInit> gridInit) {
 }
 
 void Game::generateNewGrid() {
-	mGrid = mGridInit->generateNewGrid();
+	mGrid = mGridInit->createGrid();
 }
 
 void Game::createNewEntities() {
-	mGridInit->createNewEntities(mGrid);
+	mGridInit->createEntities(mGrid);
 }
 
 void Game::setFactionRelation(FactionId a, FactionId b, FactionRelation newRelation) {
-	mFactionRelation.erase(make_pair(a, b));
-	mFactionRelation.insert(make_pair(a, b), newRelation);
+	auto key = make_pair(a, b);
+	mFactionRelation.erase(key);
+	mFactionRelation.insert({key, newRelation});
 }
 
 FactionRelation Game::getFactionRelation(FactionId a, FactionId b) const {
@@ -58,3 +60,14 @@ shared_ptr<Cell> Game::getCell(int x, int y) const {
 	return mGrid->getCell(x, y);
 }
 
+void Game::move(std::shared_ptr<Character> character, Direction dir) {
+	mGrid->move(character, dir);
+}
+
+void Game::attack(std::shared_ptr<Character> character, Direction dir) {
+	mGrid->attack(character, dir);
+}
+
+void Game::usePotion(std::shared_ptr<Character> character, Direction dir) {
+	mGrid->usePotion(character, dir);
+}

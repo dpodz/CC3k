@@ -10,7 +10,7 @@ using namespace std;
 
 
 Character::Character(FactionId factionId, Stats stats, int curHP, int maxHP): 
-									mFaction{factionId}, mCharStats{stats}, mCurHP{curHP}, mMaxHP{maxHP} { }
+									mFaction{factionId}, mCharStats(stats), mCurHP{curHP}, mMaxHP{maxHP} { }
 
 Character::~Character() { }								
 
@@ -59,6 +59,7 @@ int Character::getScore() const {
 
 vector<shared_ptr<Entity>> Character::onDeath() {
 	// TODO
+	return vector<shared_ptr<Entity>>();
 }
 
 void Character::onKill() {
@@ -70,3 +71,9 @@ void Character::useItem(shared_ptr<Item> item) {
 }
 
 bool Character::canWalkOn() { return false; }
+
+void Character::walkedOnBy(std::shared_ptr<Character>) {}
+
+void Character::turnUpdate() {
+	setHealth(getHealth() + mCharStats.healthRegen);
+}

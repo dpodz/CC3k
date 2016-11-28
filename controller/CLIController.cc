@@ -7,7 +7,7 @@
 #include "../model/position.h"
 #include "../model/entity/baseCharacters.h"
 #include "../init/gridInit.h"
-#include "../init/gridInitPreset.h"
+#include "../init/gridInitRandomGen.h"
 
 using namespace std;
 
@@ -34,7 +34,7 @@ void CLIController::playGame() {
 
 	mPlayer = make_shared<Shade>();
     // generate new grid
-    shared_ptr<GridInit> gridInit = make_shared<GridInitPreset>(mPlayer, filename);
+    shared_ptr<GridInit> gridInit = make_shared<GridInitRandomGen>(mPlayer, filename);
     mGame->setGridGen(gridInit);
     //mGame->generateNewGrid();
     mGame->createNewEntities();

@@ -5,20 +5,26 @@
 #include <memory>
 #include <fstream>
 #include <string>
+#include <vector>
 
 class Grid;
 class Character;
 
 class GridInitRandomGen : public GridInit {
 
-	std::weak_ptr<Character> mPlayer;
+	std::shared_ptr<Character> mPlayer;
 	std::ifstream mFile;
+
+	std::vector<std::vector<std::shared_ptr<Cell>>> mRooms;
+
+	void generateRoom(int roomId, int posx, int posy, std::shared_ptr<Grid>);
+	std::shared_ptr<Entity> getRandomEntity(std::vector< std::shared_ptr<Entity> >);
 
 public:
 	GridInitRandomGen(std::shared_ptr<Character>, const std::string);
 	~GridInitRandomGen();
 
-	virtual std::unique_ptr<Grid> createGrid() override;
+	virtual std::shared_ptr<Grid> createGrid() override;
 	virtual void createEntities(std::shared_ptr<Grid>) override;
 };
 
