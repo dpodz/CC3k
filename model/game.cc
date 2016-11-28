@@ -17,11 +17,11 @@ void Game::setGridGen(shared_ptr<GridInit> gridInit) {
 }
 
 void Game::generateNewGrid() {
-	mGridInit->generateNewGrid();
+	mGrid = mGridInit->generateNewGrid();
 }
 
 void Game::createNewEntities() {
-	mGridInit->generateNewGrid();
+	mGridInit->createNewEntities(mGrid);
 }
 
 void Game::setFactionRelation(FactionId a, FactionId b, FactionRelation newRelation) {
