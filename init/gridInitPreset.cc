@@ -80,6 +80,7 @@ void createEntities(std::shared_ptr<Grid> theGrid) {
 	mRooms[stairRoom][rand() % mRooms[stairRoom].size()]->setType(CellType::Stair);
 	
 	//Next, generate 10 potions
+	/*
 	for (int i = 0 ; i < 10 ; i++) {
 		vector<std::shared_ptr<Entity>> potionList;
 		potionList.push_back(std::shared_ptr<Entity>(new RestoreHealth));
@@ -88,5 +89,6 @@ void createEntities(std::shared_ptr<Grid> theGrid) {
 		potionList.push_back(std::shared_ptr<Entity>(new WoundAttack));
 		potionList.push_back(std::shared_ptr<Entity>(new BoostDefence));
 		potionList.push_back(std::shared_ptr<Entity>(new WoundDefence));
-		int posx,posy;
-		while (mRooms[(pos
+	}
+	*/
+}
