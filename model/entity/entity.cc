@@ -14,4 +14,4 @@ void Entity::setGold(int amount) {
 	mGold = amount;
 }
 
-bool Entity::canWalkOn() { return true; }
+bool Entity::canWalkOn() { return false; }
