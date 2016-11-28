@@ -1,6 +1,7 @@
 #ifndef GRID_INIT_H
 #define GRID_INIT_H
 
+#include "../model/grid.h"
 #include <memory>
 
 class Grid;
