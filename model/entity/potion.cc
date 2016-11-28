@@ -17,8 +17,6 @@ void Potion::itemUsedBy(shared_ptr<Character> character) {
 	// TODO: when Modifier is done	
 }
 
-bool Potion::canWalkOn() { return false; }
-
 void Potion::lookedOnBy(shared_ptr<Character>) {
 	// TODO
 }

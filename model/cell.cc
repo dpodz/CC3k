@@ -1,9 +1,12 @@
 #include "cell.h"
 #include "../messaging/subject.h"
+#include "exception.h"
 #include <memory>
 #include <vector>
 
 using namespace std;
+
+// TODO: Messaging
 
 Cell::Cell() : 
 	mEntities {}, mCellType {CellType::Empty} {}
@@ -23,11 +26,27 @@ void Cell::setType(CellType cellType) {
 }
 
 shared_ptr<Character> Cell::getCharacter() const {
-	
+	for (auto entity & : mEntities) {
+		auto character = dynamic_pointer_cast<Character>(entity);
+		if (character.use_count() != 0) {
+			return character;
+		}
+	}
+	throw EntityNotFound("Character");
 }
 
 bool Cell::isValidMove() const {
+	if (mCellType == Cell::Wall || mCellType == Cell::Empty) {
+		return false;
+	}
 
+	for (auto entity & : mEntities) {
+		if (!entity->canWalkOn()) {
+			return false;
+		}
+	}
+
+	return true;
 }
 
 void Cell::addEntity(shared_ptr<Entity> entity) {
@@ -39,14 +58,25 @@ void Cell::removeEntity(shared_ptr<Entity> entity) {
 		entity), mEntities.end());
 }
 
-void Cell::walkedOn(shared_ptr<Character>) {
-
+void Cell::walkedOn(shared_ptr<Character> character) {
+	for (auto entity & : mEntities) {
+		entity->walkedOnBy(character);
+	}
 }
 
-void Cell::usePotion(shared_ptr<Character>) {
-
+void Cell::usePotion(shared_ptr<Character> character) {
+	for (auto entity & : mEntities) {
+		auto potion = dynamic_pointer_cast<Potion>(entity);
+		if (potion.use_count() != 0) {
+			character->useItem(potion);
+			return;
+		}
+	}
+	throw EntityNotFound("Potion");
 }
 
 void Cell::turnUpdate() {
-
+	for (auto entity & : mEntities) {
+		entity->turnUpdate();
+	}
 }
