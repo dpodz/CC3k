@@ -7,19 +7,20 @@
 using namespace std;
 
 Treasure::Treasure(int value) { 
-	this->setGold(value);
+	setGold(value);
 }
 
 Treasure::~Treasure() { }
 
+void Treasure::walkedOnBy(shared_ptr<Character> character) {
+
+	character->setGold(character->getGold() + getGold());
+
+	ItemPickedUp msg {character, 
+		static_pointer_cast<Item>(shared_from_this())};
+	notifyObservers(msg);
+}
+
 bool Treasure::canWalkOn() {
 	return true;
-}
-
-void Treasure::lookedOnBy(shared_ptr<Character>) {
-	// TODO
-}
-
-void Treasure::walkedOnBy(shared_ptr<Character> character) {
-	// TODO
 }

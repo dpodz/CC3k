@@ -15,7 +15,6 @@ public:
 	~Potion();
 		
 	virtual void itemUsedBy(std::shared_ptr<Character>) override;
-	virtual void lookedOnBy(std::shared_ptr<Character>) override;
 };
 
 #endif // POTION_H

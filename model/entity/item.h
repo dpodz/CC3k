@@ -12,7 +12,8 @@ public:
 	Item();
 	virtual ~Item() = 0;
 
-	virtual void walkedOnBy(std::shared_ptr<Character>);
+	virtual bool canWalkOn() override;
+
 	virtual void itemUsedBy(std::shared_ptr<Character>);
 };
 

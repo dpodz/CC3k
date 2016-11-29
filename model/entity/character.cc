@@ -31,7 +31,13 @@ Stats Character::getStats() const {
 }
 
 bool Character::hasKnowledgeOf(shared_ptr<Entity> entity) const {
-	return mKnowledge.find(typeid(entity))->second;
+	auto search = mKnowledge.find(typeid(entity));
+
+	if (search != mKnowledge.end()) {
+		return search->second;
+	}
+	
+	return false;
 }
 
 void Character::setKnowledgeOf(shared_ptr<Entity> entity, bool knows) {
@@ -46,11 +52,11 @@ void Character::setFaction(FactionId factionId) {
 	mFaction = factionId;
 }
 
-void Character::attack(shared_ptr<Entity> entity) {
-	// TODO
+void Character::attack(shared_ptr<Character> character) {
+	character->getAttackedBy(static_pointer_cast<Character>(shared_from_this()));
 }
 
-void Character::getAttackedBy(shared_ptr<Entity> entity) {
+void Character::getAttackedBy(shared_ptr<Character> character) {
 	// TODO
 }
 
@@ -63,16 +69,13 @@ int Character::getScore() const {
 }
 
 vector<shared_ptr<Entity>> Character::onDeath() {
-	// TODO
 	return vector<shared_ptr<Entity>>();
 }
 
-void Character::onKill() {
-	// TODO
-}	
+void Character::onKill() {}	
 
 void Character::useItem(shared_ptr<Item> item) {
-	item->itemUsedBy(shared_ptr<Character>(this));	
+	item->itemUsedBy(static_pointer_cast<Character>(shared_from_this()));	
 }
 
 bool Character::canWalkOn() { return false; }
@@ -84,5 +87,7 @@ void Character::turnUpdate() {
 }
 
 void Character::lookedOnBy(shared_ptr<Character> character) {
-	// TODO
+	if (static_pointer_cast<Character>(shared_from_this()) != character) {
+		
+	}
 }

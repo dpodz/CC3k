@@ -6,14 +6,15 @@
 
 class Character;
 
-class Entity : public Subject {
+class Entity : public Subject, 
+	public std::enable_shared_from_this<Entity> {
 
 	int mGold;
 	Position mCurPos;
 
 public:
 	Entity(int gold = 0, Position pos = {-1,-1});
-	~Entity();
+	virtual ~Entity() = 0;
 
 	int getGold() const;
 	void setGold(int);
@@ -22,8 +23,8 @@ public:
 	void setPos(Position);
 
 	virtual bool canWalkOn();
-	virtual void lookedOnBy(std::shared_ptr<Character>) = 0;
-	virtual void walkedOnBy(std::shared_ptr<Character>) = 0;
+	virtual void lookedOnBy(std::shared_ptr<Character>);
+	virtual void walkedOnBy(std::shared_ptr<Character>);
 
 	virtual void turnUpdate();
 };

@@ -1,6 +1,7 @@
 #include "CLIView.h"
 #include <iostream>
 #include <map>
+#include <stdlib.h>
 using namespace std;
 
 CLIView::CLIView(shared_ptr<Character> player, shared_ptr<Game> game):
@@ -9,6 +10,10 @@ CLIView::CLIView(shared_ptr<Character> player, shared_ptr<Game> game):
 CLIView::~CLIView() {}
 
 void CLIView::printGrid() {
+	
+	// This is OS dependent
+	system("clear");
+
 	if (!mGame) {
 		cout << "No grid loaded yet" << endl;
 		return;

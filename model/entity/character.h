@@ -36,9 +36,9 @@ public:
 	FactionId getFaction() const;
 	void setFaction(FactionId);
 
-	virtual void attack(std::shared_ptr<Entity>);
+	virtual void attack(std::shared_ptr<Character>);
 	// May need to rewrite function below (expand it)
-	virtual void getAttackedBy(std::shared_ptr<Entity>);
+	virtual void getAttackedBy(std::shared_ptr<Character>);
 
 	virtual int getDroppedGold() const;
 	virtual int getScore() const;

@@ -20,7 +20,7 @@ public:
 	Vampire();
 	~Vampire();
 	
-	void attack(std::shared_ptr<Entity>) override;
+	void attack(std::shared_ptr<Character>) override;
 };
 
 //Drow
@@ -65,7 +65,7 @@ class Halfling : public Character {
 public:
 	Halfling();
 	~Halfling();
-	void getAttackedBy(std::shared_ptr<Entity>) override;
+	void getAttackedBy(std::shared_ptr<Character>) override;
 };
 
 //Elf
@@ -73,7 +73,7 @@ class Elf : public Character {
 public:
 	Elf();
 	~Elf();
-	void attack(std::shared_ptr<Entity>) override;
+	void attack(std::shared_ptr<Character>) override;
 };
 
 //Orc
@@ -81,7 +81,7 @@ class Orc: public Character {
 public:
 	Orc();
 	~Orc();
-	void attack(std::shared_ptr<Entity>) override;
+	void attack(std::shared_ptr<Character>) override;
 };
 
 //Dragon

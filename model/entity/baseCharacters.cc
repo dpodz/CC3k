@@ -20,7 +20,7 @@ Vampire::Vampire(): Character{1, Stats{25, 25, 0, 1.0}, 50, 50} { }
 Vampire::~Vampire() { }
 
 //TODO
-void Vampire::attack(std::shared_ptr<Entity> entity) { }
+void Vampire::attack(std::shared_ptr<Character> character) { }
 
 //DROW
 Drow::Drow(): Character{1, Stats{25, 15, 0, 1.5	}, 150, 150} { }
@@ -57,21 +57,21 @@ Halfling::Halfling(): Character{2, Stats{15, 20, 0, 1.0}, 100, 100} { }
 Halfling::~Halfling() { }
 
 // TODO
-void Halfling::getAttackedBy(shared_ptr<Entity> entity) { }
+void Halfling::getAttackedBy(shared_ptr<Character> Character) { }
 
 //Elf
 Elf::Elf(): Character{2, Stats{30, 10, 0, 1.0}, 140, 140} { }
 Elf::~Elf() { }
 
 //TODO
-void Elf::attack(shared_ptr<Entity> entity) { }
+void Elf::attack(shared_ptr<Character> character) { }
 
 //Orc
 Orc::Orc(): Character{2, Stats{30, 25, 0, 1.0}, 180, 180} { }
 Orc::~Orc() { }
 
 //TODO
-void Orc::attack(shared_ptr<Entity> entity) { }
+void Orc::attack(shared_ptr<Character> Character) { }
 
 //Dragon
 Dragon::Dragon(): Character{3, Stats{20, 20, 0, 1.0}, 150, 150} { }
