@@ -82,3 +82,7 @@ void Character::walkedOnBy(std::shared_ptr<Character>) {}
 void Character::turnUpdate() {
 	setHealth(getHealth() + mCharStats.healthRegen);
 }
+
+void Character::lookedOnBy(shared_ptr<Character> character) {
+	// TODO
+}

@@ -3,6 +3,7 @@
 #include "character.h"
 #include "potion.h"
 #include "entity.h"
+#include "modifier.h"
 #include "statsModifier.h"
 #include <memory>
 
@@ -14,10 +15,11 @@ Potion::Potion(Stats stats): mPotionStats(stats) { }
 Potion::~Potion() { }
 
 
-void Potion::itemUsedBy(shared_ptr<Character> character) {
-	character = make_shared<StatsModifier>(character, mPotionStats);
+void Potion::itemUsedBy(shared_ptr<Character> character) {	
+//	StatsModifier statMod{character,mPotionStats};
+	character = make_shared<StatsModifier>(character,mPotionStats);
 }
 
-void Potion::lookedOnBy(shared_ptr<Character>) {
-	character->setKnowledgeOf(this, true);
+void Potion::lookedOnBy(shared_ptr<Character> character) {
+	character->setKnowledgeOf(shared_ptr<Potion>(this), true);
 }

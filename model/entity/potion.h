@@ -6,7 +6,6 @@
 #include <memory>
 
 class Character;
-
 class Potion : public Item {
 
 	Stats mPotionStats;

@@ -1,6 +1,6 @@
 #include <memory>
 #include "item.h"
-
+#include "entity.h"
 
 Item::Item() { }
 

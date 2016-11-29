@@ -52,6 +52,8 @@ public:
 	virtual void walkedOnBy(std::shared_ptr<Character>) override;
 	
 	virtual void turnUpdate() override;
+
+	virtual void lookedOnBy(std::shared_ptr<Character>) override;
 };
 
 #endif // CHARACTER_H
