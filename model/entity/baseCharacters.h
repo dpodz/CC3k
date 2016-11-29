@@ -99,4 +99,5 @@ public:
 	~Merchant();
 	std::vector<std::shared_ptr<Entity>> onDeath() override;
 };
+
 #endif // BASE_CHARACTERS_H

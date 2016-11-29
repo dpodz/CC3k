@@ -27,6 +27,7 @@ public:
 
 class DragonHoard: public Treasure {
 	std::shared_ptr<Dragon> attachedDragon;
+	
 public:
 	DragonHoard();
 	~DragonHoard();
