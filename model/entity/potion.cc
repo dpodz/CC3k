@@ -3,6 +3,7 @@
 #include "character.h"
 #include "potion.h"
 #include "entity.h"
+#include "statsModifier.h"
 #include <memory>
 
 using namespace std;
@@ -14,9 +15,9 @@ Potion::~Potion() { }
 
 
 void Potion::itemUsedBy(shared_ptr<Character> character) {
-	// TODO: when Modifier is done	
+	character = make_shared<StatsModifier>(character, mPotionStats);
 }
 
 void Potion::lookedOnBy(shared_ptr<Character>) {
-	// TODO
+	character->setKnowledgeOf(this, true);
 }

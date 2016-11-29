@@ -9,6 +9,7 @@ class Modifier : public Character {
 protected:
 	std::shared_ptr<Character> mComponent;
 
+
 public:
 	Modifier(std::shared_ptr<Character>);
 	virtual ~Modifier() = 0;

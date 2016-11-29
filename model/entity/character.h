@@ -22,6 +22,7 @@ class Character : public Entity {
 
 public:
 	Character(FactionId, Stats, int curHP, int maxHP);
+	Character() { }
 	~Character();
 	
 	int getHealth() const;
@@ -35,7 +36,7 @@ public:
 	FactionId getFaction() const;
 	void setFaction(FactionId);
 
-	virtual void attack(std::shared_ptr<Entity>) = 0;
+	virtual void attack(std::shared_ptr<Entity>);
 	// May need to rewrite function below (expand it)
 	virtual void getAttackedBy(std::shared_ptr<Entity>);
 

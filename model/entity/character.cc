@@ -5,6 +5,7 @@
 #include "character.h"
 #include "stats.h"
 #include "../faction.h"
+#include "potion.h"
 
 using namespace std;
 
@@ -45,6 +46,10 @@ void Character::setFaction(FactionId factionId) {
 	mFaction = factionId;
 }
 
+void Character::attack(shared_ptr<Entity> entity) {
+	// TODO
+}
+
 void Character::getAttackedBy(shared_ptr<Entity> entity) {
 	// TODO
 }
@@ -67,7 +72,7 @@ void Character::onKill() {
 }	
 
 void Character::useItem(shared_ptr<Item> item) {
-	// TODO
+	item->itemUsedBy(shared_ptr<Character>(this));	
 }
 
 bool Character::canWalkOn() { return false; }
