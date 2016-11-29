@@ -9,6 +9,7 @@ init/gridInit.o init/gridInitRandomGen.o model/entity/entity.o \
 model/entity/character.o model/entity/baseCharacters.o model/entity/item.o \
 model/entity/potion.o model/entity/basePotions.o \
 model/entity/statsModifier.o model/entity/modifier.o \
+model/entity/treasure.o model/entity/baseTreasure.o
 
 DEPENDS = ${OBJECTS:.o=.d}
 
