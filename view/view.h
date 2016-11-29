@@ -9,6 +9,8 @@ public:
 	View();
 	~View() = 0;
 	
+	virtual void updateView() = 0;
+	virtual void turnUpdate() = 0;
 };
 
 #endif // VIEW_H

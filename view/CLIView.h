@@ -9,18 +9,24 @@
 #include "../model/grid.h"
 #include "../model/cell.h"
 #include <memory>
+#include <sstream>
 
 class CLIView : public View {
 
-	std::weak_ptr<Character> mPlayer;
+	std::shared_ptr<Character> mPlayer;
 	std::shared_ptr<Game> mGame;
+	std::ostringstream mMessages;
 	
+	bool checkIfVerticalWall(int, int);
 	void printGrid();
 
 public:
 
 	CLIView(std::shared_ptr<Character>, std::shared_ptr<Game>);
 	~CLIView();
+
+	void updateView() override;
+	void turnUpdate() override;
 	
 	virtual void notify(CharacterDeath &) override;
 	virtual void notify(CharacterAttack &) override;

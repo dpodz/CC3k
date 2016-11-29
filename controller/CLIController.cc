@@ -56,10 +56,12 @@ void CLIController::playGame() {
 
 
 	// player moves
-
+	view->updateView();
 	cout << "Enter a valid command: ";
+
 	string cmd;
 	while (cin >> cmd) {
+
 		if (cmd == "q") return;
 
 		else if (cmd == "no" || cmd == "so" || cmd == "ea" || cmd == "we" 
@@ -74,6 +76,10 @@ void CLIController::playGame() {
 			cin >> dir;
 			mGame->usePotion(mPlayer, strToDir.at(dir));
 		}
+
+		view->updateView();
+		view->turnUpdate();
+		cout << "Enter a valid command: ";
 	}
 }
 

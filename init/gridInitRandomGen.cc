@@ -24,17 +24,17 @@ shared_ptr<Entity> GridInitRandomGen::getRandomEntity(vector< shared_ptr<Entity>
 
 void GridInitRandomGen::generateRoom(int roomNumber, int posx, int posy, shared_ptr<Grid> theGrid) {
 
-	if (posx >= 0 && posx < 79 && posy >= 0 && posy < 30 && 
+	if (posx >= 0 && posx < 79 && posy >= 0 && posy < 25 && 
 		theGrid->getCell(posx,posy)->getType() == CellType::Floor &&
 		theGrid->getCell(posx,posy)->getRoomId() == -1) {
 		// Add this grid to the rooms list and recurse
 		theGrid->getCell(posx,posy)->setRoomId(roomNumber);
 		mRooms[roomNumber].push_back(theGrid->getCell(posx,posy));
 		// recurse through the 4 adjacent cells
-		this->generateRoom(roomNumber, posx+1, posy, theGrid);
-		this->generateRoom(roomNumber, posx-1, posy, theGrid);
-		this->generateRoom(roomNumber, posx, posy-1, theGrid);
-		this->generateRoom(roomNumber, posx, posy+1, theGrid);
+		generateRoom(roomNumber, posx+1, posy, theGrid);
+		generateRoom(roomNumber, posx-1, posy, theGrid);
+		generateRoom(roomNumber, posx, posy-1, theGrid);
+		generateRoom(roomNumber, posx, posy+1, theGrid);
 	}
 }
 
@@ -47,7 +47,7 @@ shared_ptr<Grid> GridInitRandomGen::createGrid() {
 
 	string line;
 	int lineNum = 0;
-	GridSize gridSize {79,30};
+	GridSize gridSize {79,25};
 	auto theGrid = make_shared<Grid>(gridSize);
 
 	// read in the floor plan
@@ -72,7 +72,7 @@ shared_ptr<Grid> GridInitRandomGen::createGrid() {
 	int roomNumber = 0;
 
 	for (int i = 0 ; i < 79 ; i++) {
-		for (int j = 0 ; j < 30; j++) {
+		for (int j = 0 ; j < 25; j++) {
 			if (theGrid->getCell(i,j)->getType() == CellType::Floor &&
 			    theGrid->getCell(i,j)->getRoomId() == -1) {
 				mRooms.emplace_back();
