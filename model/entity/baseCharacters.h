@@ -2,6 +2,9 @@
 #define BASE_CHARACTERS_H
 
 #include "character.h"
+#include "baseTreasure.h"
+
+//These need to be declared
 
 class Shade : public Character {
 public:
@@ -62,7 +65,7 @@ class Halfling : public Character {
 public:
 	Halfling();
 	~Halfling();
-	void getAttackedBy(std::shared_ptr<Character>) override;
+	void getAttackedBy(std::shared_ptr<Entity>) override;
 };
 
 //Elf
@@ -70,7 +73,7 @@ class Elf : public Character {
 public:
 	Elf();
 	~Elf();
-	void attack(std::shared_ptr<Character>) override;
+	void attack(std::shared_ptr<Entity>) override;
 };
 
 //Orc
@@ -78,7 +81,7 @@ class Orc: public Character {
 public:
 	Orc();
 	~Orc();
-	void attack(std::shared_ptr<Character>) override;
+	void attack(std::shared_ptr<Entity>) override;
 };
 
 //Dragon
@@ -94,5 +97,6 @@ class Merchant: public Character {
 public:
 	Merchant();
 	~Merchant();
+	std::vector<std::shared_ptr<Entity>> onDeath() override;
 };
 #endif // BASE_CHARACTERS_H
