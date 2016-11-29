@@ -3,13 +3,13 @@
 
 enum class Direction {
 	NO,
-	NE,
-	EO,
-	SE,
 	SO,
-	SW,
-	WO,
-	NW
+	EA,
+	WE,
+	NE,
+	NW,
+	SE,
+	SW
 };
 
 struct Position {
@@ -18,13 +18,13 @@ struct Position {
 	Position calcPosInDirection(Direction offset) {
 		switch (offset) {
 			case Direction::NO: return {x, y - 1};
-			case Direction::NE: return {x, y - 1};
-			case Direction::EO: return {x + 1, y};
-			case Direction::SE: return {x + 1, y + 1};
 			case Direction::SO: return {x, y + 1};
-			case Direction::SW: return {x - 1, y + 1};
-			case Direction::WO: return {x - 1, y};
+			case Direction::EA: return {x + 1, y};
+			case Direction::WE: return {x - 1, y};
+			case Direction::NE: return {x + 1, y - 1};
 			case Direction::NW: return {x - 1, y - 1};
+			case Direction::SE: return {x + 1, y + 1};
+			case Direction::SW: return {x - 1, y + 1};
 		}
 		return {x,y};
 	}

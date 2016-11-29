@@ -18,13 +18,13 @@ CLIController::~CLIController() { }
 
 const map <string, Direction> strToDir { 
 	{"no", Direction::NO},
-	{"ne", Direction::NE},
-	{"eo", Direction::EO},
-	{"se", Direction::SE},
 	{"so", Direction::SO},
-	{"sw", Direction::SW},
-	{"wo", Direction::WO},
+	{"ea", Direction::EA},
+	{"we", Direction::WE},
+	{"ne", Direction::NE},
 	{"nw", Direction::NW},
+	{"se", Direction::SE},
+	{"sw", Direction::SW}
 };
 
 void CLIController::playGame() {
@@ -62,7 +62,7 @@ void CLIController::playGame() {
 	while (cin >> cmd) {
 		if (cmd == "q") return;
 
-		else if (cmd == "no" || cmd == "so" || cmd == "eo" || cmd == "wo" 
+		else if (cmd == "no" || cmd == "so" || cmd == "ea" || cmd == "we" 
 			|| cmd == "ne" || cmd == "nw" || cmd == "se" || cmd == "sw") {
 			mGame->move(mPlayer, strToDir.at(cmd));
 		} else if (cmd == "a") {
