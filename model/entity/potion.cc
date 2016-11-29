@@ -14,7 +14,7 @@ Potion::Potion(Stats stats): mPotionStats(stats) { }
 
 Potion::~Potion() { }
 
-
+// TODO: Fix this using messaging
 void Potion::itemUsedBy(shared_ptr<Character> character) {	
 //	StatsModifier statMod{character,mPotionStats};
 	character = make_shared<StatsModifier>(character,mPotionStats);
