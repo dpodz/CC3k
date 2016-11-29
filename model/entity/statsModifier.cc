@@ -8,7 +8,7 @@ using namespace std;
 
 
 StatsModifier::StatsModifier(shared_ptr<Character> character, Stats stats): 
-				Modifier{character}, mStatOffsets(stats)) { }
+				Modifier{character}, mStatOffsets(stats) { }
 
 StatsModifier::~StatsModifier() { }
 
