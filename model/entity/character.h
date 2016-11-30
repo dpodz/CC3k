@@ -8,7 +8,6 @@
 #include <map>
 #include <typeindex>
 #include <memory>
-#include <typeindex>
 
 class Item;
 

@@ -59,6 +59,8 @@ shared_ptr<Grid> GridInitPreset::createGrid() {
 				cell->setType(CellType::Door);
 			} else if (line[x] == '#') {
 				cell->setType(CellType::Passage);
+			} else if (line[x] == '\\') {
+				cell->setType(CellType::Stair);
 			} else if (line[x] != ' ') {
 				cell->setType(CellType::Floor);
 			}
@@ -80,11 +82,15 @@ void GridInitPreset::createEntities(shared_ptr<Grid> theGrid) {
 			auto search = entityMap.find(line[x]);
 			if (line[x] == '@') {
 				cell->addEntity(mPlayer);
+				mPlayer->setPos(cell->getPos());
 			} else if(search != entityMap.end()) {
 				auto newEntity = search->second();
 				newEntity->attach(mObservers);
+				newEntity->setPos(cell->getPos());
 				cell->addEntity(search->second());
 			}
 		}
 	}
+
+	// TODO: Link dragon to hoard
 }

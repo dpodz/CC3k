@@ -1,10 +1,45 @@
 #include "CLIView.h"
 #include "../model/grid.h"
+#include <string>
 #include <iostream>
 #include <iomanip>
 #include <map>
 #include <stdlib.h>
+#include <typeindex>
+#include "../model/entity/treasure.h"
+#include "../model/entity/potion.h"
+#include "../model/entity/baseCharacters.h"
+#include "../model/entity/basePotions.h"
+#include "../model/entity/baseTreasure.h"
+
 using namespace std;
+
+struct entityInfo {
+	char mapIcon;
+	string name;
+};
+
+const map<type_index, entityInfo> entityInfoMap {
+	{typeid(Human), {'H', "Human"}},
+	{typeid(Dwarf), {'W', "Dwarf"}},
+	{typeid(Elf), {'E', "Elf"}},
+	{typeid(Orc), {'O', "Orc"}},
+	{typeid(Merchant), {'M', "Merchant"}},
+	{typeid(Dragon), {'D', "Dragon"}},
+	{typeid(Halfling),{'L', "Halfling"}},
+	{typeid(Potion), {'P', "Potion"}},
+	{typeid(RestoreHealth), {'P', "Restore Health"}},
+	{typeid(BoostAtk), {'P', "Boost Attack"}},
+	{typeid(BoostDef), {'P', "Boost Defence"}},
+	{typeid(PoisonHealth), {'P', "Poison Health"}},
+	{typeid(WoundAtk), {'P', "Wound Attack"}},
+	{typeid(WoundDef), {'P', "Wound Defence"}},
+	{typeid(Treasure), {'G', "Treasure"}},
+	{typeid(SmallGold), {'G', "Small Gold"}},
+	{typeid(NormalGold), {'G', "Normal Gold"}},
+	{typeid(MerchantHoard), {'G', "Merchant Hoard"}},
+	{typeid(DragonHoard), {'G', "Dragon Hoard"}}
+};
 
 CLIView::CLIView(shared_ptr<Character> player, shared_ptr<Game> game):
 	mPlayer {player}, mGame {game}, mMessages {} {}
@@ -41,7 +76,18 @@ void CLIView::printGrid() {
 			CellType cellType = mGame->getCell(x,y)->getType();
 
 			if (mGame->getCell(x,y)->getEntities().size() > 0) {
-				cout << "T"; // TODO PLACEHOLDER FOR ANY ENTITY
+				// NOTE: May need to change this to be last item
+				auto topEntity = mGame->getCell(x,y)->getEntities()[0];
+				auto search = entityInfoMap.find(typeid(*topEntity));
+
+				if (topEntity == mPlayer) {
+					cout << '@';
+				} else if (search != entityInfoMap.end()){
+					cout << search->second.mapIcon;
+				} else {
+					cout << '?';
+				}
+
 			} else if (cellType == CellType::Wall) {
 				if (checkIfVerticalWall(x, y)) {
 					cout << "|";
