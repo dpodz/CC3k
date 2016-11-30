@@ -8,9 +8,20 @@
 #include <map>
 #include <typeindex>
 #include <memory>
-#include <typeindex>
 
 class Item;
+class Vampire;
+class Drow;
+class Troll;
+class Goblin;
+class Human;
+class Dwarf;
+class Halfling;
+class Elf;
+class Orc;
+class Merchant;
+class Dragon;
+class Shade;
 
 class Character : public Entity {
 
@@ -19,14 +30,17 @@ class Character : public Entity {
 	Stats mCharStats;
 	int mCurHP;
 	int mMaxHP;
+	
+	// So we can call this in the overloaded getAttackedBy() method
+	void takeDamage(int);
 
 public:
 	Character(FactionId, Stats, int curHP, int maxHP);
 	Character() { }
 	~Character();
 	
-	int getHealth() const;
-	void setHealth(int); 
+	virtual int getHealth() const;
+	virtual void setHealth(int); 
 
 	virtual Stats getStats() const;
 
@@ -37,8 +51,20 @@ public:
 	void setFaction(FactionId);
 
 	virtual void attack(std::shared_ptr<Character>);
-	// May need to rewrite function below (expand it)
-	virtual void getAttackedBy(std::shared_ptr<Character>);
+	virtual void attack(std::shared_ptr<Character>, int);
+	// Overloading for different classes
+	virtual void getAttackedBy(std::shared_ptr<Vampire>, int);
+	virtual void getAttackedBy(std::shared_ptr<Drow>, int);
+	virtual void getAttackedBy(std::shared_ptr<Troll>, int);
+	virtual void getAttackedBy(std::shared_ptr<Goblin>, int);
+	virtual void getAttackedBy(std::shared_ptr<Human>, int);
+	virtual void getAttackedBy(std::shared_ptr<Dwarf>, int);
+	virtual void getAttackedBy(std::shared_ptr<Halfling>, int);
+	virtual void getAttackedBy(std::shared_ptr<Elf>, int);
+	virtual void getAttackedBy(std::shared_ptr<Orc>, int);
+	virtual void getAttackedBy(std::shared_ptr<Merchant>, int);
+	virtual void getAttackedBy(std::shared_ptr<Dragon>, int);
+	virtual void getAttackedBy(std::shared_ptr<Shade>, int);
 
 	virtual int getDroppedGold() const;
 	virtual int getScore() const;

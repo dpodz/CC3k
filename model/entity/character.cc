@@ -2,6 +2,7 @@
 #include <vector>
 #include <map>
 #include <typeindex>
+#include <math.h>
 #include "character.h"
 #include "stats.h"
 #include "../faction.h"
@@ -23,6 +24,10 @@ int Character::getHealth() const {
 void Character::setHealth(int hp) {
 	if (hp <= mMaxHP && hp >= 0) {
 		mCurHP = hp;
+	} else if (hp > mMaxHP) {
+		mCurHP = mMaxHP;
+	} else if (hp < 0) {
+		mCurHP = 0;
 	}
 }
 
@@ -52,12 +57,58 @@ void Character::setFaction(FactionId factionId) {
 	mFaction = factionId;
 }
 
-void Character::attack(shared_ptr<Character> character) {
-	character->getAttackedBy(static_pointer_cast<Character>(shared_from_this()));
+// Can't use this for double dispatch! Just here for reference.
+/*
+void Character::attack(shared_ptr<Character> defender) {
+	// send the character and its attack value to the enemy
+	defender->getAttackedBy(static_pointer_cast<Character>(shared_from_this()), this->getStats().attack);
 }
 
-void Character::getAttackedBy(shared_ptr<Character> character) {
-	// TODO
+void Character::attack(shared_ptr<Character> defender, int bonusAttack) {
+	// bonus attack is extra attack from modifiers
+	defender->getAttackedBy(static_pointer_cast<Character>(shared_from_this()), this->getStats().attack + bonusAttack);
+}	
+*/
+
+void Character::takeDamage(int damage){
+	this->setHealth( this->getHealth() - ceil((100.0 / ( 100.0+this->getStats().defence )) * damage) );
+}
+
+void Character::getAttackedBy(std::shared_ptr<Vampire> attacker, int attackDamage){
+	this->takeDamage(attackDamage);
+}
+void Character::getAttackedBy(std::shared_ptr<Drow> attacker, int attackDamage){
+	this->takeDamage(attackDamage);
+}
+void Character::getAttackedBy(std::shared_ptr<Troll> attacker, int attackDamage){
+	this->takeDamage(attackDamage);
+}
+void Character::getAttackedBy(std::shared_ptr<Goblin> attacker, int attackDamage){
+	this->takeDamage(attackDamage);
+}
+void Character::getAttackedBy(std::shared_ptr<Human> attacker, int attackDamage){
+	this->takeDamage(attackDamage);
+}
+void Character::getAttackedBy(std::shared_ptr<Dwarf> attacker, int attackDamage){
+	this->takeDamage(attackDamage);
+}
+void Character::getAttackedBy(std::shared_ptr<Halfling> attacker, int attackDamage){
+	this->takeDamage(attackDamage);
+}
+void Character::getAttackedBy(std::shared_ptr<Elf> attakcer, int attackDamage){
+	this->takeDamage(attackDamage);
+}
+void Character::getAttackedBy(std::shared_ptr<Orc> attacker, int attackDamage){
+	this->takeDamage(attackDamage);
+}
+void Character::getAttackedBy(std::shared_ptr<Merchant> attacker, int attackDamage){
+	this->takeDamage(attackDamage);
+}
+void Character::getAttackedBy(std::shared_ptr<Dragon> attacker, int attackDamage){
+	this->takeDamage(attackDamage);
+}
+void Character::getAttackedBy(std::shared_ptr<Shade> attacker, int attackDamage){
+	this->takeDamage(attackDamage);
 }
 
 int Character::getDroppedGold() const {
