@@ -23,8 +23,7 @@ class GridInitRandomGen : public GridInit {
 	std::shared_ptr<Entity> getRandomEntity(std::vector< std::shared_ptr<Entity> >);
 
 public:
-	GridInitRandomGen(std::shared_ptr<Character>, const std::string, 
-		std::vector<std::shared_ptr<Observer>>);
+	GridInitRandomGen(std::shared_ptr<Character>, const std::string, std::vector<std::shared_ptr<Observer>>);
 	~GridInitRandomGen();
 
 	virtual std::shared_ptr<Grid> createGrid() override;

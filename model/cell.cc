@@ -98,6 +98,7 @@ void Cell::usePotion(shared_ptr<Character> character) {
 		auto potion = dynamic_pointer_cast<Potion>(entity);
 		if (potion.use_count() != 0) {
 			character->useItem(potion);
+			removeEntity(potion);
 			return;
 		}
 	}

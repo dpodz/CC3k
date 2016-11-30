@@ -11,9 +11,11 @@ class CLIController : public Controller,
 	public std::enable_shared_from_this<CLIController> {
 
 	std::shared_ptr<Character> mPlayer;
+	std::string mFileName;
+	bool mUsePreset;
 
 public:
-	CLIController(std::shared_ptr<Game>);
+	CLIController(std::shared_ptr<Game>, std::string, bool);
 	~CLIController();
 	
 	virtual void playGame() override;

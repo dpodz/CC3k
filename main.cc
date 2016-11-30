@@ -11,11 +11,11 @@ using namespace std;
 
 int main() {
  	
-	string mapString = "default.map";
+	string mapString = "custom.map";
 
 	auto game = make_shared<Game>();
 
-	auto controller = make_shared<CLIController>(game);
+	auto controller = make_shared<CLIController>(game, mapString, true);
 
 	controller->playGame();
 

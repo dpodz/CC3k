@@ -26,13 +26,14 @@ public:
 };
 
 class DragonHoard: public Treasure {
-	std::shared_ptr<Dragon> attachedDragon;
+	std::weak_ptr<Dragon> attachedDragon;
 	
 public:
 	DragonHoard();
 	~DragonHoard();
 	
-	void walkedOnBy(std::shared_ptr<Character>);
+	void setDragon(std::shared_ptr<Dragon>);
+	virtual void walkedOnBy(std::shared_ptr<Character>) override;
 };
 
 #endif // BASE_TREASURE_H

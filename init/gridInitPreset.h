@@ -17,9 +17,10 @@ class Grid;
 class GridInitPreset : public GridInit {
 	std::shared_ptr<Character> mPlayer;
 	std::ifstream mFile;
-	
+	std::vector<std::shared_ptr<Observer>> mObservers;
+
 public:
-	GridInitPreset(std::shared_ptr<Character>, const std::string);
+	GridInitPreset(std::shared_ptr<Character>, const std::string, std::vector<std::shared_ptr<Observer>>);
 	~GridInitPreset();
 
 	std::shared_ptr<Grid> createGrid() override;

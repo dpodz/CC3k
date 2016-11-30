@@ -5,6 +5,7 @@
 
 using namespace std;
 
-Controller::Controller(shared_ptr<Game> game): mGame{game} { }
+Controller::Controller(shared_ptr<Game> game, shared_ptr<View> view):
+	mGame{game}, mView {view} { }
 
 Controller::~Controller() { }

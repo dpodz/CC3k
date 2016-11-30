@@ -51,13 +51,15 @@ void Grid::move(shared_ptr<Character> character, Direction dir) {
 	Position oldPos = character->getPos();
 	Position newPos = oldPos.calcPosInDirection(dir);
 
-	if (!checkBounds(newPos)) {
+	if (!checkBounds(newPos)
+			|| !getCell(newPos)->isValidMove()) {
 		throw out_of_range("Move");
 	}
 
 	getCell(oldPos)->removeEntity(character);
 	getCell(newPos)->addEntity(character);
 	character->setPos(newPos);
+	getCell(newPos)->walkedOn(character);
 
 	EntityMoved msg(character, oldPos);
 

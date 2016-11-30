@@ -7,12 +7,16 @@
 #include "../model/position.h"
 #include "../model/entity/baseCharacters.h"
 #include "../init/gridInitRandomGen.h"
+#include "../init/gridInitPreset.h"
+
 #include "../view/CLIView.h"
 #include "../messaging/observer.h"
 
 using namespace std;
 
-CLIController::CLIController(shared_ptr<Game> game): Controller {game} { }
+CLIController::CLIController(shared_ptr<Game> game, string fileName,
+	bool usePreset): Controller (game, make_shared<CLIView>(nullptr, nullptr)), 
+  mPlayer {}, mFileName (fileName), mUsePreset (usePreset) { }
 
 CLIController::~CLIController() { }
 
@@ -31,21 +35,26 @@ void CLIController::playGame() {
 
 	cout << "Game starts" << endl;
 
-	string filename = "default.map";
-
 	mPlayer = make_shared<Shade>();
 	// Generate new grid
-	auto view = make_shared<CLIView>(mPlayer, mGame); 
+	mView = make_shared<CLIView>(mPlayer, mGame); 
 	
 	vector<shared_ptr<Observer>> observers(3);
-	observers.push_back(view);
+	observers.push_back(mView);
 	observers.push_back(mGame->getGrid());
 	observers.push_back(shared_from_this());
 
 	mPlayer->attach(observers);
 
-	auto gridInit = make_shared<GridInitRandomGen>(mPlayer, filename, observers);
+	shared_ptr<GridInit> gridInit;
 
+	if (mUsePreset) {
+		gridInit = make_shared<GridInitPreset>(mPlayer, mFileName, observers);
+	}
+	else {
+		gridInit = make_shared<GridInitRandomGen>(mPlayer, mFileName, observers);
+	}
+	
 	mGame->setGridGen(gridInit);
 	
 	mGame->generateNewGrid();
@@ -56,7 +65,7 @@ void CLIController::playGame() {
 
 
 	// player moves
-	view->updateView();
+	mView->updateView();
 	cout << "Enter a valid command: ";
 
 	string cmd;
@@ -77,8 +86,8 @@ void CLIController::playGame() {
 			mGame->usePotion(mPlayer, strToDir.at(dir));
 		}
 
-		view->updateView();
-		view->turnUpdate();
+		mView->updateView();
+		mView->turnUpdate();
 		cout << "Enter a valid command: ";
 	}
 }
