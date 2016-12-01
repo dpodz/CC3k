@@ -12,6 +12,7 @@ public:
 	~Shade();
 
 	int getScore() const override;
+	void attack(std::shared_ptr<Character>) override;
 };
 
 //Vampire
@@ -28,6 +29,7 @@ class Drow : public Character {
 public:
 	Drow();
 	~Drow();
+	void attack(std::shared_ptr<Character>) override;
 };
 
 //Goblin
@@ -36,6 +38,8 @@ public:
 	Goblin();
 	~Goblin();
 	void onKill() override;
+	void attack(std::shared_ptr<Character>) override;
+	void getAttackedBy(std::shared_ptr<Orc>, int) override;
 };
 
 //Troll
@@ -43,6 +47,8 @@ class Troll : public Character {
 public:
 	Troll();
 	~Troll();
+
+	void attack(std::shared_ptr<Character>) override;
 };
 
 //Human
@@ -51,6 +57,7 @@ public:
 	Human();
 	~Human();
 	std::vector<std::shared_ptr<Entity>> onDeath() override;
+	void attack(std::shared_ptr<Character>) override;
 };
 
 //Dwarf
@@ -58,6 +65,7 @@ class Dwarf : public Character {
 public:
 	Dwarf();
 	~Dwarf();
+	void attack(std::shared_ptr<Character>) override;
 };
 
 //Halfling
@@ -65,7 +73,7 @@ class Halfling : public Character {
 public:
 	Halfling();
 	~Halfling();
-	void getAttackedBy(std::shared_ptr<Character>) override;
+	void attack(std::shared_ptr<Character>) override;
 };
 
 //Elf
@@ -90,6 +98,7 @@ class Dragon: public Character {
 public:
 	Dragon();
 	~Dragon();
+	void attack(std::shared_ptr<Character>) override;
 };
 
 //Merchant
@@ -97,6 +106,7 @@ class Merchant: public Character {
 public:
 	Merchant();
 	~Merchant();
+	void attack(std::shared_ptr<Character>) override;
 	std::vector<std::shared_ptr<Entity>> onDeath() override;
 };
 

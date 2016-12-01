@@ -22,7 +22,7 @@ int Character::getHealth() const {
 }
 
 void Character::setHealth(int hp) {
-	if (hp <= mMaxHP && hp >= 0) {
+	if ((hp <= mMaxHP && hp >= 0) || (hp >= 0 && mMaxHP < 0)) {
 		mCurHP = hp;
 	} else if (hp > mMaxHP) {
 		mCurHP = mMaxHP;
