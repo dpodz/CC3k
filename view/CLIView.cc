@@ -94,8 +94,7 @@ void CLIView::printGrid() {
 			CellType cellType = mGame->getCell(x,y)->getType();
 
 			if (mGame->getCell(x,y)->getEntities().size() > 0) {
-				// NOTE: May need to change this to be last item
-				auto topEntity = mGame->getCell(x,y)->getEntities()[0];
+				auto topEntity = mGame->getCell(x,y)->getEntities().back();
 				auto search = entityInfoMap.find(typeid(*topEntity));
 
 				if (topEntity == mPlayer) {

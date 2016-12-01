@@ -33,7 +33,7 @@ class Character : public Entity {
 	int mMaxHP;
 protected:	
 	// So we can call this in the overloaded getAttackedBy() method
-	int takeDamage(int);
+	void takeDamage(int);
 
 public:
 	Character(FactionId, Stats, int curHP, int maxHP);

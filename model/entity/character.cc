@@ -74,54 +74,51 @@ void  Character::takeDamage(int damage){
 }
 
 void Character::getAttackedBy(std::shared_ptr<Vampire> attacker, int attackDamage){
-	int damage = this->takeDamage(attackDamage);
+	this->takeDamage(attackDamage);
 }
 
 void Character::getAttackedBy(std::shared_ptr<Drow> attacker, int attackDamage){
-	int damage = this->takeDamage(attackDamage);
+	this->takeDamage(attackDamage);
 }
 
 void Character::getAttackedBy(std::shared_ptr<Troll> attacker, int attackDamage){
-	int damage = this->takeDamage(attackDamage);
+	this->takeDamage(attackDamage);
 }
 
 void Character::getAttackedBy(std::shared_ptr<Goblin> attacker, int attackDamage){
-	int damage = this->takeDamage(attackDamage);
+	this->takeDamage(attackDamage);
 }
 
 void Character::getAttackedBy(std::shared_ptr<Human> attacker, int attackDamage){
-	int damage = this->takeDamage(attackDamage);
+	this->takeDamage(attackDamage);
 }
 
 void Character::getAttackedBy(std::shared_ptr<Dwarf> attacker, int attackDamage){
-	int damage = this->takeDamage(attackDamage);
+	this->takeDamage(attackDamage);
 }
 
 void Character::getAttackedBy(std::shared_ptr<Halfling> attacker, int attackDamage){
-	int damage = this->takeDamage(attackDamage);
+	this->takeDamage(attackDamage);
 
 }
 
 void Character::getAttackedBy(std::shared_ptr<Elf> attacker, int attackDamage){
-	int damage = this->takeDamage(attackDamage);
+	this->takeDamage(attackDamage);
 }
 
 void Character::getAttackedBy(std::shared_ptr<Orc> attacker, int attackDamage){
-	int damage = this->takeDamage(attackDamage);
+	this->takeDamage(attackDamage);
 }
 
 void Character::getAttackedBy(std::shared_ptr<Merchant> attacker, int attackDamage){
-	int damage = this->takeDamage(attackDamage);
+	this->takeDamage(attackDamage);
 }
+
 void Character::getAttackedBy(std::shared_ptr<Dragon> attacker, int attackDamage){
-	int damage = this->takeDamage(attackDamage);
+	this->takeDamage(attackDamage);
 }
 void Character::getAttackedBy(std::shared_ptr<Shade> attacker, int attackDamage){
-	int damage = this->takeDamage(attackDamage);
-	auto self = static_pointer_cast<Character>(shared_from_this());
-
-	CharacterAttack msg {attacker, self, damage};
-	notifyObservers(msg);
+	this->takeDamage(attackDamage);
 }
 
 int Character::getDroppedGold() const {
