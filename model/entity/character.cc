@@ -32,8 +32,17 @@ void Character::setHealth(int hp) {
 }
 
 Stats Character::getStats() const {
+	return mCharStats->getStats();
+}
+
+shared_ptr<StatsContainer> Character::getStatsContainer() const {
 	return mCharStats;
 }
+
+void setStatsContainer(shared_ptr<StatsContainer> statsContainer) {
+	mCharStats = statsContainer;
+}
+
 
 bool Character::hasKnowledgeOf(shared_ptr<Entity> entity) const {
 	auto search = mKnowledge.find(typeid(entity));
@@ -58,7 +67,6 @@ void Character::setFaction(FactionId factionId) {
 }
 
 // Can't use this for double dispatch! Just here for reference.
-/*
 void Character::attack(shared_ptr<Character> defender) {
 	// send the character and its attack value to the enemy
 	defender->getAttackedBy(static_pointer_cast<Character>(shared_from_this()), this->getStats().attack);
@@ -68,7 +76,7 @@ void Character::attack(shared_ptr<Character> defender, int bonusAttack) {
 	// bonus attack is extra attack from modifiers
 	defender->getAttackedBy(static_pointer_cast<Character>(shared_from_this()), this->getStats().attack + bonusAttack);
 }	
-*/
+
 
 void Character::takeDamage(int damage){
 	this->setHealth( this->getHealth() - ceil((100.0 / ( 100.0+this->getStats().defence )) * damage) );
@@ -95,7 +103,7 @@ void Character::getAttackedBy(std::shared_ptr<Dwarf> attacker, int attackDamage)
 void Character::getAttackedBy(std::shared_ptr<Halfling> attacker, int attackDamage){
 	this->takeDamage(attackDamage);
 }
-void Character::getAttackedBy(std::shared_ptr<Elf> attakcer, int attackDamage){
+void Character::getAttackedBy(std::shared_ptr<Elf> attacker, int attackDamage){
 	this->takeDamage(attackDamage);
 }
 void Character::getAttackedBy(std::shared_ptr<Orc> attacker, int attackDamage){

@@ -20,6 +20,11 @@ struct entityInfo {
 };
 
 const map<type_index, entityInfo> entityInfoMap {
+	{typeid(Shade), {'?', "Shade"}},
+	{typeid(Vampire), {'?', "Vampire"}},
+	{typeid(Drow), {'?', "Drow"}},
+	{typeid(Goblin), {'?', "Goblin"}},
+	{typeid(Troll), {'?', "Troll"}},
 	{typeid(Human), {'H', "Human"}},
 	{typeid(Dwarf), {'W', "Dwarf"}},
 	{typeid(Elf), {'E', "Elf"}},
@@ -42,7 +47,7 @@ const map<type_index, entityInfo> entityInfoMap {
 };
 
 CLIView::CLIView(shared_ptr<Character> player, shared_ptr<Game> game):
-	mPlayer {player}, mGame {game}, mMessages {} {}
+	mPlayer {player}, mGame {game}, mMessages {}, mLevel {1} {}
 
 CLIView::~CLIView() {}
 
@@ -70,9 +75,10 @@ void CLIView::printGrid() {
 		return;
 	}
 
-	// TODO: Use grid size
-	for (int y = 0 ; y < 25 ; ++y) {
-		for (int x = 0 ; x < 79 ; ++x) {
+	GridSize gridSize = mGame->getGridSize();
+
+	for (int y = 0 ; y < gridSize.y ; ++y) {
+		for (int x = 0 ; x < gridSize.x ; ++x) {
 			CellType cellType = mGame->getCell(x,y)->getType();
 
 			if (mGame->getCell(x,y)->getEntities().size() > 0) {
@@ -110,14 +116,19 @@ void CLIView::printGrid() {
 		cout << endl;
 	}
 
-
 	ostringstream raceLine {};
 
-	raceLine << "Race: " << typeid(*mPlayer).name()
+	auto search = entityInfoMap.find(typeid(*mPlayer));
+	string playerRace = "Unknown";
+	if (search != entityInfoMap.end()) {
+		playerRace = search->second.name;
+	}
+
+	raceLine << "Race: " << playerRace
 		<< " Gold: " << mPlayer->getGold();
 
 	cout << setw(70) << left << raceLine.str()
-		<< "Floor: ???" << endl;
+		<< "Floor: " << mLevel << endl;
 
 	Stats charStats = mPlayer->getStats();
 
@@ -131,7 +142,6 @@ void CLIView::updateView() {
 	// This is OS dependent
 	system("clear");
 	printGrid();
-
 }
 
 void CLIView::turnUpdate() {

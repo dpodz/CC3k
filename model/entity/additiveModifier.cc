@@ -1,5 +1,5 @@
 #include "modifier.h"
-#include "statsModifier.h"
+#include "additiveModifier.h"
 #include "stats.h"
 #include <vector>
 #include <memory>
@@ -7,13 +7,13 @@
 using namespace std;
 
 
-StatsModifier::StatsModifier(shared_ptr<Character> character, Stats stats): 
-				Modifier{character}, mStatOffsets(stats) { }
+AdditiveModifier::AdditiveModifier(shared_ptr<StatsContainer> statsContainer, Stats stats): 
+				Modifier{statsContainer}, mStatOffsets(stats) { }
 
-StatsModifier::~StatsModifier() { }
+AdditiveModifier::~AdditiveModifier() { }
 
 
-Stats StatsModifier::getStats() const {
+Stats AdditiveModifier::getStats() const {
 	Stats charStats = mComponent->getStats();
 
 	Stats newStats{charStats.attack + mStatOffsets.attack, 

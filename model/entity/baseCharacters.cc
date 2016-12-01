@@ -99,6 +99,11 @@ void Dwarf::attack(std::shared_ptr<Character> defender) {
 Halfling::Halfling(): Character{2, Stats{15, 20, 0, 1.0}, 100, 100} { }
 Halfling::~Halfling() { }
 
+Halfling::attack(std::shared_ptr<Character> defender) {
+	// send the character and its attack value to the enemy
+	defender->getAttackedBy(static_pointer_cast<Halfling>(shared_from_this()), this->getStats().attack);
+}
+
 //Elf
 Elf::Elf(): Character{2, Stats{30, 10, 0, 1.0}, 140, 140} { }
 Elf::~Elf() { }
