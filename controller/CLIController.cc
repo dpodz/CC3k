@@ -73,6 +73,7 @@ void CLIController::playGame() {
 
 	// player moves
 	mView->updateView();
+	mView->turnUpdate();
 	cout << "Enter a valid command: ";
 
 	string cmd;

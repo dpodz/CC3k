@@ -55,9 +55,7 @@ const map<Direction, string> directionStringMap {
 	{ Direction::NW, "NW"},
 	{ Direction::SE, "SE"},
 	{ Direction::SW, "SW"}
-}
-
-
+};
 
 CLIView::CLIView(shared_ptr<Character> player, shared_ptr<Game> game):
 	mPlayer {player}, mGame {game}, mMessages {}, mLevel {1} {}
@@ -162,16 +160,16 @@ void CLIView::turnUpdate() {
 }
 
 void CLIView::notify(DebugMessage & dm) {
-	cout << "Debug Message: " << dm.message << endl;
+	mMessages << "Debug Message: " << dm.message;
 }
 
 void CLIView::notify(CharacterDeath & msg) {
 	if (msg.killed == mPlayer) {
-		mMessages << "PC dies. "
+		mMessages << "PC dies. ";
 	}
 	else {
-		mMessages << entityInfoMap.at(typeid(msg.killed)).name
-			<< " dies."
+		mMessages << entityInfoMap.at(typeid(*msg.killed)).name
+			<< " dies.";
 	}
 }
 
@@ -180,7 +178,7 @@ void CLIView::notify(CharacterDeath & msg) {
 	if (msg.FIELD == mPlayer) { \
 		FIELD = "PC"; \
 	} else { \
-		FIELD = entityInfoMap.at(typeid(msg.FIELD)).name; \
+		FIELD = entityInfoMap.at(typeid(*msg.FIELD)).name; \
 	} 
 // Macro end
 
@@ -206,7 +204,7 @@ void CLIView::notify(CharacterAttack & msg) {
 void CLIView::notify(ItemUsed & msg) {
 	if (mPlayer == msg.character) {
 		mMessages << "PC used a " << 
-			entityInfoMap.at(typeid(msg.item)).name; 
+			entityInfoMap.at(typeid(*msg.item)).name << ". "; 
 	} else {
 		mMessages << "Enemy used an item??? ";
 	}	
@@ -224,7 +222,7 @@ void CLIView::notify(EntityRemoved & msg) {
 
 void CLIView::notify(GridCreated & msg) {
 	mMessages << "Grid created. ";
-	mGame = mc.theGame;
+	mGame = msg.theGame;
 }
 
 // TODO: Add knowledge
@@ -234,15 +232,15 @@ void CLIView::notify(EntityObserved & msg) {
 		Direction dir = msg.observed->getPos()
 			.calcDirectionGivenPos(playerPos);
 		mMessages << "PC sees a " <<
-			entityInfoMap.at(typeid(msg.observed)).name
-			<< " (WIP).";
+			entityInfoMap.at(typeid(*msg.observed)).name
+			 << " in " << directionStringMap.at(dir) << " (WIP).";
 	}
 }
 
 void CLIView::notify(ItemPickedUp & msg) {
 	if (mPlayer == msg.character) {
 		mMessages << "PC picked up " << 
-			entityInfoMap.at(typeid(msg.item)).name; 
+			entityInfoMap.at(typeid(*msg.item)).name; 
 	} else {
 		mMessages << "Enemy picked up item??? ";
 	}	

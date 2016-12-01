@@ -8,12 +8,12 @@
 #include "../model/entity/baseTreasure.h"
 #include "../model/entity/baseCharacters.h"
 #include "../model/entity/basePotions.h"
+#include <iostream>
 
+using namespace std;
 
 #define entityMapEntry(symbol, type, args) \
 	{symbol, []() -> shared_ptr<Entity> {return make_shared<type>(args);}},
-
-using namespace std;
 
 const map<char, shared_ptr<Entity>(*)()> entityMap {
 	entityMapEntry('H', Human, )
@@ -87,7 +87,7 @@ void GridInitPreset::createEntities(shared_ptr<Grid> theGrid) {
 				auto newEntity = search->second();
 				newEntity->attach(mObservers);
 				newEntity->setPos(cell->getPos());
-				cell->addEntity(search->second());
+				cell->addEntity(newEntity);
 			}
 		}
 	}

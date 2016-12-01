@@ -27,8 +27,8 @@ class Character : public Entity {
 
 	std::map<std::type_index, bool> mKnowledge;
 	FactionId mFaction;
-	std::shared_ptr<StatsContainer> mStats;
-	Stats mCharStats;
+	std::shared_ptr<StatsContainer> mCharStats;
+
 	int mCurHP;
 	int mMaxHP;
 protected:	
@@ -53,7 +53,7 @@ public:
 	FactionId getFaction() const;
 	void setFaction(FactionId);
 
-	virtual void attack(std::shared_ptr<Character>)=0;
+	virtual void attack(std::shared_ptr<Character>) = 0;
 	// Overloading for different classes
 	virtual void getAttackedBy(std::shared_ptr<Vampire>, int);
 	virtual void getAttackedBy(std::shared_ptr<Drow>, int);

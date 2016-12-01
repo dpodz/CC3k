@@ -12,7 +12,7 @@ using namespace std;
 
 
 Character::Character(FactionId factionId, Stats stats, int curHP, int maxHP): 
-									mFaction{factionId}, mCharStats(stats), mCurHP{curHP}, mMaxHP{maxHP} { }
+									mFaction{factionId}, mCharStats(make_shared<StatsContainer>(stats)), mCurHP{curHP}, mMaxHP{maxHP} { }
 
 Character::~Character() { }								
 
@@ -39,10 +39,9 @@ shared_ptr<StatsContainer> Character::getStatsContainer() const {
 	return mCharStats;
 }
 
-void setStatsContainer(shared_ptr<StatsContainer> statsContainer) {
+void Character::setStatsContainer(shared_ptr<StatsContainer> statsContainer) {
 	mCharStats = statsContainer;
 }
-
 
 bool Character::hasKnowledgeOf(shared_ptr<Entity> entity) const {
 	auto search = mKnowledge.find(typeid(entity));
@@ -65,18 +64,6 @@ FactionId Character::getFaction() const {
 void Character::setFaction(FactionId factionId) {
 	mFaction = factionId;
 }
-
-// Can't use this for double dispatch! Just here for reference.
-void Character::attack(shared_ptr<Character> defender) {
-	// send the character and its attack value to the enemy
-	defender->getAttackedBy(static_pointer_cast<Character>(shared_from_this()), this->getStats().attack);
-}
-
-void Character::attack(shared_ptr<Character> defender, int bonusAttack) {
-	// bonus attack is extra attack from modifiers
-	defender->getAttackedBy(static_pointer_cast<Character>(shared_from_this()), this->getStats().attack + bonusAttack);
-}	
-
 
 void Character::takeDamage(int damage){
 	this->setHealth( this->getHealth() - ceil((100.0 / ( 100.0+this->getStats().defence )) * damage) );
@@ -142,7 +129,7 @@ bool Character::canWalkOn() { return false; }
 void Character::walkedOnBy(std::shared_ptr<Character>) {}
 
 void Character::turnUpdate() {
-	setHealth(getHealth() + mCharStats.healthRegen);
+	setHealth(getHealth() + mCharStats->getStats().healthRegen);
 }
 
 void Character::lookedOnBy(shared_ptr<Character> character) {

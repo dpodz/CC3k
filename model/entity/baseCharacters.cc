@@ -15,7 +15,7 @@ int Shade::getScore() const {
 	return getGold() * 1.5;
 }
 
-void Shade::attack(std::shared_ptr<Character> defender) {
+void Shade::attack(shared_ptr<Character> defender) {
 	// send the character and its attack value to the enemy
 	defender->getAttackedBy(static_pointer_cast<Shade>(shared_from_this()), this->getStats().attack);
 }
@@ -24,7 +24,7 @@ void Shade::attack(std::shared_ptr<Character> defender) {
 Vampire::Vampire(): Character{1, Stats{25, 25, 0, 1.0}, 50, 50} { }
 Vampire::~Vampire() { }
 
-void Vampire::attack(std::shared_ptr<Character> defender) {
+void Vampire::attack(shared_ptr<Character> defender) {
 	// send the character and its attack value to the enemy
 	defender->getAttackedBy(static_pointer_cast<Vampire>(shared_from_this()), this->getStats().attack);
 	// restore health, unless attacking a dwarf
@@ -39,7 +39,7 @@ void Vampire::attack(std::shared_ptr<Character> defender) {
 Drow::Drow(): Character{1, Stats{25, 15, 0, 1.5	}, 150, 150} { }
 Drow::~Drow() { }
 
-void Drow::attack(std::shared_ptr<Character> defender) {
+void Drow::attack(shared_ptr<Character> defender) {
 	// send the character and its attack value to the enemy
 	defender->getAttackedBy(static_pointer_cast<Drow>(shared_from_this()), this->getStats().attack);
 }
@@ -48,12 +48,12 @@ void Drow::attack(std::shared_ptr<Character> defender) {
 Goblin::Goblin(): Character{1, Stats{15, 20, 0, 1.0}, 110, 110} { }
 Goblin::~Goblin() { }
 
-void Goblin::attack(std::shared_ptr<Character> defender) {
+void Goblin::attack(shared_ptr<Character> defender) {
 	// send the character and its attack value to the enemy
 	defender->getAttackedBy(static_pointer_cast<Goblin>(shared_from_this()), this->getStats().attack);
 }
 
-void Goblin::getAttackedBy(std::shared_ptr<Orc> attacker, int attackDamage) {
+void Goblin::getAttackedBy(shared_ptr<Orc> attacker, int attackDamage) {
 	this->takeDamage(attackDamage * 1.5); // take extra damage from Orcs
 }
 
@@ -65,7 +65,7 @@ void Goblin::onKill() { }
 Troll::Troll(): Character{1, Stats{25, 15, 5, 1.0}, 120, 120} { }
 Troll::~Troll() { }
 
-void Troll::attack(std::shared_ptr<Character> defender) {
+void Troll::attack(shared_ptr<Character> defender) {
 	// send the character and its attack value to the enemy
 	defender->getAttackedBy(static_pointer_cast<Troll>(shared_from_this()), this->getStats().attack);
 }
@@ -81,7 +81,7 @@ vector<shared_ptr<Entity>> Human::onDeath() {
 	return dropOnDeath;
 }
 
-void Human::attack(std::shared_ptr<Character> defender) {
+void Human::attack(shared_ptr<Character> defender) {
 	// send the character and its attack value to the enemy
 	defender->getAttackedBy(static_pointer_cast<Human>(shared_from_this()), this->getStats().attack);
 }
@@ -90,7 +90,7 @@ void Human::attack(std::shared_ptr<Character> defender) {
 Dwarf::Dwarf(): Character{2, Stats{20, 30, 0, 1.0}, 100, 100}  { }
 Dwarf::~Dwarf() { }
 
-void Dwarf::attack(std::shared_ptr<Character> defender) {
+void Dwarf::attack(shared_ptr<Character> defender) {
 	// send the character and its attack value to the enemy
 	defender->getAttackedBy(static_pointer_cast<Shade>(shared_from_this()), this->getStats().attack);
 }
@@ -99,7 +99,7 @@ void Dwarf::attack(std::shared_ptr<Character> defender) {
 Halfling::Halfling(): Character{2, Stats{15, 20, 0, 1.0}, 100, 100} { }
 Halfling::~Halfling() { }
 
-Halfling::attack(std::shared_ptr<Character> defender) {
+void Halfling::attack(shared_ptr<Character> defender) {
 	// send the character and its attack value to the enemy
 	defender->getAttackedBy(static_pointer_cast<Halfling>(shared_from_this()), this->getStats().attack);
 }
@@ -108,7 +108,7 @@ Halfling::attack(std::shared_ptr<Character> defender) {
 Elf::Elf(): Character{2, Stats{30, 10, 0, 1.0}, 140, 140} { }
 Elf::~Elf() { }
 
-void Elf::attack(std::shared_ptr<Character> defender) {
+void Elf::attack(shared_ptr<Character> defender) {
 	// send the character and its attack value to the enemy
 	int numAttacks = 2;
 	if (typeid(defender) == typeid(Elf)) { numAttacks = 1; }
@@ -121,7 +121,7 @@ void Elf::attack(std::shared_ptr<Character> defender) {
 Orc::Orc(): Character{2, Stats{30, 25, 0, 1.0}, 180, 180} { }
 Orc::~Orc() { }
 
-void Orc::attack(std::shared_ptr<Character> defender) {
+void Orc::attack(shared_ptr<Character> defender) {
 	// send the character and its attack value to the enemy
 	defender->getAttackedBy(static_pointer_cast<Orc>(shared_from_this()), this->getStats().attack);
 }
@@ -130,7 +130,7 @@ void Orc::attack(std::shared_ptr<Character> defender) {
 Dragon::Dragon(): Character{3, Stats{20, 20, 0, 1.0}, 150, 150} { }
 Dragon::~Dragon() { }
 
-void Dragon::attack(std::shared_ptr<Character> defender) {
+void Dragon::attack(shared_ptr<Character> defender) {
 	// send the character and its attack value to the enemy
 	defender->getAttackedBy(static_pointer_cast<Dragon>(shared_from_this()), this->getStats().attack);
 }
@@ -139,7 +139,7 @@ void Dragon::attack(std::shared_ptr<Character> defender) {
 Merchant::Merchant(): Character{4, Stats{70, 5, 0, 1.0}, 30, 30} { }
 Merchant::~Merchant() { }
 
-void Merchant::attack(std::shared_ptr<Character> defender) {
+void Merchant::attack(shared_ptr<Character> defender) {
 	// send the character and its attack value to the enemy
 	defender->getAttackedBy(static_pointer_cast<Merchant>(shared_from_this()), this->getStats().attack);
 }

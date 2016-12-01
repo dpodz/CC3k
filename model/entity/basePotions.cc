@@ -27,7 +27,13 @@ RestoreHealth::RestoreHealth(): Potion {Stats{0,0,0,0}} {}
 RestoreHealth::~RestoreHealth() {}
 
 void RestoreHealth::itemUsedBy(shared_ptr<Character> character) {
+	auto self = static_pointer_cast<Potion>(shared_from_this());
+
 	character->setHealth(character->getHealth() + 10);
+	character->setKnowledgeOf(self, true);
+
+	ItemUsed msg {character, self};
+	notifyObservers(msg);
 }
 
 PoisonHealth::PoisonHealth(): Potion {Stats{0,0,0,0}} {}
@@ -35,5 +41,11 @@ PoisonHealth::PoisonHealth(): Potion {Stats{0,0,0,0}} {}
 PoisonHealth::~PoisonHealth() {}
 
 void PoisonHealth::itemUsedBy(shared_ptr<Character> character) {
+	auto self = static_pointer_cast<Potion>(shared_from_this());
+
 	character->setHealth(character->getHealth() - 10);
+	character->setKnowledgeOf(self, true);
+
+	ItemUsed msg {character, self};
+	notifyObservers(msg);
 }

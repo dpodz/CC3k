@@ -4,10 +4,11 @@
 
 using namespace std;
 
-Modifier::Modifier(shared_ptr<StatsContainer> component): mComponent{component} { }
+Modifier::Modifier(shared_ptr<StatsContainer> component, Stats stats): 
+	StatsContainer{stats}, mComponent {component} { }
 
 Modifier::~Modifier() { }
 
-Stats Modifier::getBaseStats() {
-	return component->getBaseStats();
+Stats Modifier::getBaseStats() const {
+	return mComponent->getBaseStats();
 }

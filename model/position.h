@@ -29,7 +29,7 @@ struct Position {
 		return {x,y};
 	}
 
-	Position calcDirectionGivenPos(Position oldPos) {
+	Direction calcDirectionGivenPos(Position oldPos) {
 		switch (x - oldPos.x) {
 			case -1:
 				switch (y - oldPos.y) {

@@ -4,10 +4,10 @@ StatsContainer::StatsContainer(Stats stats): mStats(stats) {}
 
 StatsContainer::~StatsContainer() { }
 
-Stats StatsContainer::getStats() {
+Stats StatsContainer::getStats() const {
 	return mStats;
 }
 
-Stats StatsContainer::getBaseStats() {
+Stats StatsContainer::getBaseStats() const {
 	return mStats;
 }

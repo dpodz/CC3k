@@ -7,8 +7,6 @@
 
 class AdditiveModifier : public Modifier {
 
-	Stats mStatOffsets;
-
 public:
 	AdditiveModifier(std::shared_ptr<StatsContainer>, Stats);
 	~AdditiveModifier();
