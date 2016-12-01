@@ -82,13 +82,18 @@ void Cell::removeEntity(shared_ptr<Entity> entity) {
 }
 
 void Cell::walkedOn(shared_ptr<Character> character) {
-	for (auto & entity : mEntities) {
-		entity->walkedOnBy(character);
+	// Making copy is required, since elements in original may be deleted
+	auto entities = mEntities;
+	for (auto & entity : entities) {
+		if (entity != character) {
+			entity->walkedOnBy(character);
+		}
 	}
 }
 
 void Cell::lookedOn(shared_ptr<Character> character) {
-	for (auto & entity : mEntities) {
+	auto entities = mEntities; 
+	for (auto & entity : entities) {
 		entity->lookedOnBy(character);
 	}
 }

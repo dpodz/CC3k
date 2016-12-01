@@ -11,7 +11,7 @@ using namespace std;
 
 int main() {
  	
-	string mapString = "custom.map";
+	string mapString = "test.map";
 
 	auto game = make_shared<Game>();
 
