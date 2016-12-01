@@ -28,6 +28,32 @@ struct Position {
 		}
 		return {x,y};
 	}
+
+	Position calcDirectionGivenPos(Position oldPos) {
+		switch (x - oldPos.x) {
+			case -1:
+				switch (y - oldPos.y) {
+					case -1: return Direction::NW;
+					case 0: return Direction::WE;
+					case 1: return Direction::SW;
+				}
+				break;
+			case 0:
+				switch (y - oldPos.y) {
+					case -1: return Direction::NO;
+					case 1: return Direction::SO;
+				}
+				break;
+			case 1:
+				switch (y - oldPos.y) {
+					case -1: return Direction::NE;
+					case 0: return Direction::EA;
+					case 1: return Direction::SE;
+				}
+				break;
+		}
+		return Direction::NO;
+	}
 };
 
 #endif // POSITION_H

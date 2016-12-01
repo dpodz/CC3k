@@ -46,6 +46,19 @@ const map<type_index, entityInfo> entityInfoMap {
 	{typeid(DragonHoard), {'G', "Dragon Hoard"}}
 };
 
+const map<Direction, string> directionStringMap {
+	{ Direction::NO, "NO"}, 
+	{ Direction::SO, "SO"}, 
+	{ Direction::EA, "EA"}, 
+	{ Direction::WE, "WE"}, 
+	{ Direction::NE, "NE"},
+	{ Direction::NW, "NW"},
+	{ Direction::SE, "SE"},
+	{ Direction::SW, "SW"}
+}
+
+
+
 CLIView::CLIView(shared_ptr<Character> player, shared_ptr<Game> game):
 	mPlayer {player}, mGame {game}, mMessages {}, mLevel {1} {}
 
@@ -152,57 +165,93 @@ void CLIView::notify(DebugMessage & dm) {
 	cout << "Debug Message: " << dm.message << endl;
 }
 
-void CLIView::notify(CharacterDeath & cd) {
-	string killerName;
-	string killedName;
-	
-	if (dynamic_pointer_cast<Shade>(cd.killer)) { killerName = "Shade"; } 
-	else { killerName = "Not a Shade"; }
-	
-	if (dynamic_pointer_cast<Shade>(cd.killed)) { killedName = "Shade"; }
-	else { killerName = "Not a Shade"; }
-	
-	mMessages << killerName << " killed " << killedName << ". ";
-	//updateView(vector<Position>{cd.killer->getPos, cd.killed->getPos});
+void CLIView::notify(CharacterDeath & msg) {
+	if (msg.killed == mPlayer) {
+		mMessages << "PC dies. "
+	}
+	else {
+		mMessages << entityInfoMap.at(typeid(msg.killed)).name
+			<< " dies."
+	}
 }
 
-//TODO
-void CLIView::notify(CharacterAttack & ca) {
-	mMessages << "A character attacked another character for " << ca.damage << " damage! ";
+// Macro to save code
+#define getEntityString(FIELD) \
+	if (msg.FIELD == mPlayer) { \
+		FIELD = "PC"; \
+	} else { \
+		FIELD = entityInfoMap.at(typeid(msg.FIELD)).name; \
+	} 
+// Macro end
+
+//TODO: Add misses
+void CLIView::notify(CharacterAttack & msg) {
+	string attacker;
+	string defender;
+
+	getEntityString(attacker)
+	getEntityString(defender)
+
+	mMessages << attacker << " deals " << msg.damage
+		<< " damage to " << defender;
+
+	if (msg.defender != mPlayer) {
+		mMessages << "(" << msg.defender->getHealth() << "). ";
+	}
+	else {
+		mMessages << ". ";
+	}
 }
 
-//TODO
-void CLIView::notify(ItemUsed & iu) {
-	mMessages << "A character used an item. ";
+void CLIView::notify(ItemUsed & msg) {
+	if (mPlayer == msg.character) {
+		mMessages << "PC used a " << 
+			entityInfoMap.at(typeid(msg.item)).name; 
+	} else {
+		mMessages << "Enemy used an item??? ";
+	}	
 }
 
-//TODO
-void CLIView::notify(EntityCreated & ec) {
+// Debug currently
+void CLIView::notify(EntityCreated & msg) {
 	mMessages << "An entity was created. ";
 }
 
-//TODO
-void CLIView::notify(EntityRemoved & er) {
+// Debug currently
+void CLIView::notify(EntityRemoved & msg) {
 	mMessages << "An entity was removed. ";
 }
 
-//TODO
-void CLIView::notify(GridCreated & mc) {
+void CLIView::notify(GridCreated & msg) {
 	mMessages << "Grid created. ";
 	mGame = mc.theGame;
 }
 
-//TODO
-void CLIView::notify(EntityObserved & eo) {
-	mMessages << "An entity observed an entity. ";
+// TODO: Add knowledge
+void CLIView::notify(EntityObserved & msg) {
+	if (mPlayer == msg.observer) {
+		Position playerPos = mPlayer->getPos();
+		Direction dir = msg.observed->getPos()
+			.calcDirectionGivenPos(playerPos);
+		mMessages << "PC sees a " <<
+			entityInfoMap.at(typeid(msg.observed)).name
+			<< " (WIP).";
+	}
 }
 
-//TODO
-void CLIView::notify(ItemPickedUp & ipu) {
-	mMessages << "An item was picked up. ";
+void CLIView::notify(ItemPickedUp & msg) {
+	if (mPlayer == msg.character) {
+		mMessages << "PC picked up " << 
+			entityInfoMap.at(typeid(msg.item)).name; 
+	} else {
+		mMessages << "Enemy picked up item??? ";
+	}	
 }
 
-//TODO
-void CLIView::notify(EntityMoved & cm) {
-	mMessages << "An entity moved. ";
+void CLIView::notify(EntityMoved & msg) {
+	if (mPlayer == msg.entity) {
+		Position newPos = mPlayer->getPos();
+		Direction dir = newPos.calcDirectionGivenPos(msg.oldPos);
+		mMessages << "PC moved " << directionStringMap.at(dir) << ". ";
+	}
 }
