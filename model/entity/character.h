@@ -31,7 +31,7 @@ class Character : public Entity {
 	Stats mCharStats;
 	int mCurHP;
 	int mMaxHP;
-	
+protected:	
 	// So we can call this in the overloaded getAttackedBy() method
 	void takeDamage(int);
 
@@ -53,8 +53,7 @@ public:
 	FactionId getFaction() const;
 	void setFaction(FactionId);
 
-	virtual void attack(std::shared_ptr<Character>);
-	virtual void attack(std::shared_ptr<Character>, int);
+	virtual void attack(std::shared_ptr<Character>)=0;
 	// Overloading for different classes
 	virtual void getAttackedBy(std::shared_ptr<Vampire>, int);
 	virtual void getAttackedBy(std::shared_ptr<Drow>, int);
