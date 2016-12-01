@@ -141,8 +141,9 @@ void CLIController::playGame() {
 			for (int j = 0 ; j < mGame->getGridSize().y ; j++) {
 				try {
 					shared_ptr<Character> charCheck = mGame->getCell(i,j)->getCharacter();
-					computerPlayers.emplace_back(charCheck);
+					if (charCheck != mPlayer) {computerPlayers.emplace_back(charCheck); }
 				}
+				catch (...) { }
 			}
 		}
 
@@ -154,6 +155,7 @@ void CLIController::playGame() {
 		mView->turnUpdate();
 
 		cout << "Enter a valid command: ";
+		}
 	}
 }
 

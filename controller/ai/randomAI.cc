@@ -25,7 +25,7 @@ void RandomAI::processTurn(std::shared_ptr<Character> charToMove) {
 				charToMove->attack(checkChar);
 				return;
 			}
-		}
+		} catch (...) { }
 	}}}
 	
 	//if dragon, special logic TODO
