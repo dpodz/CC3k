@@ -17,33 +17,34 @@ using namespace std;
 struct entityInfo {
 	char mapIcon;
 	string name;
+	string unknownName;
 };
 
 const map<type_index, entityInfo> entityInfoMap {
-	{typeid(Shade), {'?', "Shade"}},
-	{typeid(Vampire), {'?', "Vampire"}},
-	{typeid(Drow), {'?', "Drow"}},
-	{typeid(Goblin), {'?', "Goblin"}},
-	{typeid(Troll), {'?', "Troll"}},
-	{typeid(Human), {'H', "Human"}},
-	{typeid(Dwarf), {'W', "Dwarf"}},
-	{typeid(Elf), {'E', "Elf"}},
-	{typeid(Orc), {'O', "Orc"}},
-	{typeid(Merchant), {'M', "Merchant"}},
-	{typeid(Dragon), {'D', "Dragon"}},
-	{typeid(Halfling),{'L', "Halfling"}},
-	{typeid(Potion), {'P', "Potion"}},
-	{typeid(RestoreHealth), {'P', "Restore Health"}},
-	{typeid(BoostAtk), {'P', "Boost Attack"}},
-	{typeid(BoostDef), {'P', "Boost Defence"}},
-	{typeid(PoisonHealth), {'P', "Poison Health"}},
-	{typeid(WoundAtk), {'P', "Wound Attack"}},
-	{typeid(WoundDef), {'P', "Wound Defence"}},
-	{typeid(Treasure), {'G', "Treasure"}},
-	{typeid(SmallGold), {'G', "Small Gold"}},
-	{typeid(NormalGold), {'G', "Normal Gold"}},
-	{typeid(MerchantHoard), {'G', "Merchant Hoard"}},
-	{typeid(DragonHoard), {'G', "Dragon Hoard"}}
+	{typeid(Shade), {'?', "Shade", "Shade"}},
+	{typeid(Vampire), {'?', "Vampire", "Vampire"}},
+	{typeid(Drow), {'?', "Drow", "Drow"}},
+	{typeid(Goblin), {'?', "Goblin", "Goblin"}},
+	{typeid(Troll), {'?', "Troll", "Troll"}},
+	{typeid(Human), {'H', "Human", "Human"}},
+	{typeid(Dwarf), {'W', "Dwarf", "Dwarf"}},
+	{typeid(Elf), {'E', "Elf", "Elf"}},
+	{typeid(Orc), {'O', "Orc", "Orc"}},
+	{typeid(Merchant), {'M', "Merchant", "Merchant"}},
+	{typeid(Dragon), {'D', "Dragon", "Dragon"}},
+	{typeid(Halfling),{'L', "Halfling", "Halfling"}},
+	{typeid(Potion), {'P', "Potion", "Potion"}},
+	{typeid(RestoreHealth), {'P', "Restore Health", "Potion"}},
+	{typeid(BoostAtk), {'P', "Boost Attack", "Potion"}},
+	{typeid(BoostDef), {'P', "Boost Defence", "Potion"}},
+	{typeid(PoisonHealth), {'P', "Poison Health", "Potion"}},
+	{typeid(WoundAtk), {'P', "Wound Attack", "Potion"}},
+	{typeid(WoundDef), {'P', "Wound Defence", "Potion"}},
+	{typeid(Treasure), {'G', "Treasure", "Treasure"}},
+	{typeid(SmallGold), {'G', "Small Gold", "Small Gold"}},
+	{typeid(NormalGold), {'G', "Normal Gold", "Normal Gold"}},
+	{typeid(MerchantHoard), {'G', "Merchant Hoard", "Merchant Hoard"}},
+	{typeid(DragonHoard), {'G', "Dragon Hoard", "Dragon Hoard"}}
 };
 
 const map<Direction, string> directionStringMap {
@@ -210,14 +211,12 @@ void CLIView::notify(ItemUsed & msg) {
 	}	
 }
 
-// Debug currently
 void CLIView::notify(EntityCreated & msg) {
-	mMessages << "An entity was created. ";
+	//mMessages << "An entity was created. ";
 }
 
-// Debug currently
 void CLIView::notify(EntityRemoved & msg) {
-	mMessages << "An entity was removed. ";
+	//mMessages << "An entity was removed. ";
 }
 
 void CLIView::notify(GridCreated & msg) {
@@ -225,22 +224,29 @@ void CLIView::notify(GridCreated & msg) {
 	mGame = msg.theGame;
 }
 
-// TODO: Add knowledge
 void CLIView::notify(EntityObserved & msg) {
 	if (mPlayer == msg.observer) {
 		Position playerPos = mPlayer->getPos();
+
+		entityInfo info = entityInfoMap.at(typeid(*msg.observed));
+
+		string entityName = info.unknownName;
+
+		if (mPlayer->hasKnowledgeOf(msg.observed)) {
+			entityName = info.name;
+		}
+
 		Direction dir = msg.observed->getPos()
 			.calcDirectionGivenPos(playerPos);
-		mMessages << "PC sees a " <<
-			entityInfoMap.at(typeid(*msg.observed)).name
-			 << " in " << directionStringMap.at(dir) << " (WIP).";
+		mMessages << "PC sees a " << entityName
+			 << " in " << directionStringMap.at(dir) << ". ";
 	}
 }
 
 void CLIView::notify(ItemPickedUp & msg) {
 	if (mPlayer == msg.character) {
 		mMessages << "PC picked up " << 
-			entityInfoMap.at(typeid(*msg.item)).name; 
+			entityInfoMap.at(typeid(*msg.item)).name << ". "; 
 	} else {
 		mMessages << "Enemy picked up item??? ";
 	}	

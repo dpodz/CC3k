@@ -47,7 +47,7 @@ void Character::setStatsContainer(shared_ptr<StatsContainer> statsContainer) {
 }
 
 bool Character::hasKnowledgeOf(shared_ptr<Entity> entity) const {
-	auto search = mKnowledge.find(typeid(entity));
+	auto search = mKnowledge.find(typeid(*entity));
 
 	if (search != mKnowledge.end()) {
 		return search->second;
@@ -57,7 +57,7 @@ bool Character::hasKnowledgeOf(shared_ptr<Entity> entity) const {
 }
 
 void Character::setKnowledgeOf(shared_ptr<Entity> entity, bool knows) {
-	mKnowledge[typeid(entity)] = knows;
+	mKnowledge[typeid(*entity)] = knows;
 }
 
 FactionId Character::getFaction() const {
