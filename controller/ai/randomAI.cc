@@ -7,19 +7,24 @@
 
 using namespace std;
 
+RandomAI::RandomAI(shared_ptr<Game> theGame): CharacterAI{theGame} { }
+RandomAI::~RandomAI() { }
+
 void RandomAI::processTurn(std::shared_ptr<Character> charToMove) {
 	Position charPos = charToMove->getPos();
 	
 	//loop through all cells around character
 	//check if should attack
 	for (int i = -1 ; i <= 1 ; i++){ for (int j = -1 ; j <= 1 ; j++) { if (i != 0 && j !=0) {
-		shared_ptr<Character> checkChar = mGame->getCell(charPos.x+i, charPos.y+j)->getCharacter();
-		if (checkChar && mGame->getFactionRelation(charToMove->getFaction(),
-							   checkChar->getFaction()) 
-					== FactionRelation::hostile) {
-			//if hostile, attack!
-			charToMove->attack(checkChar);
-			return;
+		try {
+			shared_ptr<Character> checkChar = mGame->getCell(charPos.x+i, charPos.y+j)->getCharacter();
+			if (checkChar && mGame->getFactionRelation(charToMove->getFaction(),
+								   checkChar->getFaction()) 
+						== FactionRelation::hostile) {
+				//if hostile, attack!
+				charToMove->attack(checkChar);
+				return;
+			}
 		}
 	}}}
 	

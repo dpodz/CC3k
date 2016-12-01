@@ -9,11 +9,9 @@ class Game;
 class CharacterAI {
 protected:
 	std::shared_ptr<Game> mGame;
-
 public:
 	CharacterAI(std::shared_ptr<Game>);
 	~CharacterAI();
-
 	virtual void processTurn(std::shared_ptr<Character>) = 0;
 };
 

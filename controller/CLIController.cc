@@ -4,6 +4,7 @@
 #include <exception>
 #include "CLIController.h"
 #include "controller.h"
+#include "ai/randomAI.h"
 #include "../model/game.h"
 #include "../model/position.h"
 #include "../model/entity/baseCharacters.h"
@@ -86,6 +87,10 @@ void CLIController::playGame() {
 
 	mGame->createNewEntities();
 
+	// initialize AI to use random AI
+
+	mAI = make_shared<RandomAI>(mGame);
+
 	// player moves
 	mView->updateView();
 	mView->turnUpdate();
@@ -129,6 +134,21 @@ void CLIController::playGame() {
 				break;
 			}
 		}
+		
+		// Computer players make moves
+		vector<shared_ptr<Character>> computerPlayers;
+		for (int i = 0 ; i < mGame->getGridSize().x ; i++) {
+			for (int j = 0 ; j < mGame->getGridSize().y ; j++) {
+				try {
+					shared_ptr<Character> charCheck = mGame->getCell(i,j)->getCharacter();
+					computerPlayers.emplace_back(charCheck);
+				}
+			}
+		}
+
+		while (computerPlayers.size() > 0) {
+			mAI->processTurn(computerPlayers.back());
+			computerPlayers.pop_back();
 
 		mView->updateView();
 		mView->turnUpdate();
