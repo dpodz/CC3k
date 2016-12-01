@@ -57,9 +57,9 @@ void Goblin::getAttackedBy(shared_ptr<Orc> attacker, int attackDamage) {
 	this->takeDamage(attackDamage * 1.5); // take extra damage from Orcs
 }
 
-//TODO: increase gold by 5 on kill
-void Goblin::onKill() { }
-
+void Goblin::onKill() { 
+	this->setHealth(getHealth() + 5);	// increase gold by 5 on kill
+}
 
 //TROLL
 Troll::Troll(): Character{1, Stats{25, 15, 5, 1.0}, 120, 120} { }
@@ -111,7 +111,7 @@ Elf::~Elf() { }
 void Elf::attack(shared_ptr<Character> defender) {
 	// send the character and its attack value to the enemy
 	int numAttacks = 2;
-	if (typeid(defender) == typeid(Elf)) { numAttacks = 1; }
+	if (typeid(defender) == typeid(Drow)) { numAttacks = 1; }
 	for (int i = 0 ; i < numAttacks ; i++) {
 		defender->getAttackedBy(static_pointer_cast<Elf>(shared_from_this()), this->getStats().attack);
 	}
