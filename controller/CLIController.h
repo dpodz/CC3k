@@ -7,10 +7,12 @@
 
 class Game;
 class Character;
+class CharacterAI;
 
 class CLIController : public Controller, public Subject,
 	public std::enable_shared_from_this<CLIController> {
 
+	std::shared_ptr<CharacterAI> mAI;
 	std::shared_ptr<Character> mPlayer;
 	std::string mFileName;
 	bool mUsePreset;
