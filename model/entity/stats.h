@@ -6,6 +6,7 @@ struct Stats {
 	int defence;
 	int healthRegen;
 	double potionStrength;
+	double dodge;
 };
 
 class StatsContainer {

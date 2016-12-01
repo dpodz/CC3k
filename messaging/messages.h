@@ -42,11 +42,12 @@ struct CharacterAttack: public BaseMessage {
 	std::shared_ptr<Character> attacker;
 	std::shared_ptr<Character> defender;
 	int damage;
+	bool isMiss;
 
 	virtual void notifyObserver( std::shared_ptr<Observer> ) override;
 
-	CharacterAttack(std::shared_ptr<Character> a, std::shared_ptr<Character> b, int c) : 
-		BaseMessage{}, attacker(a), defender(b), damage{c} {}
+	CharacterAttack(std::shared_ptr<Character> a, std::shared_ptr<Character> b, int c, bool d) : 
+		BaseMessage{}, attacker(a), defender(b), damage{c}, isMiss{d} {}
 };
 
 // Item Used

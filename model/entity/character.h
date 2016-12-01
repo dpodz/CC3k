@@ -33,7 +33,7 @@ class Character : public Entity {
 	int mMaxHP;
 protected:	
 	// So we can call this in the overloaded getAttackedBy() method
-	void takeDamage(std::shared_ptr<Character>);
+	bool takeDamage(std::shared_ptr<Character>);
 
 public:
 	Character(FactionId, Stats, int curHP, int maxHP);

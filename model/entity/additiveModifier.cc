@@ -3,6 +3,7 @@
 #include "stats.h"
 #include <vector>
 #include <memory>
+#include <math.h>
 
 using namespace std;
 
@@ -12,14 +13,13 @@ AdditiveModifier::AdditiveModifier(shared_ptr<StatsContainer> statsContainer, St
 
 AdditiveModifier::~AdditiveModifier() { }
 
-
 Stats AdditiveModifier::getStats() const {
 	Stats charStats = mComponent->getStats();
 
-	Stats newStats{charStats.attack + mStats.attack, 
-		charStats.defence + mStats.defence, 
-		charStats.healthRegen + mStats.healthRegen,
-		charStats.potionStrength + mStats.potionStrength};
+	Stats newStats{charStats.attack + (int)ceil(mStats.attack * charStats.potionStrength), 
+		charStats.defence + (int)ceil(mStats.defence * charStats.potionStrength), 
+		charStats.healthRegen + (int)ceil(mStats.healthRegen * charStats.potionStrength),
+		charStats.potionStrength + mStats.potionStrength * charStats.potionStrength};
 
 	return newStats;
 }

@@ -30,6 +30,7 @@ public:
 	Drow();
 	~Drow();
 	void attack(std::shared_ptr<Character>) override;
+	void getAttackedBy(std::shared_ptr<Elf>) override;
 };
 
 //Goblin
@@ -66,6 +67,7 @@ public:
 	Dwarf();
 	~Dwarf();
 	void attack(std::shared_ptr<Character>) override;
+	void getAttackedBy(std::shared_ptr<Vampire>) override;
 };
 
 //Halfling
@@ -94,11 +96,14 @@ public:
 
 //Dragon
 class Dragon: public Character {
-	std::shared_ptr<DragonHoard> treasure;
+	std::shared_ptr<DragonHoard> mHoard;
 public:
 	Dragon();
 	~Dragon();
 	void attack(std::shared_ptr<Character>) override;
+
+	std::shared_ptr<DragonHoard> getHoard() const;
+	void setHoard(std::shared_ptr<DragonHoard>);
 };
 
 //Merchant
