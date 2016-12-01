@@ -7,7 +7,7 @@ class Character;
 class Game;
 
 class CharacterAI {
-
+protected:
 	std::shared_ptr<Game> mGame;
 
 public:
