@@ -27,6 +27,7 @@ class Character : public Entity {
 
 	std::map<std::type_index, bool> mKnowledge;
 	FactionId mFaction;
+	std::shared_ptr<StatsContainer> mStats;
 	Stats mCharStats;
 	int mCurHP;
 	int mMaxHP;
@@ -43,6 +44,8 @@ public:
 	virtual void setHealth(int); 
 
 	virtual Stats getStats() const;
+	virtual std::shared_ptr<StatsContainer> getStatsContainer() const;
+	virtual void setStatsContainer(std::shared_ptr<StatsContainer>);
 
 	bool hasKnowledgeOf(std::shared_ptr<Entity>) const;
 	void setKnowledgeOf(std::shared_ptr<Entity>, bool);

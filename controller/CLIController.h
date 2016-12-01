@@ -3,11 +3,12 @@
 
 #include "controller.h"
 #include <memory>
+#include "../messaging/subject.h"
 
 class Game;
 class Character;
 
-class CLIController : public Controller, 
+class CLIController : public Controller, public Subject,
 	public std::enable_shared_from_this<CLIController> {
 
 	std::shared_ptr<Character> mPlayer;

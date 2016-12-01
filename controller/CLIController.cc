@@ -1,6 +1,7 @@
 #include <memory>
 #include <iostream>
 #include <string>
+#include <exception>
 #include "CLIController.h"
 #include "controller.h"
 #include "../model/game.h"
@@ -11,6 +12,8 @@
 
 #include "../view/CLIView.h"
 #include "../messaging/observer.h"
+#include "../messaging/subject.h"
+#include "../messaging/messages.h"
 
 using namespace std;
 
@@ -33,7 +36,11 @@ const map <string, Direction> strToDir {
 
 void CLIController::playGame() {
 
-	cout << "Game starts" << endl;
+	cout << "Select a Race" << endl;
+
+	// TODO: Race selection here
+
+
 
 	mPlayer = make_shared<Shade>();
 	// Generate new grid
@@ -45,6 +52,7 @@ void CLIController::playGame() {
 	observers.push_back(shared_from_this());
 
 	mPlayer->attach(observers);
+	shared_from_this()->attach(observers);
 
 	shared_ptr<GridInit> gridInit;
 
@@ -63,37 +71,57 @@ void CLIController::playGame() {
 
 	mGame->createNewEntities();
 
-
 	// player moves
 	mView->updateView();
 	cout << "Enter a valid command: ";
 
 	string cmd;
 	while (cin >> cmd) {
+		bool valid = true;
+		try {
+			if (cmd == "q") return;
 
-		if (cmd == "q") return;
+			else if (cmd == "no" || cmd == "so" || cmd == "ea" || cmd == "we" 
+				|| cmd == "ne" || cmd == "nw" || cmd == "se" || cmd == "sw") {
+				mGame->move(mPlayer, strToDir.at(cmd));
+			} else if (cmd == "a") {
+				string dir;
+				cin >> dir;
+				mGame->attack(mPlayer, strToDir.at(dir));
+			} else if (cmd == "u") {
+				string dir;
+				cin >> dir;
+				mGame->usePotion(mPlayer, strToDir.at(dir));
+			} else if (cmd == "r") {
 
-		else if (cmd == "no" || cmd == "so" || cmd == "ea" || cmd == "we" 
-			|| cmd == "ne" || cmd == "nw" || cmd == "se" || cmd == "sw") {
-			mGame->move(mPlayer, strToDir.at(cmd));
-		} else if (cmd == "a") {
-			string dir;
-			cin >> dir;
-			mGame->attack(mPlayer, strToDir.at(dir));
-		} else if (cmd == "u") {
-			string dir;
-			cin >> dir;
-			mGame->usePotion(mPlayer, strToDir.at(dir));
+			} else if (cmd == "f") {
+
+			} else {
+				throw invalid_argument("");
+			}
+		}
+		catch (exception) {
+			DebugMessage msg ("Invalid command entered");
+			notifyObservers(msg);
+			valid = false;
+		}
+
+		if (valid) {
+			bool gameOver = gameCycle();
+			if (gameOver) {
+				mView->updateView();
+				break;
+			}
 		}
 
 		mView->updateView();
 		mView->turnUpdate();
+
 		cout << "Enter a valid command: ";
 	}
 }
 
 
 bool CLIController::gameCycle() {
-	// TODO:
 	return false;
 }

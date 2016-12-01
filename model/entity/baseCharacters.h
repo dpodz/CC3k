@@ -65,7 +65,7 @@ class Halfling : public Character {
 public:
 	Halfling();
 	~Halfling();
-	void getAttackedBy(std::shared_ptr<Character>) override;
+	//void getAttackedBy(std::shared_ptr<Character>) override;
 };
 
 //Elf

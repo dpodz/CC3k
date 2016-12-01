@@ -4,6 +4,10 @@
 
 using namespace std;
 
-Modifier::Modifier(shared_ptr<Character> component): mComponent{component} { }
+Modifier::Modifier(shared_ptr<StatsContainer> component): mComponent{component} { }
 
 Modifier::~Modifier() { }
+
+Stats Modifier::getBaseStats() {
+	return component->getBaseStats();
+}

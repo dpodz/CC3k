@@ -57,7 +57,7 @@ Halfling::Halfling(): Character{2, Stats{15, 20, 0, 1.0}, 100, 100} { }
 Halfling::~Halfling() { }
 
 // TODO
-void Halfling::getAttackedBy(shared_ptr<Character> Character) { }
+// void Halfling::getAttackedBy(shared_ptr<Character> Character) { }
 
 //Elf
 Elf::Elf(): Character{2, Stats{30, 10, 0, 1.0}, 140, 140} { }

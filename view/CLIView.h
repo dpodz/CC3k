@@ -16,6 +16,7 @@ class CLIView : public View {
 	std::shared_ptr<Character> mPlayer;
 	std::shared_ptr<Game> mGame;
 	std::ostringstream mMessages;
+	int mLevel;
 	
 	bool checkIfVerticalWall(int, int);
 	void printGrid();
