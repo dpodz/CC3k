@@ -28,6 +28,7 @@ bool Entity::canWalkOn() { return false; }
 
 void Entity::lookedOnBy(std::shared_ptr<Character> character) {
 	EntityObserved msg {character, shared_from_this()};
+	notifyObservers(msg);
 }
 
 void Entity::walkedOnBy(std::shared_ptr<Character> character) { }

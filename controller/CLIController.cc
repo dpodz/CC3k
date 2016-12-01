@@ -46,13 +46,9 @@ void CLIController::playGame() {
 	// Generate new grid
 	mView = make_shared<CLIView>(mPlayer, mGame); 
 	
-	vector<shared_ptr<Observer>> observers(3);
-	observers.push_back(mView);
-	observers.push_back(mGame->getGrid());
-	observers.push_back(shared_from_this());
-
-	mPlayer->attach(observers);
-	shared_from_this()->attach(observers);
+	auto observers = make_shared<vector<shared_ptr<Observer>>>(3);
+	observers->push_back(mView);
+	observers->push_back(shared_from_this());
 
 	shared_ptr<GridInit> gridInit;
 
@@ -64,10 +60,13 @@ void CLIController::playGame() {
 	}
 	
 	mGame->setGridGen(gridInit);
-	
 	mGame->generateNewGrid();
 
-	mGame->attach(observers);
+	observers->push_back(mGame->getGrid());
+
+	mPlayer->attach(*observers);
+	shared_from_this()->attach(*observers);
+	mGame->attach(*observers);
 
 	mGame->createNewEntities();
 

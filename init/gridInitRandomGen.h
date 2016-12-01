@@ -15,7 +15,7 @@ class GridInitRandomGen : public GridInit {
 
 	std::shared_ptr<Character> mPlayer;
 	std::ifstream mFile;
-	std::vector<std::shared_ptr<Observer>> mObservers;
+	std::shared_ptr<std::vector<std::shared_ptr<Observer>>> mObservers;
 
 	std::vector<std::vector<std::shared_ptr<Cell>>> mRooms;
 
@@ -23,7 +23,8 @@ class GridInitRandomGen : public GridInit {
 	std::shared_ptr<Entity> getRandomEntity(std::vector< std::shared_ptr<Entity> >);
 
 public:
-	GridInitRandomGen(std::shared_ptr<Character>, const std::string, std::vector<std::shared_ptr<Observer>>);
+	GridInitRandomGen(std::shared_ptr<Character>, const std::string, 
+		std::shared_ptr<std::vector<std::shared_ptr<Observer>>>);
 	~GridInitRandomGen();
 
 	virtual std::shared_ptr<Grid> createGrid() override;

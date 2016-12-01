@@ -36,7 +36,7 @@ const map<char, shared_ptr<Entity>(*)()> entityMap {
 };
 
 GridInitPreset::GridInitPreset(shared_ptr<Character> player, const string fileName,
-	vector<shared_ptr<Observer>> observers): 
+	shared_ptr<vector<shared_ptr<Observer>>> observers): 
 	GridInit {}, mPlayer {player}, mFile {fileName}, mObservers {observers} {}
 
 GridInitPreset::~GridInitPreset() {}
@@ -85,7 +85,7 @@ void GridInitPreset::createEntities(shared_ptr<Grid> theGrid) {
 				mPlayer->setPos(cell->getPos());
 			} else if(search != entityMap.end()) {
 				auto newEntity = search->second();
-				newEntity->attach(mObservers);
+				newEntity->attach(*mObservers);
 				newEntity->setPos(cell->getPos());
 				cell->addEntity(newEntity);
 			}

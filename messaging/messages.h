@@ -45,8 +45,8 @@ struct CharacterAttack: public BaseMessage {
 
 	virtual void notifyObserver( std::shared_ptr<Observer> ) override;
 
-	CharacterAttack(std::shared_ptr<Character> a, std::shared_ptr<Character> b) : 
-		BaseMessage{}, attacker(a), defender(b) {}
+	CharacterAttack(std::shared_ptr<Character> a, std::shared_ptr<Character> b, int c) : 
+		BaseMessage{}, attacker(a), defender(b), damage{c} {}
 };
 
 // Item Used

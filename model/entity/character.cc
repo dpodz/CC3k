@@ -4,9 +4,12 @@
 #include <typeindex>
 #include <math.h>
 #include "character.h"
+#include "baseCharacters.h"
 #include "stats.h"
 #include "../faction.h"
 #include "potion.h"
+#include "../../messaging/subject.h"
+#include "../../messaging/messages.h"
 
 using namespace std;
 
