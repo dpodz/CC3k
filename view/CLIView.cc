@@ -225,15 +225,20 @@ void CLIView::notify(GridCreated & msg) {
 	mGame = msg.theGame;
 }
 
-// TODO: Add knowledge
 void CLIView::notify(EntityObserved & msg) {
 	if (mPlayer == msg.observer) {
 		Position playerPos = mPlayer->getPos();
 		Direction dir = msg.observed->getPos()
 			.calcDirectionGivenPos(playerPos);
-		mMessages << "PC sees a " <<
+		if (mPlayer->hasKnowledgeOf(msg.observed)) {
+			mMessages << "PC sees a " <<
 			entityInfoMap.at(typeid(*msg.observed)).name
-			 << " in " << directionStringMap.at(dir) << " (WIP).";
+			 << " in " << directionStringMap.at(dir) << ". ";
+		} else {
+			mMessages << "PC sees an unknown potion" <<
+			" in " << directionStringMap.at(dir) << ". ";
+		}
+		
 	}
 }
 

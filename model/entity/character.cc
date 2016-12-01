@@ -107,6 +107,12 @@ void Character::getAttackedBy(std::shared_ptr<Dragon> attacker, int attackDamage
 }
 void Character::getAttackedBy(std::shared_ptr<Shade> attacker, int attackDamage){
 	this->takeDamage(attackDamage);
+
+	auto self = static_pointer_cast<Character>(shared_from_this());
+
+	CharacterAttack msg {attacker, self, attackDamage};
+	notifyObservers(msg);
+
 }
 
 int Character::getDroppedGold() const {

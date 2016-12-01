@@ -36,13 +36,29 @@ const map <string, Direction> strToDir {
 
 void CLIController::playGame() {
 
-	cout << "Select a Race" << endl;
+	string race = "";
+	cout << "Select a race (shade, drow, vampire, troll, goblin): ";
+	while (cin >> race) {
+		if (race == "shade") {
+			mPlayer = make_shared<Shade>();
+			break;
+		} else if (race == "drow") {
+			mPlayer = make_shared<Drow>();
+			break;
+		} else if (race == "vampire") {
+			mPlayer = make_shared<Vampire>();
+			break;
+		} else if (race == "troll") {
+			mPlayer = make_shared<Troll>();
+			break;
+		} else if (race == "goblin") {
+			mPlayer = make_shared<Goblin>();
+			break;
+		} else {
+			cout << "Select a race (shade, drow, vampire, troll, goblin): ";
+		}
+	}
 
-	// TODO: Race selection here
-
-
-
-	mPlayer = make_shared<Shade>();
 	// Generate new grid
 	mView = make_shared<CLIView>(mPlayer, mGame); 
 	
