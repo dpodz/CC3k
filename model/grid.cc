@@ -87,6 +87,13 @@ void Grid::attack(shared_ptr<Character> attacker, Direction dir) {
 	shared_ptr<Character> defender = getCell(defenderPos)->getCharacter();
 
 	attacker->attack(defender);
+
+	if (defender->getHealth() == 0) {
+		getCell(defenderPos)->removeEntity(defender);
+
+		CharacterDeath msg {attacker, defender};
+		notifyObservers(msg);
+	}
 }
 
 void Grid::usePotion(shared_ptr<Character> character, Direction dir) {
