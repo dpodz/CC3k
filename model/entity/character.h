@@ -33,7 +33,7 @@ class Character : public Entity {
 	int mMaxHP;
 protected:	
 	// So we can call this in the overloaded getAttackedBy() method
-	void takeDamage(int);
+	void takeDamage(std::shared_ptr<Character>);
 
 public:
 	Character(FactionId, Stats, int curHP, int maxHP);
@@ -55,18 +55,18 @@ public:
 
 	virtual void attack(std::shared_ptr<Character>) = 0;
 	// Overloading for different classes
-	virtual void getAttackedBy(std::shared_ptr<Vampire>, int);
-	virtual void getAttackedBy(std::shared_ptr<Drow>, int);
-	virtual void getAttackedBy(std::shared_ptr<Troll>, int);
-	virtual void getAttackedBy(std::shared_ptr<Goblin>, int);
-	virtual void getAttackedBy(std::shared_ptr<Human>, int);
-	virtual void getAttackedBy(std::shared_ptr<Dwarf>, int);
-	virtual void getAttackedBy(std::shared_ptr<Halfling>, int);
-	virtual void getAttackedBy(std::shared_ptr<Elf>, int);
-	virtual void getAttackedBy(std::shared_ptr<Orc>, int);
-	virtual void getAttackedBy(std::shared_ptr<Merchant>, int);
-	virtual void getAttackedBy(std::shared_ptr<Dragon>, int);
-	virtual void getAttackedBy(std::shared_ptr<Shade>, int);
+	virtual void getAttackedBy(std::shared_ptr<Vampire>);
+	virtual void getAttackedBy(std::shared_ptr<Drow>);
+	virtual void getAttackedBy(std::shared_ptr<Troll>);
+	virtual void getAttackedBy(std::shared_ptr<Goblin>);
+	virtual void getAttackedBy(std::shared_ptr<Human>);
+	virtual void getAttackedBy(std::shared_ptr<Dwarf>);
+	virtual void getAttackedBy(std::shared_ptr<Halfling>);
+	virtual void getAttackedBy(std::shared_ptr<Elf>);
+	virtual void getAttackedBy(std::shared_ptr<Orc>);
+	virtual void getAttackedBy(std::shared_ptr<Merchant>);
+	virtual void getAttackedBy(std::shared_ptr<Dragon>);
+	virtual void getAttackedBy(std::shared_ptr<Shade>);
 
 	virtual int getDroppedGold() const;
 	virtual int getScore() const;

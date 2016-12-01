@@ -39,7 +39,7 @@ public:
 	~Goblin();
 	void onKill() override;
 	void attack(std::shared_ptr<Character>) override;
-	void getAttackedBy(std::shared_ptr<Orc>, int) override;
+	void getAttackedBy(std::shared_ptr<Orc>) override;
 };
 
 //Troll

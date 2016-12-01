@@ -68,57 +68,62 @@ void Character::setFaction(FactionId factionId) {
 	mFaction = factionId;
 }
 
-void  Character::takeDamage(int damage){
-	int dmg = ceil((100.0 / ( 100.0+this->getStats().defence )) * damage);
+void  Character::takeDamage(shared_ptr<Character> attacker){
+	int attackerAtk = attacker->getStats().attack;
+	int dmg = ceil((100.0 / ( 100.0+this->getStats().defence )) * attackerAtk);
 	this->setHealth( this->getHealth() - dmg );
+
+	CharacterAttack msg {attacker, 
+		static_pointer_cast<Character>(shared_from_this()), dmg};
+	notifyObservers(msg);
 }
 
-void Character::getAttackedBy(std::shared_ptr<Vampire> attacker, int attackDamage){
-	this->takeDamage(attackDamage);
+void Character::getAttackedBy(shared_ptr<Vampire> attacker){
+	this->takeDamage(attacker);
 }
 
-void Character::getAttackedBy(std::shared_ptr<Drow> attacker, int attackDamage){
-	this->takeDamage(attackDamage);
+void Character::getAttackedBy(shared_ptr<Drow> attacker){
+	this->takeDamage(attacker);
 }
 
-void Character::getAttackedBy(std::shared_ptr<Troll> attacker, int attackDamage){
-	this->takeDamage(attackDamage);
+void Character::getAttackedBy(shared_ptr<Troll> attacker){
+	this->takeDamage(attacker);
 }
 
-void Character::getAttackedBy(std::shared_ptr<Goblin> attacker, int attackDamage){
-	this->takeDamage(attackDamage);
+void Character::getAttackedBy(shared_ptr<Goblin> attacker){
+	this->takeDamage(attacker);
 }
 
-void Character::getAttackedBy(std::shared_ptr<Human> attacker, int attackDamage){
-	this->takeDamage(attackDamage);
+void Character::getAttackedBy(shared_ptr<Human> attacker){
+	this->takeDamage(attacker);
 }
 
-void Character::getAttackedBy(std::shared_ptr<Dwarf> attacker, int attackDamage){
-	this->takeDamage(attackDamage);
+void Character::getAttackedBy(shared_ptr<Dwarf> attacker){
+	this->takeDamage(attacker);
 }
 
-void Character::getAttackedBy(std::shared_ptr<Halfling> attacker, int attackDamage){
-	this->takeDamage(attackDamage);
-
+void Character::getAttackedBy(shared_ptr<Halfling> attacker){
+	this->takeDamage(attacker);
 }
 
-void Character::getAttackedBy(std::shared_ptr<Elf> attacker, int attackDamage){
-	this->takeDamage(attackDamage);
+void Character::getAttackedBy(shared_ptr<Elf> attacker){
+	this->takeDamage(attacker);
 }
 
-void Character::getAttackedBy(std::shared_ptr<Orc> attacker, int attackDamage){
-	this->takeDamage(attackDamage);
+void Character::getAttackedBy(shared_ptr<Orc> attacker){
+	this->takeDamage(attacker);
 }
 
-void Character::getAttackedBy(std::shared_ptr<Merchant> attacker, int attackDamage){
-	this->takeDamage(attackDamage);
+void Character::getAttackedBy(shared_ptr<Merchant> attacker){
+	this->takeDamage(attacker);
 }
 
-void Character::getAttackedBy(std::shared_ptr<Dragon> attacker, int attackDamage){
-	this->takeDamage(attackDamage);
+void Character::getAttackedBy(shared_ptr<Dragon> attacker){
+	this->takeDamage(attacker);
 }
-void Character::getAttackedBy(std::shared_ptr<Shade> attacker, int attackDamage){
-	this->takeDamage(attackDamage);
+
+void Character::getAttackedBy(shared_ptr<Shade> attacker){
+	this->takeDamage(attacker);
 }
 
 int Character::getDroppedGold() const {
@@ -141,7 +146,7 @@ void Character::useItem(shared_ptr<Item> item) {
 
 bool Character::canWalkOn() { return false; }
 
-void Character::walkedOnBy(std::shared_ptr<Character>) {}
+void Character::walkedOnBy(shared_ptr<Character>) {}
 
 void Character::turnUpdate() {
 	setHealth(getHealth() + mCharStats->getStats().healthRegen);
