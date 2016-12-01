@@ -37,7 +37,7 @@ void RandomAI::processTurn(std::shared_ptr<Character> charToMove) {
 	vector<Direction> possibleMoves;
 	for (int i=-1;i<=1;i++) { for (int j=-1;j<=1;j++) { if (i != 0 && j !=0) {
 		Position newPos {charPos.x+i, charPos.y+j};
-		if (mGame->getCell(newPos)->canWalkOn()) {
+		if (mGame->getCell(newPos)->isValidMove()) {
 			possibleMoves.emplace_back(newPos.calcDirectionGivenPos(charPos));
 		}
 	}}}
