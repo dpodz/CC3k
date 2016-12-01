@@ -21,7 +21,7 @@ void Shade::attack(shared_ptr<Character> defender) {
 }
 
 //VAMPIRE
-Vampire::Vampire(): Character{1, Stats{25, 25, 0, 1.0}, 50, 50} { }
+Vampire::Vampire(): Character{1, Stats{25, 25, 0, 1.0}, 50, -1} { }
 Vampire::~Vampire() { }
 
 void Vampire::attack(shared_ptr<Character> defender) {
