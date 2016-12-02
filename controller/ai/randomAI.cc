@@ -15,7 +15,7 @@ void RandomAI::processTurn(std::shared_ptr<Character> charToMove) {
 	
 	//loop through all cells around character
 	//check if should attack
-	for (int i = -1 ; i <= 1 ; i++){ for (int j = -1 ; j <= 1 ; j++) { if (i != 0 && j !=0) {
+	for (int i = -1 ; i <= 1 ; i++){ for (int j = -1 ; j <= 1 ; j++) { if (i != 0 || j !=0) {
 		try {
 			shared_ptr<Character> checkChar = mGame->getCell(charPos.x+i, charPos.y+j)->getCharacter();
 			if (mGame->getFactionRelation(charToMove->getFaction(), checkChar->getFaction()) == FactionRelation::hostile) {
@@ -30,7 +30,7 @@ void RandomAI::processTurn(std::shared_ptr<Character> charToMove) {
 	if (typeid(*charToMove) == typeid(Dragon)) {
 		if (!static_pointer_cast<Dragon>(charToMove)->getHoard()) { return; } // if no hoard
 		Position hoardPos = static_pointer_cast<Dragon>(charToMove)->getHoard()->getPos();
-		for (int i = -1 ; i <= 1 ; i++) { for (int j=-1;j<=1;j++) { if(i!=0&&j!=0) {
+		for (int i = -1 ; i <= 1 ; i++) { for (int j=-1;j<=1;j++) { if(i!=0||j!=0) {
 			try {
 				shared_ptr<Character> checkChar = mGame->getCell(hoardPos.x+i, hoardPos.y+j)->getCharacter();
 				if (mGame->getFactionRelation(charToMove->getFaction(), checkChar->getFaction()) == FactionRelation::hostile) {
@@ -45,7 +45,7 @@ void RandomAI::processTurn(std::shared_ptr<Character> charToMove) {
 
 	//else, should move
 	vector<Direction> possibleMoves;
-	for (int i=-1;i<=1;i++) { for (int j=-1;j<=1;j++) { if (i != 0 && j !=0) { 
+	for (int i=-1;i<=1;i++) { for (int j=-1;j<=1;j++) { if (i != 0 || j !=0) { 
 		Position newPos {charPos.x+i, charPos.y+j};
 		shared_ptr<Cell> newCell = mGame->getCell(newPos);
 		//valid move, don't move into doors, and no entities (potions, gold)
