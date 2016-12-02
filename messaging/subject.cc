@@ -11,11 +11,11 @@ Subject::Subject() : mObservers {} {}
 
 Subject::~Subject() {}
 
-void Subject::attach(shared_ptr<Observer> observer) {
+void Subject::attach(weak_ptr<Observer> observer) {
 	mObservers.push_back(observer);
 }
 
-void Subject::attach(vector<shared_ptr<Observer>> observers) {
+void Subject::attach(vector<weak_ptr<Observer>> observers) {
 	for (auto & observer : observers) {
 		attach(observer);
 	}

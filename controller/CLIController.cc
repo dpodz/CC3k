@@ -67,7 +67,7 @@ void CLIController::playGame() {
 	// Generate new grid
 	mView = make_shared<CLIView>(mPlayer, mGame); 
 	
-	auto observers = make_shared<vector<shared_ptr<Observer>>>(3);
+	auto observers = make_shared<vector<weak_ptr<Observer>>>(3);
 	observers->push_back(mView);
 	observers->push_back(shared_from_this());
 

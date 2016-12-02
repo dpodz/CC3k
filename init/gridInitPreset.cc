@@ -37,7 +37,7 @@ const map<char, shared_ptr<Entity>(*)()> entityMap {
 };
 
 GridInitPreset::GridInitPreset(shared_ptr<Character> player, const string fileName,
-	shared_ptr<vector<shared_ptr<Observer>>> observers): 
+	shared_ptr<vector<weak_ptr<Observer>>> observers): 
 	GridInit {}, mPlayer {player}, mFile {fileName}, mObservers {observers} {}
 
 GridInitPreset::~GridInitPreset() {}

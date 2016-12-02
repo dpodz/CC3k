@@ -29,7 +29,7 @@ shared_ptr<Grid> Game::getGrid() const {
 	return mGrid;
 }
 
-void Game::attach(vector<shared_ptr<Observer>> observers) {
+void Game::attach(vector<weak_ptr<Observer>> observers) {
 	mGrid->attach(observers);
 	mGrid->attachCells(observers);
 }

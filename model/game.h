@@ -29,7 +29,7 @@ public:
 
 	std::shared_ptr<Grid> getGrid() const;
 
-	void attach(std::vector<std::shared_ptr<Observer>>);
+	void attach(std::vector<std::weak_ptr<Observer>>);
 
 	void setFactionRelation(FactionId, FactionId, FactionRelation);
 	FactionRelation getFactionRelation(FactionId, FactionId) const;

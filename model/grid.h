@@ -18,7 +18,7 @@ class Grid : public Observer, public Subject {
 
 	GridSize mSize;
 	std::vector<std::vector<std::shared_ptr<Cell>>> mCells;
-	std::vector<std::shared_ptr<Observer>> mObservers;
+	std::vector<std::weak_ptr<Observer>> mObservers;
 
 	bool checkBounds(Position);
 
@@ -37,7 +37,7 @@ public:
 	void attack(std::shared_ptr<Character>, Direction);
 	void usePotion(std::shared_ptr<Character>, Direction);
 
-	void attachCells(std::vector<std::shared_ptr<Observer>>);
+	void attachCells(std::vector<std::weak_ptr<Observer>>);
 
 	virtual void notify(CharacterDeath &) override;
 	virtual void notify(ItemPickedUp &) override;

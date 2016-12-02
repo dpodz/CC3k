@@ -100,7 +100,7 @@ void Grid::usePotion(shared_ptr<Character> character, Direction dir) {
 	getCell(potPos)->usePotion(character);
 }
 
-void Grid::attachCells(vector<shared_ptr<Observer>> observers) {
+void Grid::attachCells(vector<weak_ptr<Observer>> observers) {
 	for (auto & row: mCells) {
 		for (auto & cell : row) {
 			cell->attach(observers);

@@ -11,7 +11,7 @@
 using namespace std;
 
 GridInitRandomGen::GridInitRandomGen(shared_ptr<Character> player, const string fileName,
-	shared_ptr<vector<shared_ptr<Observer>>> observers): 
+	shared_ptr<vector<weak_ptr<Observer>>> observers): 
 	GridInit {}, mPlayer {player}, mFile {fileName}, mObservers {observers}, mRooms {} {}
 
 GridInitRandomGen::~GridInitRandomGen() {}
