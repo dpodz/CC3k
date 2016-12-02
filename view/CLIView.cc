@@ -159,8 +159,12 @@ void CLIView::turnUpdate() {
 	mMessages.str("");
 }
 
-void CLIView::notify(DebugMessage & dm) {
-	mMessages << "Debug Message: " << dm.message;
+void CLIView::notify(DebugMessage & msg) {
+	mMessages << "Debug Message: " << msg.message;
+}
+
+void CLIView::notify(InfoMessage & msg) {
+	mMessages << msg.message << " ";
 }
 
 void CLIView::notify(CharacterDeath & msg) {
@@ -190,8 +194,13 @@ void CLIView::notify(CharacterAttack & msg) {
 	getEntityString(attacker)
 	getEntityString(defender)
 
-	mMessages << attacker << " deals " << msg.damage
-		<< " damage to " << defender;
+	if (msg.isMiss) {
+		mMessages << attacker << " misses " << defender;
+	}
+	else {
+		mMessages << attacker << " deals " << msg.damage
+			<< " damage to " << defender;
+	}
 
 	if (msg.defender != mPlayer) {
 		mMessages << "(" << msg.defender->getHealth() << "). ";

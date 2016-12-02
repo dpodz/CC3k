@@ -20,6 +20,7 @@ public:
 	virtual void notify(ItemUsed &);
 	virtual void notify(ItemPickedUp &);
 	virtual void notify(GridCreated &);
+	virtual void notify(InfoMessage &);
 	virtual void notify(DebugMessage &);
 };
 

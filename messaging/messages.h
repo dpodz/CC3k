@@ -26,6 +26,16 @@ struct DebugMessage: public BaseMessage {
 		BaseMessage{}, message(a) {}
 };
 
+// Info Message
+struct InfoMessage: public BaseMessage {
+	std::string message;
+	
+	virtual void notifyObserver( std::shared_ptr<Observer> ) override;
+
+	InfoMessage(std::string a) : 
+		BaseMessage{}, message(a) {}
+};
+
 // Character Death
 struct CharacterDeath: public BaseMessage {
 	std::shared_ptr<Character> killer;

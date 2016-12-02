@@ -23,3 +23,5 @@ void Observer::notify(ItemPickedUp &) {}
 void Observer::notify(GridCreated &) {}
 
 void Observer::notify(DebugMessage &) {}
+
+void Observer::notify(InfoMessage &) {}

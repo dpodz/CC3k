@@ -38,27 +38,31 @@ const map <string, Direction> strToDir {
 void CLIController::playGame() {
 
 	string race = "";
-	cout << "Select a race (shade, drow, vampire, troll, goblin): ";
+	cout << "Select a race (Shade, Drow, vampire, troll, goblin): " << endl;
 	while (cin >> race) {
-		if (race == "shade") {
+		if (race == "s") {
 			mPlayer = make_shared<Shade>();
 			break;
-		} else if (race == "drow") {
+		} else if (race == "d") {
 			mPlayer = make_shared<Drow>();
 			break;
-		} else if (race == "vampire") {
+		} else if (race == "v") {
 			mPlayer = make_shared<Vampire>();
 			break;
-		} else if (race == "troll") {
+		} else if (race == "t") {
 			mPlayer = make_shared<Troll>();
 			break;
-		} else if (race == "goblin") {
+		} else if (race == "g") {
 			mPlayer = make_shared<Goblin>();
 			break;
+		} else if (race == "q") {
+			return;
 		} else {
-			cout << "Select a race (shade, drow, vampire, troll, goblin): ";
+			cout << "Select a race (shade, drow, vampire, troll, goblin): " << endl;
 		}
 	}
+
+	if (race == "") return;
 
 	// Generate new grid
 	mView = make_shared<CLIView>(mPlayer, mGame); 
@@ -134,32 +138,32 @@ void CLIController::playGame() {
 				break;
 			}
 		}
-		
-		// Computer players make moves
-		vector<shared_ptr<Character>> computerPlayers;
-		for (int i = 0 ; i < mGame->getGridSize().x ; i++) {
-			for (int j = 0 ; j < mGame->getGridSize().y ; j++) {
-				try {
-					shared_ptr<Character> charCheck = mGame->getCell(i,j)->getCharacter();
-					if (charCheck != mPlayer) {computerPlayers.emplace_back(charCheck); }
-				}
-				catch (...) { }
-			}
-		}
-
-		while (computerPlayers.size() > 0) {
-			mAI->processTurn(computerPlayers.back());
-			computerPlayers.pop_back();
 
 		mView->updateView();
 		mView->turnUpdate();
-
-		cout << "Enter a valid command: ";
-		}
 	}
 }
 
 
 bool CLIController::gameCycle() {
+
+	// Computer players make moves
+	vector<shared_ptr<Character>> computerPlayers;
+	for (int y = 0 ; y < mGame->getGridSize().y ; ++y) {
+		for (int x = 0 ; x < mGame->getGridSize().x ; ++x) {
+			try {
+				shared_ptr<Character> charCheck = mGame->getCell(x,y)->getCharacter();
+				if (charCheck != mPlayer) {
+					computerPlayers.emplace_back(charCheck); 
+				}
+			}
+			catch (...) { }
+		}
+	}
+
+	for (auto & character : computerPlayers) {
+		mAI->processTurn(character);
+	}
+
 	return false;
 }

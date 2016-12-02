@@ -6,6 +6,10 @@ void DebugMessage::notifyObserver( std::shared_ptr<Observer> observer ) {
 	observer->notify(*this);
 }
 
+void InfoMessage::notifyObserver( std::shared_ptr<Observer> observer ) {
+	observer->notify(*this);
+}
+
 void CharacterDeath::notifyObserver( std::shared_ptr<Observer> observer ) {
 	observer->notify(*this);
 }

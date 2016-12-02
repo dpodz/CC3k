@@ -111,7 +111,7 @@ void Dwarf::attack(shared_ptr<Character> defender) {
 
 void Dwarf::getAttackedBy(shared_ptr<Vampire> attacker) {
 	if(takeDamage(attacker)) {
-		attacker->setHealth( getHealth() - 5);	
+		attacker->setHealth( attacker->getHealth() - 5);	
 	}
 }
 

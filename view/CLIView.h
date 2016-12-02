@@ -39,6 +39,7 @@ public:
 	virtual void notify(ItemPickedUp &) override;
 	virtual void notify(GridCreated &) override;
 	virtual void notify(DebugMessage &) override;
+	virtual void notify(InfoMessage &) override;
 };
 
 #endif // CLI_VIEW_H
