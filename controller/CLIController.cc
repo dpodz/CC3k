@@ -95,6 +95,10 @@ void CLIController::playGame() {
 
 	mAI = make_shared<RandomAI>(mGame);
 
+	// setting default factions
+	mGame->setFactionRelation(2,1,FactionRelation::hostile);
+	mGame->setFactionRelation(3,1,FactionRelation::hostile);
+
 	// player moves
 	mView->updateView();
 	mView->turnUpdate();

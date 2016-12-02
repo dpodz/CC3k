@@ -30,7 +30,7 @@ void Character::setHealth(int hp) {
 
 		CharacterDeath msg {static_pointer_cast<Character>(shared_from_this())};
 		notifyObservers(msg);
-	} else if ((hp <= mMaxHP && hp > 0) || (hp > 0 && mMaxHP < 0)) {
+	} else if ((hp <= mMaxHP && hp > 0) || (hp > 0 && mMaxHP < 0)) { // if mMaxHP < 0 , consider infinite max hp
 		mCurHP = hp;
 	} else if (hp > mMaxHP) {
 		mCurHP = mMaxHP;

@@ -18,9 +18,7 @@ void RandomAI::processTurn(std::shared_ptr<Character> charToMove) {
 	for (int i = -1 ; i <= 1 ; i++){ for (int j = -1 ; j <= 1 ; j++) { if (i != 0 && j !=0) {
 		try {
 			shared_ptr<Character> checkChar = mGame->getCell(charPos.x+i, charPos.y+j)->getCharacter();
-			if (checkChar && mGame->getFactionRelation(charToMove->getFaction(),
-								   checkChar->getFaction()) 
-						== FactionRelation::hostile) {
+			if (mGame->getFactionRelation(charToMove->getFaction(), checkChar->getFaction()) == FactionRelation::hostile) {
 				//if hostile, attack!
 				charToMove->attack(checkChar);
 				return;
@@ -28,21 +26,32 @@ void RandomAI::processTurn(std::shared_ptr<Character> charToMove) {
 		} catch (...) { }
 	}}}
 	
-	//if dragon, special logic TODO
-	/*
-	if (typeid(charToMove) == typeid(Dragon)) {
+	//if dragon, special logic
+	if (typeid(*charToMove) == typeid(Dragon)) {
+		if (!static_pointer_cast<Dragon>(charToMove)->getHoard()) { return; } // if no hoard
+		Position hoardPos = static_pointer_cast<Dragon>(charToMove)->getHoard()->getPos();
 		for (int i = -1 ; i <= 1 ; i++) { for (int j=-1;j<=1;j++) { if(i!=0&&j!=0) {
-			shared_ptr<Character> checkChar = mGame->getCell(charPos.x
+			try {
+				shared_ptr<Character> checkChar = mGame->getCell(hoardPos.x+i, hoardPos.y+j)->getCharacter();
+				if (mGame->getFactionRelation(charToMove->getFaction(), checkChar->getFaction()) == FactionRelation::hostile) {
+					//if hostile, attack
+					charToMove->attack(checkChar);
+					return;
+				}
+			} catch (...) { }
 		}}}
 		return; // dragons never move
 	}
-	*/
 
 	//else, should move
 	vector<Direction> possibleMoves;
-	for (int i=-1;i<=1;i++) { for (int j=-1;j<=1;j++) { if (i != 0 && j !=0) {
+	for (int i=-1;i<=1;i++) { for (int j=-1;j<=1;j++) { if (i != 0 && j !=0) { 
 		Position newPos {charPos.x+i, charPos.y+j};
-		if (mGame->getCell(newPos)->isValidMove()) {
+		shared_ptr<Cell> newCell = mGame->getCell(newPos);
+		//valid move, don't move into doors, and no entities (potions, gold)
+		if (newCell->isValidMove() &&
+		  newCell->getType() != CellType::Door &&
+		  newCell->getEntities().size() == 0) {
 			possibleMoves.emplace_back(newPos.calcDirectionGivenPos(charPos));
 		}
 	}}}
