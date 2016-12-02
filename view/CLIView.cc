@@ -173,7 +173,7 @@ void CLIView::notify(CharacterDeath & msg) {
 	}
 	else {
 		mMessages << entityInfoMap.at(typeid(*msg.killed)).name
-			<< " dies.";
+			<< " dies. ";
 	}
 }
 

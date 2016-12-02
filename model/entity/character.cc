@@ -25,13 +25,16 @@ int Character::getHealth() const {
 }
 
 void Character::setHealth(int hp) {
-	if ((hp <= mMaxHP && hp >= 0) || (hp >= 0 && mMaxHP < 0)) {
+	if (hp <= 0) {
+		mCurHP = 0;
+
+		CharacterDeath msg {static_pointer_cast<Character>(shared_from_this())};
+		notifyObservers(msg);
+	} else if ((hp <= mMaxHP && hp > 0) || (hp > 0 && mMaxHP < 0)) {
 		mCurHP = hp;
 	} else if (hp > mMaxHP) {
 		mCurHP = mMaxHP;
-	} else if (hp < 0) {
-		mCurHP = 0;
-	}
+	} 
 }
 
 Stats Character::getStats() const {
@@ -79,11 +82,13 @@ bool Character::takeDamage(shared_ptr<Character> attacker){
 
 	int attackerAtk = attacker->getStats().attack;
 	int dmg = ceil((100.0 / ( 100.0+getStats().defence )) * attackerAtk);
-	setHealth( getHealth() - dmg );
 
 	CharacterAttack msg {attacker, 
 		static_pointer_cast<Character>(shared_from_this()), dmg, false};
 	notifyObservers(msg);
+
+	setHealth( getHealth() - dmg );
+
 	return true;
 }
 
@@ -119,7 +124,9 @@ void Character::getAttackedBy(shared_ptr<Halfling> attacker){
 
 void Character::getAttackedBy(shared_ptr<Elf> attacker){
 	takeDamage(attacker);
-	takeDamage(attacker);
+	if (getHealth() > 0) {
+		takeDamage(attacker);
+	}
 }
 
 void Character::getAttackedBy(shared_ptr<Orc> attacker){

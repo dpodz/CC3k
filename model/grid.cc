@@ -87,13 +87,6 @@ void Grid::attack(shared_ptr<Character> attacker, Direction dir) {
 	shared_ptr<Character> defender = getCell(defenderPos)->getCharacter();
 
 	attacker->attack(defender);
-
-	if (defender->getHealth() == 0) {
-		getCell(defenderPos)->removeEntity(defender);
-
-		CharacterDeath msg {attacker, defender};
-		notifyObservers(msg);
-	}
 }
 
 void Grid::usePotion(shared_ptr<Character> character, Direction dir) {
@@ -113,11 +106,52 @@ void Grid::attachCells(vector<shared_ptr<Observer>> observers) {
 			cell->attach(observers);
 		}
 	}
+	mObservers = observers;
 }
 
+const vector<Direction> gridEnumeration {
+	Direction::NO,
+	Direction::SO,
+	Direction::EA,
+	Direction::WE,
+	Direction::NE,
+	Direction::NW,
+	Direction::SE,
+	Direction::SW
+};
+
 void Grid::notify(CharacterDeath & msg) {
-	// TODO: Add character item drop
 	getCell(msg.killed->getPos())->removeEntity(msg.killed);
+
+	// Below code handles dropped items
+
+	Position pos = msg.killed->getPos();
+	auto droppedItems = msg.killed->onDeath();
+
+	for (auto & item : droppedItems) {
+		item->attach(mObservers);
+	}
+
+	if (!droppedItems.empty()) {
+		getCell(pos)->addEntity(droppedItems.back());
+		droppedItems.pop_back();
+	}
+
+	for (auto & dir : gridEnumeration) {
+		if (droppedItems.empty()) {
+			break;
+		}
+		Position cellPos = pos.calcPosInDirection(dir);
+		if (getCell(cellPos)->getEntities().empty()) {
+			getCell(cellPos)->addEntity(droppedItems.back());
+			droppedItems.pop_back();
+		}
+	}
+
+	// In case of overflow
+	for (auto & item : droppedItems) {
+		getCell(pos)->addEntity(item);
+	}
 }
 
 void Grid::notify(ItemPickedUp & msg) {

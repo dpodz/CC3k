@@ -18,6 +18,7 @@ class Grid : public Observer, public Subject {
 
 	GridSize mSize;
 	std::vector<std::vector<std::shared_ptr<Cell>>> mCells;
+	std::vector<std::shared_ptr<Observer>> mObservers;
 
 	bool checkBounds(Position);
 

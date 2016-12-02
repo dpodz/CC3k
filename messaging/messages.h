@@ -38,13 +38,12 @@ struct InfoMessage: public BaseMessage {
 
 // Character Death
 struct CharacterDeath: public BaseMessage {
-	std::shared_ptr<Character> killer;
 	std::shared_ptr<Character> killed;
 
 	virtual void notifyObserver( std::shared_ptr<Observer> ) override;
 
-	CharacterDeath(std::shared_ptr<Character> a, std::shared_ptr<Character> b) : 
-		BaseMessage{}, killer(a), killed(b) {}
+	CharacterDeath(std::shared_ptr<Character> a) : 
+		BaseMessage{}, killed(a) {}
 };
 
 // Character Attack

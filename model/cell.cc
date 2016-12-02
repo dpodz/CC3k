@@ -65,6 +65,7 @@ bool Cell::isValidMove() const {
 }
 
 void Cell::addEntity(shared_ptr<Entity> entity) {
+	entity->setPos(mCellPos);
 	mEntities.push_back(entity);
 
 	EntityCreated msg(entity);
