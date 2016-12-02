@@ -14,11 +14,11 @@ protected:
 	std::shared_ptr<View> mView;
 
 public:
-	Controller(std::shared_ptr<Game>, std::shared_ptr<View>);
+	Controller();
 	~Controller();
 
 	virtual void playGame() = 0;
-	virtual bool gameCycle() = 0;
+	virtual void gameCycle() = 0;
 };
 
 #endif // CONTROLLER_H

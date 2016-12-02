@@ -18,9 +18,9 @@
 
 using namespace std;
 
-CLIController::CLIController(shared_ptr<Game> game, string fileName,
-	bool usePreset): Controller (game, make_shared<CLIView>(nullptr, nullptr)), 
-  mPlayer {}, mFileName (fileName), mUsePreset (usePreset) { }
+CLIController::CLIController(string fileName,
+	bool usePreset): Controller {}, 
+  mPlayer {}, mFileName (fileName), mUsePreset (usePreset), mLevel {0} { }
 
 CLIController::~CLIController() { }
 
@@ -35,10 +35,10 @@ const map <string, Direction> strToDir {
 	{"sw", Direction::SW}
 };
 
-void CLIController::playGame() {
-
+string CLIController::raceSelection() {
 	string race = "";
-	cout << "Select a race (Shade, Drow, vampire, troll, goblin): " << endl;
+	
+	cout << "Select a race: " << endl;
 	while (cin >> race) {
 		if (race == "s") {
 			mPlayer = make_shared<Shade>();
@@ -56,20 +56,24 @@ void CLIController::playGame() {
 			mPlayer = make_shared<Goblin>();
 			break;
 		} else if (race == "q") {
-			return;
+			return "";
 		} else {
-			cout << "Select a race (shade, drow, vampire, troll, goblin): " << endl;
+			cout << "Select a race: " << endl;
 		}
-	}
+	}	
+	return race;
+}
 
-	if (race == "") return;
+void CLIController::gameSetup() {
 
-	// Generate new grid
+	mGame = make_shared<Game>();
 	mView = make_shared<CLIView>(mPlayer, mGame); 
+	mAI = make_shared<RandomAI>(mGame);
 	
-	auto observers = make_shared<vector<weak_ptr<Observer>>>(3);
+	auto observers = make_shared<vector<weak_ptr<Observer>>>(4);
 	observers->push_back(mView);
 	observers->push_back(shared_from_this());
+	observers->push_back(mAI);
 
 	shared_ptr<GridInit> gridInit;
 
@@ -91,25 +95,54 @@ void CLIController::playGame() {
 
 	mGame->createNewEntities();
 
-	// initialize AI to use random AI
+	GridCreated gc {mGame};
+	notifyObservers(gc);
 
-	mAI = make_shared<RandomAI>(mGame);
+	InfoMessage im {"PC has spawned."};
+	notifyObservers(im);
 
 	// setting default factions
 	mGame->setFactionRelation(2,1,FactionRelation::hostile);
 	mGame->setFactionRelation(3,1,FactionRelation::hostile);
+	mLevel = 1;
+}
 
-	// player moves
+bool CLIController::nextLevel() {
+	if (mLevel == 5) {
+		return false;
+	} 
+
+	mGame->purgeEntities();
+	mGame->createNewEntities();
+
+	GridCreated gc {mGame};
+	notifyObservers(gc);
+
+	InfoMessage im {"PC has taken the stairs to the next level."};
+	notifyObservers(im);
+
+	++mLevel;
+	return true;
+}
+
+void CLIController::playGame() {
+
+	if (raceSelection() == "") return;
+
+	gameSetup();
+
 	mView->updateView();
 	mView->turnUpdate();
+
 	cout << "Enter a valid command: ";
+
+	bool runGameCycle = true; 
 
 	string cmd;
 	while (cin >> cmd) {
 		bool valid = true;
 		try {
 			if (cmd == "q") return;
-
 			else if (cmd == "no" || cmd == "so" || cmd == "ea" || cmd == "we" 
 				|| cmd == "ne" || cmd == "nw" || cmd == "se" || cmd == "sw") {
 				mGame->move(mPlayer, strToDir.at(cmd));
@@ -123,23 +156,51 @@ void CLIController::playGame() {
 				mGame->usePotion(mPlayer, strToDir.at(dir));
 			} else if (cmd == "r") {
 
-			} else if (cmd == "f") {
+				if (raceSelection() == "") return;
+				gameSetup();
+				
+				InfoMessage msg {"Restarting Game."};
+				notifyObservers(msg);
 
+				// Avoids touching anything that modifies game state
+				// Until player does valid command
+				valid = false;
+
+			} else if (cmd == "f") {
+				runGameCycle = !runGameCycle;
 			} else {
 				throw invalid_argument("");
 			}
 		}
 		catch (exception) {
-			DebugMessage msg ("Invalid command entered");
+			InfoMessage msg ("Invalid command entered.");
 			notifyObservers(msg);
 			valid = false;
 		}
 
 		if (valid) {
-			bool gameOver = gameCycle();
-			if (gameOver) {
+
+			mGame->turnUpdate();
+			
+			if (runGameCycle) {
+				gameCycle();
+			}
+		}
+
+		if (mPlayer->getHealth() <= 0) {
+			InfoMessage msg {"You lost :("};
+			notifyObservers(msg);
+			mView->updateView();
+			return;
+		}
+		else if (mGame->getCell(mPlayer->getPos())->getType() == CellType::Stair) {
+			if (!nextLevel()) {
+				InfoMessage msg {"PC has cleared the dungeon. You Win!"};
+				notifyObservers(msg);
+				InfoMessage scr {"Final score is " + mPlayer->getScore()};
+				notifyObservers(scr);
 				mView->updateView();
-				break;
+				return;
 			}
 		}
 
@@ -149,7 +210,7 @@ void CLIController::playGame() {
 }
 
 
-bool CLIController::gameCycle() {
+void CLIController::gameCycle() {
 
 	// Computer players make moves
 	vector<shared_ptr<Character>> computerPlayers;
@@ -168,6 +229,4 @@ bool CLIController::gameCycle() {
 	for (auto & character : computerPlayers) {
 		mAI->processTurn(character);
 	}
-
-	return false;
 }

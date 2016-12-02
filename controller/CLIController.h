@@ -3,6 +3,7 @@
 
 #include "controller.h"
 #include <memory>
+#include <string>
 #include "../messaging/subject.h"
 
 class Game;
@@ -16,13 +17,18 @@ class CLIController : public Controller, public Subject,
 	std::shared_ptr<Character> mPlayer;
 	std::string mFileName;
 	bool mUsePreset;
+	int mLevel;
+
+	std::string raceSelection();
+	void gameSetup();
+	bool nextLevel();
 
 public:
-	CLIController(std::shared_ptr<Game>, std::string, bool);
+	CLIController(std::string, bool);
 	~CLIController();
 	
 	virtual void playGame() override;
-	virtual bool gameCycle() override;
+	virtual void gameCycle() override;
 };
 
 #endif // CLI_CONTROLLER_H

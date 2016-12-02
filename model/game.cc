@@ -25,6 +25,10 @@ void Game::createNewEntities() {
 	mGridInit->createEntities(mGrid);
 }
 
+void Game::purgeEntities() {
+	mGrid->purgeEntities();
+}
+
 shared_ptr<Grid> Game::getGrid() const {
 	return mGrid;
 }

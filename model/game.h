@@ -26,6 +26,7 @@ public:
 	void setGridGen(std::shared_ptr<GridInit>);
 	void generateNewGrid();
 	void createNewEntities();
+	void purgeEntities();
 
 	std::shared_ptr<Grid> getGrid() const;
 

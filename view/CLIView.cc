@@ -59,7 +59,7 @@ const map<Direction, string> directionStringMap {
 };
 
 CLIView::CLIView(shared_ptr<Character> player, shared_ptr<Game> game):
-	mPlayer {player}, mGame {game}, mMessages {}, mLevel {1} {}
+	mPlayer {player}, mGame {game}, mMessages {}, mLevel {0} {}
 
 CLIView::~CLIView() {}
 
@@ -186,7 +186,6 @@ void CLIView::notify(CharacterDeath & msg) {
 	} 
 // Macro end
 
-//TODO: Add misses
 void CLIView::notify(CharacterAttack & msg) {
 	string attacker;
 	string defender;
@@ -203,7 +202,8 @@ void CLIView::notify(CharacterAttack & msg) {
 	}
 
 	if (msg.defender != mPlayer) {
-		mMessages << "(" << msg.defender->getHealth() << "). ";
+		mMessages << "(" << max(0, msg.defender->getHealth() - msg.damage) 
+			<< "). ";
 	}
 	else {
 		mMessages << ". ";
@@ -228,7 +228,7 @@ void CLIView::notify(EntityRemoved & msg) {
 }
 
 void CLIView::notify(GridCreated & msg) {
-	mMessages << "Grid created. ";
+	++mLevel;
 	mGame = msg.theGame;
 }
 

@@ -45,6 +45,7 @@ public:
 
 	void addEntity(std::shared_ptr<Entity>);
 	void removeEntity(std::shared_ptr<Entity>);
+	void purgeEntities();
 
 	void walkedOn(std::shared_ptr<Character>);
 	void lookedOn(std::shared_ptr<Character>);

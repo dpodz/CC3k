@@ -109,6 +109,14 @@ void Grid::attachCells(vector<weak_ptr<Observer>> observers) {
 	mObservers = observers;
 }
 
+void Grid::purgeEntities() {
+	for (auto & row: mCells) {
+		for (auto & cell : row) {
+			cell->purgeEntities();
+		}
+	}
+}
+
 const vector<Direction> gridEnumeration {
 	Direction::NO,
 	Direction::SO,

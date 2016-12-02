@@ -90,7 +90,6 @@ struct EntityRemoved: public BaseMessage {
 		BaseMessage {}, entity(a) {}
 };
 
-// Map Created
 struct GridCreated: public BaseMessage {
 	std::shared_ptr<Game> theGame;
 

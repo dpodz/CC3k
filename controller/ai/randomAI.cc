@@ -15,45 +15,68 @@ void RandomAI::processTurn(std::shared_ptr<Character> charToMove) {
 	
 	//loop through all cells around character
 	//check if should attack
-	for (int i = -1 ; i <= 1 ; i++){ for (int j = -1 ; j <= 1 ; j++) { if (i != 0 || j !=0) {
-		try {
-			shared_ptr<Character> checkChar = mGame->getCell(charPos.x+i, charPos.y+j)->getCharacter();
-			if (mGame->getFactionRelation(charToMove->getFaction(), checkChar->getFaction()) == FactionRelation::hostile) {
-				//if hostile, attack!
-				charToMove->attack(checkChar);
-				return;
+	for (int i = -1 ; i <= 1 ; i++){ 
+		for (int j = -1 ; j <= 1 ; j++) { 
+			if (i != 0 || j !=0) {
+				try {
+					auto checkChar = mGame->getCell(charPos.x+i, charPos.y+j)->getCharacter();
+					if (mGame->getFactionRelation(charToMove->getFaction(), checkChar->getFaction()) == FactionRelation::hostile) {
+						//if hostile, attack!
+						charToMove->attack(checkChar);
+						return;
+					}
+				} catch (...) { }
 			}
-		} catch (...) { }
-	}}}
+		}
+	}
 	
 	//if dragon, special logic
 	if (typeid(*charToMove) == typeid(Dragon)) {
-		if (!static_pointer_cast<Dragon>(charToMove)->getHoard()) { return; } // if no hoard
+		if (!static_pointer_cast<Dragon>(charToMove)->getHoard()) { 
+			return; // If no hoard
+		} 
 		Position hoardPos = static_pointer_cast<Dragon>(charToMove)->getHoard()->getPos();
-		for (int i = -1 ; i <= 1 ; i++) { for (int j=-1;j<=1;j++) { if(i!=0||j!=0) {
-			try {
-				shared_ptr<Character> checkChar = mGame->getCell(hoardPos.x+i, hoardPos.y+j)->getCharacter();
-				if (mGame->getFactionRelation(charToMove->getFaction(), checkChar->getFaction()) == FactionRelation::hostile) {
-					//if hostile, attack
-					charToMove->attack(checkChar);
-					return;
+		for (int i = -1 ; i <= 1 ; i++) { 
+			for (int j = -1; j <= 1; j++) { 
+				if(i !=0 || j !=0 ) {
+					try {
+						auto checkChar = mGame->getCell(hoardPos.x+i, hoardPos.y+j)->getCharacter();
+						if (mGame->getFactionRelation(charToMove->getFaction(), checkChar->getFaction()) == FactionRelation::hostile) {
+							// If hostile, attack
+							charToMove->attack(checkChar);
+							return;
+						}
+					} catch (...) { }
 				}
-			} catch (...) { }
-		}}}
+			}	
+		}
 		return; // dragons never move
 	}
 
 	//else, should move
 	vector<Direction> possibleMoves;
-	for (int i=-1;i<=1;i++) { for (int j=-1;j<=1;j++) { if (i != 0 || j !=0) { 
-		Position newPos {charPos.x+i, charPos.y+j};
-		shared_ptr<Cell> newCell = mGame->getCell(newPos);
-		//valid move, don't move into doors, and no entities (potions, gold)
-		if (newCell->isValidMove() &&
-		  newCell->getType() != CellType::Door &&
-		  newCell->getEntities().size() == 0) {
-			possibleMoves.emplace_back(newPos.calcDirectionGivenPos(charPos));
+	for (int i = -1; i <= 1; i++) { 
+		for (int j = -1; j <= 1; j++) { 
+			if (i != 0 || j !=0) { 
+				Position newPos {charPos.x+i, charPos.y+j};
+				shared_ptr<Cell> newCell = mGame->getCell(newPos);
+				//valid move, don't move into doors, and no entities (potions, gold)
+				if (newCell->isValidMove() &&
+					newCell->getType() != CellType::Door &&
+					newCell->getEntities().size() == 0) {
+					possibleMoves.emplace_back(newPos.calcDirectionGivenPos(charPos));
+				}
+			}
 		}
-	}}}
-	mGame->move(charToMove, possibleMoves[rand() % possibleMoves.size()] );
+	}
+	
+	if (!possibleMoves.empty()) {
+		mGame->move(charToMove, possibleMoves[rand() % possibleMoves.size()] );
+	}
 }
+
+void RandomAI::notify(CharacterAttack & msg) {
+	mGame->setFactionRelation(msg.defender->getFaction(), 
+		msg.attacker->getFaction(), FactionRelation::hostile);
+}
+

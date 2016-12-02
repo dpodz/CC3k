@@ -2,6 +2,7 @@
 #define RANDOM_AI_H
 
 #include "characterAI.h"
+#include "../../messaging/messages.h"
 #include <memory>
 
 class Game;
@@ -14,6 +15,8 @@ public:
 	~RandomAI();
 
 	virtual void processTurn(std::shared_ptr<Character>) override;
+
+	virtual void notify(CharacterAttack &) override;
 };
 
 #endif // RANDOM_AI_H

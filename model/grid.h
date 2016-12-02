@@ -39,6 +39,8 @@ public:
 
 	void attachCells(std::vector<std::weak_ptr<Observer>>);
 
+	void purgeEntities();
+
 	virtual void notify(CharacterDeath &) override;
 	virtual void notify(ItemPickedUp &) override;
 };

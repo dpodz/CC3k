@@ -82,6 +82,10 @@ void Cell::removeEntity(shared_ptr<Entity> entity) {
 	notifyObservers(msg);
 }
 
+void Cell::purgeEntities() {
+	mEntities = {};
+}
+
 void Cell::walkedOn(shared_ptr<Character> character) {
 	// Making copy is required, since elements in original may be deleted
 	auto entities = mEntities;
