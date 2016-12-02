@@ -106,7 +106,7 @@ void GridInitPreset::createEntities(shared_ptr<Grid> theGrid) {
 				auto dragonPos = dragon->getPos();
 				auto entities = theGrid->getCell(dragonPos.x + i, dragonPos.y + j)->getEntities();
 				if (!entities.empty() 
-						&& typeid(entities[0]) == typeid(DragonHoard)) {
+						&& typeid(*entities[0]) == typeid(DragonHoard)) {
 					auto dragonHoard = dynamic_pointer_cast<DragonHoard> (entities[0]);
 					dragonHoard->setDragon(dragon);
 					dragon->setHoard(dragonHoard);
