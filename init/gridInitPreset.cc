@@ -9,6 +9,7 @@
 #include "../model/entity/baseCharacters.h"
 #include "../model/entity/basePotions.h"
 #include <iostream>
+#include <memory>
 
 using namespace std;
 
@@ -74,6 +75,7 @@ shared_ptr<Grid> GridInitPreset::createGrid() {
 
 void GridInitPreset::createEntities(shared_ptr<Grid> theGrid) {
 	string line;
+	vector<shared_ptr<Dragon>> dragons {};
 
 	for (int y = 0; y < 25; ++y) {
 		getline(mFile, line);
@@ -88,9 +90,34 @@ void GridInitPreset::createEntities(shared_ptr<Grid> theGrid) {
 				newEntity->attach(*mObservers);
 				newEntity->setPos(cell->getPos());
 				cell->addEntity(newEntity);
+
+				shared_ptr<Dragon> dragon;
+				if (dragon = dynamic_pointer_cast<Dragon>(newEntity)) {
+					dragons.push_back(dragon);
+				}
 			}
 		}
 	}
 
-	// TODO: Link dragon to hoard
+	// Link dragons to hoard
+	for (auto & dragon : dragons) {
+		for (int i = -1; i < 1; ++i) {
+			for (int j = -1; j < 1; ++j) {
+				auto dragonPos = dragon->getPos();
+				auto entities = theGrid->getCell(dragonPos.x + i, dragonPos.y + j)->getEntities();
+				if (!entities.empty() 
+						&& typeid(entities[0]) == typeid(DragonHoard)) {
+					auto dragonHoard = dynamic_pointer_cast<DragonHoard> (entities[0]);
+					dragonHoard->setDragon(dragon);
+					dragon->setHoard(dragonHoard);
+					goto hoardFound;
+				}
+				 
+			}
+		}
+		hoardFound:
+		(void) 0;
+	}
 }
+
+

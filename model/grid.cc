@@ -142,7 +142,8 @@ void Grid::notify(CharacterDeath & msg) {
 			break;
 		}
 		Position cellPos = pos.calcPosInDirection(dir);
-		if (getCell(cellPos)->getEntities().empty()) {
+		if (getCell(cellPos)->getEntities().empty()
+			&& getCell(cellPos)->getType() == CellType::Floor) {
 			getCell(cellPos)->addEntity(droppedItems.back());
 			droppedItems.pop_back();
 		}
