@@ -157,14 +157,7 @@ vector<shared_ptr<Entity>> Character::onDeath() {
 	return vector<shared_ptr<Entity>>();
 }
 
-void Character::onKill() {
-	if (rand() % 2 == 0) {
-		setGold(getGold() + 1);
-	}
-	else {
-		setGold(getGold() + 2);
-	}
-}	
+void Character::onKill() {}	
 
 void Character::useItem(shared_ptr<Item> item) {
 	item->itemUsedBy(static_pointer_cast<Character>(shared_from_this()));	

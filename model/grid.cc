@@ -8,6 +8,7 @@
 #include <memory>
 #include <vector>
 #include <exception>
+#include <cstdlib>
 
 using namespace std;
 

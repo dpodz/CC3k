@@ -78,5 +78,18 @@ void RandomAI::processTurn(std::shared_ptr<Character> charToMove) {
 void RandomAI::notify(CharacterAttack & msg) {
 	mGame->setFactionRelation(msg.defender->getFaction(), 
 		msg.attacker->getFaction(), FactionRelation::hostile);
+
+	if (msg.defender->getHealth() - msg.damage <= 0) {
+		if (typeid(*msg.defender) != typeid(Dragon)
+			&& typeid(*msg.defender) != typeid(Merchant)
+			&& typeid(*msg.defender) != typeid(Human)) {
+			if (rand() % 2 == 0) {
+				msg.attacker->setGold(msg.attacker->getGold() + 1);
+			}
+			else {
+				msg.attacker->setGold(msg.attacker->getGold() + 2);
+			}
+		}
+	}
 }
 
