@@ -178,6 +178,18 @@ void CLIController::playGame() {
 			valid = false;
 		}
 
+		if (mGame->getCell(mPlayer->getPos())->getType() == CellType::Stair) {
+			if (!nextLevel()) {
+				InfoMessage msg {"PC has cleared the dungeon. You Win!"};
+				notifyObservers(msg);
+				InfoMessage scr {"Final score is " + to_string(mPlayer->getScore())};
+				notifyObservers(scr);
+				mView->updateView();
+				return;
+			}
+			valid = false;
+		}
+
 		if (valid) {
 
 			mGame->turnUpdate();
@@ -192,16 +204,6 @@ void CLIController::playGame() {
 			notifyObservers(msg);
 			mView->updateView();
 			return;
-		}
-		else if (mGame->getCell(mPlayer->getPos())->getType() == CellType::Stair) {
-			if (!nextLevel()) {
-				InfoMessage msg {"PC has cleared the dungeon. You Win!"};
-				notifyObservers(msg);
-				InfoMessage scr {"Final score is " + mPlayer->getScore()};
-				notifyObservers(scr);
-				mView->updateView();
-				return;
-			}
 		}
 
 		mView->updateView();

@@ -10,7 +10,7 @@ using namespace std;
 
 int main() {
  	
-	string mapString = "test.map";
+	string mapString = "maps/FastWin.map";
 
 	auto controller = make_shared<CLIController>(mapString, true);
 
