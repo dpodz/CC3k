@@ -44,8 +44,10 @@ public:
 	virtual void setHealth(int); 
 
 	virtual Stats getStats() const;
+	virtual void resetStats();
 	virtual std::shared_ptr<StatsContainer> getStatsContainer() const;
 	virtual void setStatsContainer(std::shared_ptr<StatsContainer>);
+
 
 	bool hasKnowledgeOf(std::shared_ptr<Entity>) const;
 	void setKnowledgeOf(std::shared_ptr<Entity>, bool);
@@ -68,7 +70,6 @@ public:
 	virtual void getAttackedBy(std::shared_ptr<Dragon>);
 	virtual void getAttackedBy(std::shared_ptr<Shade>);
 
-	virtual int getDroppedGold() const;
 	virtual int getScore() const;
 
 	virtual std::vector<std::shared_ptr<Entity>> onDeath();

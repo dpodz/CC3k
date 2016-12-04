@@ -114,6 +114,7 @@ bool CLIController::nextLevel() {
 
 	mGame->purgeEntities();
 	mGame->createNewEntities();
+	mPlayer->resetStats();
 
 	GridCreated gc {mGame};
 	notifyObservers(gc);

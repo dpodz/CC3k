@@ -27,7 +27,6 @@ int Character::getHealth() const {
 void Character::setHealth(int hp) {
 	if (hp <= 0) {
 		mCurHP = 0;
-
 		CharacterDeath msg {static_pointer_cast<Character>(shared_from_this())};
 		notifyObservers(msg);
 	} else if ((hp <= mMaxHP && hp > 0) || (hp > 0 && mMaxHP < 0)) { // if mMaxHP < 0 , consider infinite max hp
@@ -39,6 +38,10 @@ void Character::setHealth(int hp) {
 
 Stats Character::getStats() const {
 	return mCharStats->getStats();
+}
+
+void Character::resetStats() {
+	mCharStats = make_shared<StatsContainer>(mCharStats->getBaseStats());
 }
 
 shared_ptr<StatsContainer> Character::getStatsContainer() const {
@@ -143,10 +146,6 @@ void Character::getAttackedBy(shared_ptr<Dragon> attacker){
 
 void Character::getAttackedBy(shared_ptr<Shade> attacker){
 	takeDamage(attacker);
-}
-
-int Character::getDroppedGold() const {
-	return getGold();
 }
 
 int Character::getScore() const {
