@@ -20,7 +20,8 @@ class GridInitRandomGen : public GridInit {
 	std::vector<std::vector<std::shared_ptr<Cell>>> mRooms;
 
 	void generateRoom(int roomId, int posx, int posy, std::shared_ptr<Grid>);
-	std::shared_ptr<Entity> getRandomEntity(std::vector< std::shared_ptr<Entity> >);
+	void generateEntities(std::vector<std::vector<std::shared_ptr<Entity>>(*)()>, 
+		int, std::shared_ptr<Grid>);
 
 public:
 	GridInitRandomGen(std::shared_ptr<Character>, const std::string, 

@@ -2,6 +2,10 @@
 #include "../model/entity/entity.h"
 #include "../model/entity/character.h"
 #include "../model/cell.h"
+#include "../model/position.h"
+#include "../model/entity/baseTreasure.h"
+#include "../model/entity/baseCharacters.h"
+#include "../model/entity/basePotions.h"
 #include <fstream>
 #include <memory>
 #include <string>
@@ -10,19 +14,120 @@
 
 using namespace std;
 
-GridInitRandomGen::GridInitRandomGen(shared_ptr<Character> player, const string fileName,
-	shared_ptr<vector<weak_ptr<Observer>>> observers): 
+#define singleEntityGen(type, args) \
+	[]() -> vector<shared_ptr<Entity>> {return vector<shared_ptr<Entity>>{make_shared<type>(args)};},
+
+const vector<vector<shared_ptr<Entity>>(*)()> potionList {
+	singleEntityGen(BoostAtk, )
+	singleEntityGen(WoundAtk, )
+	singleEntityGen(BoostDef, )
+	singleEntityGen(WoundDef, )
+	singleEntityGen(RestoreHealth, )
+	singleEntityGen(PoisonHealth, )
+};
+
+const vector<vector<shared_ptr<Entity>>(*)()> treasureList {
+	singleEntityGen(SmallGold, )
+	singleEntityGen(SmallGold, )
+	singleEntityGen(SmallGold, )
+	singleEntityGen(SmallGold, )
+	singleEntityGen(SmallGold, )
+	singleEntityGen(NormalGold, )
+	singleEntityGen(NormalGold, )
+	[]() -> vector<shared_ptr<Entity>> {
+		auto dragon = make_shared<Dragon>();
+		auto dragonHoard = make_shared<DragonHoard>();
+		dragon->setHoard(dragonHoard);
+		dragonHoard->setDragon(dragon);
+		return vector<shared_ptr<Entity>>{dragonHoard, dragon};
+	}
+};
+
+const vector<vector<shared_ptr<Entity>>(*)()> characterList {
+	singleEntityGen(Human, )
+	singleEntityGen(Human, )
+	singleEntityGen(Human, )
+	singleEntityGen(Human, )
+	singleEntityGen(Dwarf, )
+	singleEntityGen(Dwarf, )
+	singleEntityGen(Dwarf, )
+	singleEntityGen(Halfling, )
+	singleEntityGen(Halfling, )
+	singleEntityGen(Halfling, )
+	singleEntityGen(Halfling, )
+	singleEntityGen(Halfling, )
+	singleEntityGen(Elf, )
+	singleEntityGen(Elf, )
+	singleEntityGen(Orc, )
+	singleEntityGen(Orc, )
+	singleEntityGen(Merchant, )
+	singleEntityGen(Merchant, )
+};
+
+
+GridInitRandomGen::GridInitRandomGen(shared_ptr<Character> player, 
+	const string fileName, shared_ptr<vector<weak_ptr<Observer>>> observers): 
 	GridInit {}, mPlayer {player}, mFile {fileName}, mObservers {observers}, mRooms {} {}
 
 GridInitRandomGen::~GridInitRandomGen() {}
 
-//Private methods
+void GridInitRandomGen::generateEntities(
+	vector<vector<shared_ptr<Entity>>(*)()> entityVector, 
+	int total, shared_ptr<Grid> grid) {
+	for (int i = 0; i < total; ++i) {
 
-shared_ptr<Entity> GridInitRandomGen::getRandomEntity(vector< shared_ptr<Entity> > entityVector) {
-	return entityVector.at(rand() % entityVector.size());
+		// Generates the entities to place
+		auto entities = entityVector.at(rand() % entityVector.size())();
+		if (entities.size() == 0) return;
+
+		// Assuming no room is ever filled up completely
+		auto roomToGen = mRooms.at(rand() % mRooms.size());
+
+		shared_ptr<Cell> cellToUse;
+
+		do {
+			cellToUse = roomToGen.at(rand() % roomToGen.size());
+		} while(cellToUse->getEntities().size() != 0 
+			|| cellToUse->getType() == CellType::Stair);
+
+		Position cellPos = cellToUse->getPos();
+		vector<shared_ptr<Cell>> possibleLocations;
+
+		for (int x = -1; x <= 1; x++) { 
+			for (int y = -1; y <= 1; y++) { 
+				if (x != 0 || y !=0) { 
+					Position newPos {cellPos.x + x, cellPos.y + y};
+					shared_ptr<Cell> newCell = grid->getCell(newPos);
+
+					if (newCell->isValidMove() &&
+						newCell->getType() != CellType::Door &&
+						newCell->getEntities().size() == 0) {
+						possibleLocations.push_back(newCell);
+					}
+				}
+			}
+		}
+
+		for (auto & entity: entities) {
+			entity->attach(*mObservers);
+
+			if (cellToUse->getEntities().size() == 0
+				|| possibleLocations.size() == 0) {
+				cellToUse->addEntity(entity);
+			}
+			else {
+				int offset = rand() % possibleLocations.size();
+				auto location = possibleLocations.at(offset);
+				location->addEntity(entity);
+
+				possibleLocations.erase(possibleLocations.begin() + offset);
+			}
+		}
+	}
 }
 
-void GridInitRandomGen::generateRoom(int roomNumber, int posx, int posy, shared_ptr<Grid> theGrid) {
+void GridInitRandomGen::generateRoom(int roomNumber, int posx, 
+	int posy, shared_ptr<Grid> theGrid) {
 
 	if (posx >= 0 && posx < 79 && posy >= 0 && posy < 25 && 
 		theGrid->getCell(posx,posy)->getType() == CellType::Floor &&
@@ -90,24 +195,29 @@ void GridInitRandomGen::createEntities(shared_ptr<Grid> theGrid) {
 	// Generate the player
 	int playerRoom = rand() % mRooms.size();
 	auto playerCell = mRooms[playerRoom][rand() % mRooms[playerRoom].size()];
-	mPlayer->setPos(playerCell->getPos());
 	playerCell->addEntity(mPlayer);
 	
 	// Generate the stairway location
+	// Remove prior stairway
+
+	for (int x = 0; x < 79; ++x) {
+		for (int y = 0; y < 25; ++y) {
+			if (theGrid->getCell(x,y)->getType() == CellType::Stair) {
+				theGrid->getCell(x,y)->setType(CellType::Floor);
+			}
+		}
+	}
+
 	int stairRoom;
-	while ((stairRoom = rand()%mRooms.size()) ==  playerRoom);
+	do {
+		stairRoom = rand() % mRooms.size();
+	} while(stairRoom == playerRoom);
+
 	mRooms[stairRoom][rand() % mRooms[stairRoom].size()]->setType(CellType::Stair);
 	
-	// Generate 10 potions
-	/*
-	for (int i = 0 ; i < 10 ; i++) {
-		vector<std::shared_ptr<Entity>> potionList;
-		potionList.push_back(std::shared_ptr<Entity>(new RestoreHealth));
-		potionList.push_back(std::shared_ptr<Entity>(new PoisonHealth));
-		potionList.push_back(std::shared_ptr<Entity>(new BoostAttack));
-		potionList.push_back(std::shared_ptr<Entity>(new WoundAttack));
-		potionList.push_back(std::shared_ptr<Entity>(new BoostDefence));
-		potionList.push_back(std::shared_ptr<Entity>(new WoundDefence));
-	}
-	*/
+	generateEntities(potionList, 10, theGrid);
+
+	generateEntities(treasureList, 10, theGrid);
+
+	generateEntities(characterList, 20, theGrid);
 }

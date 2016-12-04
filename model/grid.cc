@@ -167,3 +167,7 @@ void Grid::notify(CharacterDeath & msg) {
 void Grid::notify(ItemPickedUp & msg) {
 	getCell(msg.item->getPos())->removeEntity(msg.item);
 }
+
+void Grid::notify(ItemUsed & msg) {
+	getCell(msg.item->getPos())->removeEntity(msg.item);
+}

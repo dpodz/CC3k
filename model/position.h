@@ -9,7 +9,8 @@ enum class Direction {
 	NE,
 	NW,
 	SE,
-	SW
+	SW,
+	C
 };
 
 struct Position {
@@ -25,6 +26,7 @@ struct Position {
 			case Direction::NW: return {x - 1, y - 1};
 			case Direction::SE: return {x + 1, y + 1};
 			case Direction::SW: return {x - 1, y + 1};
+			case Direction::C: return {x, y};
 		}
 		return {x,y};
 	}
@@ -52,7 +54,7 @@ struct Position {
 				}
 				break;
 		}
-		return Direction::NO;
+		return Direction::C;
 	}
 };
 

@@ -43,6 +43,7 @@ public:
 
 	virtual void notify(CharacterDeath &) override;
 	virtual void notify(ItemPickedUp &) override;
+	virtual void notify(ItemUsed &) override;
 };
 
 #endif // GRID_H

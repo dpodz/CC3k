@@ -55,7 +55,8 @@ const map<Direction, string> directionStringMap {
 	{ Direction::NE, "NE"},
 	{ Direction::NW, "NW"},
 	{ Direction::SE, "SE"},
-	{ Direction::SW, "SW"}
+	{ Direction::SW, "SW"},
+	{ Direction::C, "the space beneath it"}
 };
 
 CLIView::CLIView(shared_ptr<Character> player, shared_ptr<Game> game):

@@ -4,6 +4,7 @@
 \usepackage[none]{hyphenat}
 \usepackage{hhline}
 \usepackage{longtable}
+
 \title{CS 246 Final Document - CC3k}
 \author{
 Lidiya Murakhovs'ka, Daniel Podlovics, Alex Tomala
@@ -11,8 +12,6 @@ Lidiya Murakhovs'ka, Daniel Podlovics, Alex Tomala
 \date {}
 \begin{document}
 \maketitle
-
-
 
 \section*{Overview}
 From a high-level view, the CC3k project is implemented using a MVC architecture along with a messaging system to facilitate communication between various subjects and observers. The model holds the map and all of the entities in the game. It also handles transitions in the model through various helper methods. The controller is used to handle user input, manage the view/model objects, and handle AI. The view handles outputting the model and primarily receives information through the messaging system. 
