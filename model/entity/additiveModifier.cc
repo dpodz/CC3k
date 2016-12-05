@@ -16,10 +16,10 @@ AdditiveModifier::~AdditiveModifier() { }
 Stats AdditiveModifier::getStats() const {
 	Stats charStats = mComponent->getStats();
 
-	Stats newStats{charStats.attack + (int)ceil(mStats.attack * charStats.potionStrength), 
-		charStats.defence + (int)ceil(mStats.defence * charStats.potionStrength), 
+	Stats newStats{max(0, charStats.attack + (int)ceil(mStats.attack * charStats.potionStrength)), 
+		max(0, charStats.defence + (int)ceil(mStats.defence * charStats.potionStrength)), 
 		charStats.healthRegen + (int)ceil(mStats.healthRegen * charStats.potionStrength),
-		charStats.potionStrength + mStats.potionStrength * charStats.potionStrength};
+		max(0.0, charStats.potionStrength + mStats.potionStrength * charStats.potionStrength)};
 
 	return newStats;
 }
