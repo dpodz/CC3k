@@ -129,8 +129,21 @@ All of the pointers have been implemented using smart pointers. There is no memo
 \section*{Final Questions}
 
 \begin{enumerate}
-\item[6.] What lessons did this project teach you about developing software in teams? If you worked alone, what lessons did you learn about writing large programs?
-\item[7.] What would you have done differently if you had the chance to start over?
+\item[6.] What lessons did this project teach you about developing software in teams? If you worked alone, what lessons did you learn about writing large programs? \\
+
+The project taught us why it is useful to preplan the software architecture and formalize what each person has to do through a plan of attack. It taught us how to handle merge conflicts that sometimes occur with Git when developing the software together. It also taught us how to handle disagreements that arose in how the software should be structured.
+
+\item[7.] What would you have done differently if you had the chance to start over? \\
+
+Some things we may have done differently if we started over include: 
+\begin{itemize}
+\item Try using the visitor pattern more with the Character class
+\item Try to give a bit more structure to the controller code, while preserving its flexibility.
+\item Use some global object to handle messaging instead of having to attach observers to each subject (since each subject attaches itself to every observer)
+\item Implement the stairway as an entity instead of a cell type. This can add more flexibility.
+\item Use more macros to reduce duplicated code (e.g. Character subclasses have lots of duplicated code that can only be generalized with macros)
+\end{itemize}
+
 \end{enumerate}
 
 

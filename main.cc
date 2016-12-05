@@ -29,6 +29,10 @@ int main(int argc, char* argv[]) {
 			mapString = argv[2];
 			customMap = true;
 		}
+		else {
+			cerr << "Invalid argument" << endl;
+			return 1;
+		}
 	}
 
 	auto controller = make_shared<CLIController>(mapString, customMap);
