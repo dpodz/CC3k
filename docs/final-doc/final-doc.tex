@@ -20,7 +20,7 @@ From a high-level view, the CC3k project is implemented using a MVC architecture
 
 \subsection*{Model}
 
-The model is represented using a Game object, which contains an instance of the Grid class to store the map. The Grid class contains a 2d vector of Cell objects, which contains information about each individual cell. The Cell objects have a cell type associated to it (e.g. Wall, Floor, Stairs), as well as a vector of Entity objects to describe what is on the cell. Entity objects are any object that can be placed on the Map and that includes Characters, Potions, and Treasure. The Entity class itself is abstract and has no meaning unless the methods associated with it are overridden. \\
+The model is represented using a Game object, which contains an instance of the Grid class to store the map. The Grid class contains a 2d vector of Cell objects, which contains information about each individual cell. The Cell objects have a cell type associated to it (e.g. Wall, Floor, Stairs), as well as a vector of Entity objects to describe what is on the cell. Entity objects are any object that can be placed on the Map and that includes Characters, Potions, and Treasures. The Entity class itself is abstract and has no meaning unless the methods associated with it are overridden. \\
 \\
 Grid generation and Entity generation are handled using an object that inherits from GridInit abstract class, which uses the Factory pattern. During game setup (which occurs in controller), the object is passed to the Game object and then is called as needed. This method makes Grid/Entity generation modular and also prevents the controller from having to keep track of the GridInit object.\\
 \\
@@ -33,9 +33,9 @@ Each Character has a map associated with it that describes what Entities the cha
 \\
 Character combat is handled using double dispatch. Each character has a overridden attack method which calls the getAttackedBy method for the defending enemy. This method allows character to character overrides to be easily added (e.g. Vampire losing health when only attacking Dwarfs). \\
 \\
-The character stats are stored within a StatsContainer object, which seems to be useless at first glance as it just returns the Stats struct within itself, but it does serve a valuable purpose. The Modifier abstract class inherits from the StatsContainer class and implements the decorator pattern. This means that modification of a characters stats can be done in a temporary manner by overlaying a subclass of the Modifier object onto the characters StatsContainer object. \\
+The character stats are stored within a StatsContainer object, which seems to be useless as it just returns the Stats struct within itself, but it does serve a valuable purpose. The Modifier abstract class inherits from the StatsContainer class and implements the decorator pattern. This means that modification of a characters stats can be done in a temporary manner by overlaying a subclass of the Modifier object onto the characters StatsContainer object. \\
 \\
-When the built-in Potions are used, they either decrease/increase the characters health or they change the characters stats. The first one is achieved by simply changing the character health, while the second one overlays an AdditiveModifier object (inherits from Modifier) to the characters StatsContainer object. These operations occur in the itemUsedBy function that the Potion classes inherit from the Item class. \\
+When the built-in Potions are used, they either decrease/increase the characters health or they change the characters stats. The first effect is achieved by simply changing the character health, while the second one overlays an AdditiveModifier object (inherits from Modifier) to the characters StatsContainer object. These operations occur in the itemUsedBy function that the Potion classes inherit from the Item class. \\
 \\
 Treasure is handled by overriding the walkedOnBy function that is provided from the Entity class. In most cases, the treasure simply removes itself from the board (by sending a message requesting removal to the Grid object) and then increments the characters gold by the amount specified in the object. This differs in the case of the Dragon Hoard, which has a weak pointer to the associated Dragon. The gold is only picked up in the case where the associated Dragon no longer exist.
 \subsection*{View}
@@ -89,6 +89,7 @@ There are so many cool things that can be done with the controller and the autho
 As mentioned before, the AI is handled through the strategy pattern. This means that changing the AI used by the controller is a matter of swapping which AI class is instantiated.
 
 \section*{Answer to Questions}
+Most of the answers were updated slightly to make things easier to understand.
 \begin{enumerate}
 \item How could your design your system so that each race could be easily generated? Additionally, how difficult does such a solution make adding additional races?\\
 
@@ -116,12 +117,14 @@ The Decorator pattern tends to be a bit harder to understand and implementing it
 
 \item How could you generate items so that the generation of Treasure and Potions reuses as much code as possible? That is, how would you structure your system so that the generation of a potion and then generation of treasure does not duplicate code?\\
 
-This can be done using a function that takes in an array of an array of Entity objects (which Treasure/Potions inherit from), an array of rooms (which is an array of cells in the room), and the number of items to generate (which we denote by $n$). The function can then randomly take one of the arrays of Entity objects and place a copy of the objects in a random cell in one of the rooms (and area surrounding cell if more then one entity in the array). This method is rather extensible and works with the Dragon Hoard/Dragon generation. 
+This can be done using a function that takes in an array of an array of Entity objects (which Treasure/Potions inherit from), an array of rooms (which is an array of cells in the room), and the number of items to generate (which we denote by $n$). The function can then randomly take one of the arrays of Entity objects and place a copy of the objects in a random cell in one of the rooms (and area surrounding cell if more then one entity in the array). This method is rather extensible and works with the Dragon Hoard/Dragon generation. \\
+\\
+This answer was updated to be more clear and to mention an array of an array of Entity objects instead of an array of Entity objects.
 \end{enumerate}
 
 \section*{Extra Credit Features}
 
-All of the pointers have been implemented using smart pointers. 
+All of the pointers have been implemented using smart pointers. There is no memory allocation/deallocation using new/delete.
 
 \section*{Final Questions}
 
