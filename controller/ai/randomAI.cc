@@ -63,6 +63,7 @@ void RandomAI::processTurn(std::shared_ptr<Character> charToMove) {
 				//valid move, don't move into doors, and no entities (potions, gold)
 				if (newCell->isValidMove() &&
 					newCell->getType() != CellType::Door &&
+					newCell->getType() != CellType::Stair &&
 					newCell->getEntities().size() == 0) {
 					possibleMoves.emplace_back(newPos.calcDirectionGivenPos(charPos));
 				}
