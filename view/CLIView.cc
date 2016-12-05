@@ -67,13 +67,13 @@ CLIView::~CLIView() {}
 bool CLIView::checkIfVerticalWall(int x, int y) {
 
 	if (y > 0 ) {
-		if (mGame->getCell(x,y-1)->getType() == CellType::Wall) {
+		if (mGame->getCell(x,y-1)->getType() == CellType::Wall || mGame->getCell(x,y-1)->getType() == CellType::Door) {
 			return true;
 		}
 	}
 
 	if (y < mGame->getGridSize().y - 1) {
-		if (mGame->getCell(x,y+1)->getType() == CellType::Wall) {
+		if (mGame->getCell(x,y+1)->getType() == CellType::Wall || mGame->getCell(x,y+1)->getType() == CellType::Door) {
 			return true;
 		}
 	}
